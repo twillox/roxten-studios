@@ -86,22 +86,23 @@ export default function Hero() {
           <p className="text-white/45 text-sm md:text-base max-w-xs leading-relaxed">
             An elite studio building the software companies run on.
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-6 md:mt-0">
             <a
               href="#contact"
               onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
               data-testid="button-start-project"
-              className="px-7 py-3.5 bg-white text-black text-sm font-bold uppercase tracking-widest hover:bg-white/85 transition-colors duration-300"
+              className="px-8 py-4 rounded-[24px] bg-white text-black text-xs md:text-sm font-black uppercase tracking-[0.15em] hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center gap-3 border border-white"
             >
               Start a Project
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </a>
             <a
               href="#work"
               onClick={(e) => { e.preventDefault(); document.getElementById("work")?.scrollIntoView({ behavior: "smooth" }); }}
               data-testid="button-view-work"
-              className="text-sm font-medium uppercase tracking-widest text-white/40 hover:text-white transition-colors duration-300"
+              className="px-8 py-4 rounded-[24px] border border-white/20 bg-white/[0.03] backdrop-blur-xl text-white text-xs md:text-sm font-bold uppercase tracking-[0.15em] hover:bg-white/10 hover:border-white/40 hover:scale-[1.03] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center gap-3"
             >
-              See Work ↓
+              View Work
             </a>
           </div>
         </motion.div>
