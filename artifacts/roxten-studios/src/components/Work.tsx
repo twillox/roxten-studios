@@ -24,11 +24,11 @@ export default function Work() {
         orderBy("order", "asc")
       );
       const snap = await getDocs(q);
-      const fetched = snap.docs.slice(0, 3).map(doc => {
+      const fetched = snap.docs.slice(0, 3).map((doc, index) => {
         const data = doc.data();
         return {
           id: doc.id,
-          num: `/0${data.order || 1}`,
+          num: `/0${index + 1}`,
           name: data.title,
           client: data.category,
           category: data.category,
