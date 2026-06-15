@@ -70,7 +70,7 @@ export default function Work() {
     // Initial setup:
     // Card 0 is already at y: 0.
     // Cards 1, 2, 3 are pushed completely off-screen below.
-    gsap.set(cards.slice(1), { yPercent: 120 });
+    gsap.set(cards.slice(1), { yPercent: 120, y: 0 });
 
     // Master Timeline
     const masterTl = gsap.timeline({
@@ -100,9 +100,13 @@ export default function Work() {
       const prevCard = cards[index - 1];
       const prevOverlay = prevCard.querySelector('.dim-overlay');
 
+      // Add a dynamic top gap so previous cards peak out
+      const yOffset = index * 32; 
+
       const tl = masterTl.addLabel(`card${index}`)
         .to(card, {
           yPercent: 0,
+          y: yOffset, // Stacking gap
           ease: "none"
         }, `card${index}`);
         
