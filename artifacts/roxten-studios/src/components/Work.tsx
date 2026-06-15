@@ -137,7 +137,7 @@ export default function Work() {
         {/* Full-width Centered Card Stack */}
         <div 
           ref={containerRef}
-          className="w-[92vw] max-w-[1400px] relative h-[80vh]"
+          className="w-[92vw] max-w-[1400px] relative h-[45vh] md:h-[80vh]"
         >
           {projects.map((project, i) => (
             <div 
@@ -189,13 +189,13 @@ export default function Work() {
                     </div>
 
                     {/* Card Content */}
-                    <div className="relative z-20 flex flex-col h-full p-8 md:p-14 pointer-events-none">
+                    <div className="relative z-20 flex flex-col h-full p-6 md:p-14 pointer-events-none">
                       
                       {/* Top Area */}
                       <div className="flex justify-between items-start pointer-events-auto relative z-10">
                         {/* Number */}
                         <div className="flex flex-col gap-8">
-                          <span className="text-white font-light font-mono text-4xl md:text-5xl tracking-tighter shadow-black drop-shadow-md">
+                          <span className="text-white font-light font-mono text-3xl md:text-5xl tracking-tighter shadow-black drop-shadow-md">
                             {project.num}
                           </span>
                         </div>
@@ -203,7 +203,7 @@ export default function Work() {
                         {/* Live Preview Button */}
                         <button 
                           onClick={() => setPreviewUrl(project.href)}
-                          className="flex items-center gap-2 px-6 py-3 rounded-full border border-[rgba(255,255,255,0.1)] text-white text-[11px] uppercase tracking-widest font-semibold hover:bg-white hover:text-black hover:border-white transition-all duration-[800ms] ease-[cubic-bezier(0.22,0.61,0.36,1)] group/btn hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] bg-black/20 backdrop-blur-md"
+                          className="flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full border border-[rgba(255,255,255,0.1)] text-white text-[10px] md:text-[11px] uppercase tracking-widest font-semibold hover:bg-white hover:text-black hover:border-white transition-all duration-[800ms] ease-[cubic-bezier(0.22,0.61,0.36,1)] group/btn hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] bg-black/20 backdrop-blur-md"
                         >
                           <span className="hidden md:inline">Live Project</span>
                           <span className="md:hidden">View</span>
@@ -217,7 +217,7 @@ export default function Work() {
                       {/* Bottom Area */}
                       <div className="mt-auto flex flex-col md:flex-row md:items-end justify-between gap-8 pointer-events-auto relative z-10">
                         <div>
-                          <h3 className="text-white text-5xl md:text-[clamp(4rem,8vw,8rem)] font-black tracking-[-0.04em] uppercase leading-none mb-4 shadow-black drop-shadow-lg">
+                          <h3 className="text-white text-4xl md:text-[clamp(4rem,8vw,8rem)] font-black tracking-[-0.04em] uppercase leading-none mb-2 md:mb-4 shadow-black drop-shadow-lg">
                             {project.name}
                           </h3>
                         </div>
