@@ -107,10 +107,9 @@ export default function Work() {
       // Add a dynamic top gap so previous cards peak out
       const yOffset = index * 32; 
 
-      // Overlap animations so there is absolutely zero delay between cards
-      const position = index === 1 ? undefined : "-=0.3";
-
-      const tl = masterTl.addLabel(`card${index}`, position)
+      // Cards will enter completely sequentially now. 
+      // Because we perfectly calculated the distanceToBottom, there won't be any empty-screen delay between them.
+      const tl = masterTl.addLabel(`card${index}`)
         .to(card, {
           yPercent: 0,
           y: yOffset, // Stacking gap
