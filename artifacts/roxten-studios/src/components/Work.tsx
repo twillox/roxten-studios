@@ -202,7 +202,7 @@ export default function Work() {
                       <div className="flex justify-between items-start pointer-events-auto relative z-10">
                         {/* Number */}
                         <div className="flex flex-col gap-8">
-                          <span className="text-white font-light font-mono text-3xl md:text-5xl tracking-tighter shadow-black drop-shadow-md">
+                          <span className="text-black font-medium font-mono text-3xl md:text-5xl tracking-tighter">
                             {project.num}
                           </span>
                         </div>
