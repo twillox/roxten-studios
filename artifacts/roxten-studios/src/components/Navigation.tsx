@@ -20,7 +20,6 @@ export default function Navigation() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // 1. Adaptive Height Compression on Scroll
-  // 2. Adaptive Color Theme based on active section
   useGSAP(() => {
     if (!headerRef.current || !containerRef.current) return;
 
@@ -30,25 +29,44 @@ export default function Navigation() {
       end: 99999,
       toggleClass: { targets: containerRef.current, className: "scrolled-nav" },
     });
+  });
 
-    // Color Adaptation Logic
-    // Delay slightly to ensure all sections are fully painted
-    setTimeout(() => {
-      // Look at document instead of scoped headerRef
+  // 2. Robust Adaptive Color Theme based on active section
+  useEffect(() => {
+    let ticking = false;
+
+    const checkTheme = () => {
       const sections = document.querySelectorAll("section");
+      let currentTheme = "dark";
+      const navOffset = 100; // Offset for nav height
+      const scrollY = window.scrollY + navOffset;
+      
       sections.forEach((section) => {
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top 60px", // When the section reaches the middle of the nav
-          end: "bottom 60px",
-          onEnter: () => setTheme((section.dataset.theme as "dark" | "light") || "dark"),
-          onEnterBack: () => setTheme((section.dataset.theme as "dark" | "light") || "dark"),
-        });
+        const top = section.offsetTop;
+        const bottom = top + section.offsetHeight;
+        if (scrollY >= top && scrollY <= bottom) {
+          currentTheme = section.dataset.theme || "dark";
+        }
       });
-      ScrollTrigger.refresh();
-    }, 100);
+      
+      setTheme(currentTheme as "dark" | "light");
+      ticking = false;
+    };
 
-  }); // Removed scope so we can access document globally
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(checkTheme);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    // Initial check after a slight delay to allow rendering
+    setTimeout(checkTheme, 100);
+    setTimeout(checkTheme, 1000); // Check again after async data might have loaded
+    
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
