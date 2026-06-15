@@ -24,21 +24,24 @@ export default function Work() {
         orderBy("order", "asc")
       );
       const snap = await getDocs(q);
-      const fetched = snap.docs.slice(0, 3).map((doc, index) => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          num: `/0${index + 1}`,
-          name: data.title,
-          client: data.category,
-          category: data.category,
-          year: new Date(data.createdAt || Date.now()).getFullYear().toString(),
-          desc: data.description,
-          tags: ["Dynamic", "Portfolio", "Roxten"],
-          image: data.imageUrl,
-          href: data.link
-        };
-      });
+      const fetched = snap.docs
+        .map(doc => ({ id: doc.id, ...doc.data() }))
+        .filter(data => data.showOnLandingPage)
+        .slice(0, 3)
+        .map((data, index) => {
+          return {
+            id: data.id,
+            num: `/0${index + 1}`,
+            name: data.title,
+            client: data.category,
+            category: data.category,
+            year: new Date(data.createdAt || Date.now()).getFullYear().toString(),
+            desc: data.description,
+            tags: ["Dynamic", "Portfolio", "Roxten"],
+            image: data.imageUrl,
+            href: data.link
+          };
+        });
       
       // Add the final archive link
       fetched.push({
@@ -172,21 +175,19 @@ export default function Work() {
                 ) : (
                   /* NORMAL CARD LAYOUT */
                   <>
-                    {/* Background Image Area */}
-                    <div className="absolute inset-0 w-full h-full overflow-hidden rounded-[40px]">
-                      {/* Luxury dark gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/95 via-[#050505]/40 to-[#050505]/80 z-10 transition-opacity duration-[800ms] group-hover:opacity-80" />
-                      
-                      {/* Iframe for project preview */}
-                      <iframe 
-                        src={project.href} 
-                        title={project.name}
-                        loading="lazy"
-                        className="absolute inset-0 w-full h-full border-none pointer-events-none scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-out opacity-80"
-                      />
+                    {/* Background Area (No Iframe to save performance) */}
+                    <div className="absolute inset-0 w-full h-full overflow-hidden rounded-[40px] bg-[#080808]">
+                      {project.image && (
+                        <img 
+                          src={project.image} 
+                          alt={project.name}
+                          className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity pointer-events-none"
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/90 via-[#050505]/60 to-[#050505]/95 z-10" />
                     </div>
 
-                    {/* Card Content (On top of image) */}
+                    {/* Card Content */}
                     <div className="relative z-20 flex flex-col h-full p-8 md:p-14 pointer-events-none">
                       
                       {/* Top Area */}
@@ -213,11 +214,17 @@ export default function Work() {
                       </div>
 
                       {/* Bottom Area */}
-                      <div className="mt-auto flex flex-col md:flex-row md:items-end justify-between gap-8">
+                      <div className="mt-auto flex flex-col md:flex-row md:items-end justify-between gap-8 pointer-events-auto">
                         <div>
-                          <h3 className="text-white text-5xl md:text-[clamp(4rem,8vw,10rem)] font-black tracking-[-0.04em] uppercase leading-none shadow-black drop-shadow-lg">
+                          <span className="text-white/60 font-mono text-xs tracking-[0.2em] uppercase block mb-6">
+                            {project.client}
+                          </span>
+                          <h3 className="text-white text-5xl md:text-[clamp(4rem,8vw,8rem)] font-black tracking-[-0.04em] uppercase leading-none mb-4 shadow-black drop-shadow-lg">
                             {project.name}
                           </h3>
+                          <p className="text-white/70 text-lg md:text-xl max-w-xl leading-relaxed font-light hidden md:block">
+                            {project.desc}
+                          </p>
                         </div>
                       </div>
 

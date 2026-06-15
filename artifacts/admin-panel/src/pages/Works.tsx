@@ -118,6 +118,7 @@ function WorkModal({ work, onClose }: any) {
       link: "",
       category: "other",
       isVisible: true,
+      showOnLandingPage: false,
       order: 0,
     }
   );
@@ -191,15 +192,27 @@ function WorkModal({ work, onClose }: any) {
                 className="w-full bg-input border border-border rounded-md px-3 py-2"
               />
             </div>
-            <div className="flex-1 flex items-center gap-2 mt-6">
-              <input
-                type="checkbox"
-                id="isVisible"
-                checked={formData.isVisible}
-                onChange={(e) => setFormData({ ...formData, isVisible: e.target.checked })}
-                className="w-4 h-4 rounded border-border bg-input"
-              />
-              <label htmlFor="isVisible" className="text-sm font-medium">Is Visible</label>
+            <div className="flex-1 flex flex-col gap-3 mt-6">
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="isVisible"
+                  checked={formData.isVisible}
+                  onChange={(e) => setFormData({ ...formData, isVisible: e.target.checked })}
+                  className="w-4 h-4 rounded border-border bg-input"
+                />
+                <label htmlFor="isVisible" className="text-sm font-medium">Is Visible (Global)</label>
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="showOnLandingPage"
+                  checked={formData.showOnLandingPage || false}
+                  onChange={(e) => setFormData({ ...formData, showOnLandingPage: e.target.checked })}
+                  className="w-4 h-4 rounded border-border bg-input"
+                />
+                <label htmlFor="showOnLandingPage" className="text-sm font-medium">Show on Landing Page Stack</label>
+              </div>
             </div>
           </div>
         </div>
