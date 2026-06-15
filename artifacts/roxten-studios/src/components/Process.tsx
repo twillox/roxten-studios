@@ -24,11 +24,13 @@ const transformations = [
 ];
 
 function TransformationCard({ data }: { data: typeof transformations[0] }) {
+  const triggerRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
+    const trigger = triggerRef.current;
     const card = cardRef.current;
-    if (!card) return;
+    if (!trigger || !card) return;
 
     const beforeBlock = card.querySelector('.before-block');
     const beforeTextSpans = card.querySelectorAll('.before-item > span.text-content');
@@ -37,9 +39,9 @@ function TransformationCard({ data }: { data: typeof transformations[0] }) {
 
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: card,
-        start: "top 85%", // Start animating when the top of the card is at 85% of viewport
-        end: "center 55%", // Finish the animation when the card reaches the center of the screen
+        trigger: trigger,
+        start: "top 85%", // Start animating when the top of the wrapper is at 85% of viewport
+        end: "center 55%", // Finish the animation when the wrapper reaches the center of the screen
         scrub: 1, // Smoothly link to scroll position
       }
     });
@@ -80,44 +82,46 @@ function TransformationCard({ data }: { data: typeof transformations[0] }) {
       ease: "none"
     });
 
-  }, { scope: cardRef });
+  }, { scope: triggerRef });
 
   return (
-    <div
-      ref={cardRef}
-      className="relative w-[95vw] md:w-[85vw] mx-auto min-h-[50vh] md:min-h-[60vh] bg-white/[0.02] border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md p-8 md:p-16 flex flex-col md:flex-row gap-12 md:gap-8 items-center will-change-transform"
-    >
-      {/* Decorative ID */}
-      <div className="absolute top-6 left-8 md:top-10 md:left-12 font-mono text-white/20 text-sm tracking-widest">
-        /{data.id}
-      </div>
+    <div ref={triggerRef} className="w-full flex justify-center perspective-[1000px]">
+      <div
+        ref={cardRef}
+        className="relative w-[95vw] md:w-[85vw] mx-auto min-h-[50vh] md:min-h-[60vh] bg-white/[0.02] border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md p-8 md:p-16 flex flex-col md:flex-row gap-12 md:gap-8 items-center will-change-transform"
+      >
+        {/* Decorative ID */}
+        <div className="absolute top-6 left-8 md:top-10 md:left-12 font-mono text-white/20 text-sm tracking-widest">
+          /{data.id}
+        </div>
 
-      {/* BEFORE SECTION */}
-      <div className="before-block flex-1 w-full mt-8 md:mt-0 flex flex-col justify-center border-b border-white/10 md:border-b-0 md:border-r pb-12 md:pb-0 md:pr-12 will-change-transform">
-        <h3 className="text-white/40 font-mono text-xs md:text-sm tracking-[0.2em] uppercase mb-8">Before</h3>
-        <ul className="flex flex-col gap-6">
-          {data.before.map((item, i) => (
-            <li key={i} className="before-item relative w-fit text-white/80 text-xl md:text-4xl font-light tracking-tight break-words flex items-center">
-              <span className="text-content block will-change-transform">{item}</span>
-              <span className="strike-line absolute left-0 top-1/2 -translate-y-1/2 w-0 h-[2px] bg-white/60 shadow-[0_0_10px_rgba(255,255,255,0.3)] origin-left" />
-            </li>
-          ))}
-        </ul>
-      </div>
+        {/* BEFORE SECTION */}
+        <div className="before-block flex-1 w-full mt-8 md:mt-0 flex flex-col justify-center border-b border-white/10 md:border-b-0 md:border-r pb-12 md:pb-0 md:pr-12 will-change-transform">
+          <h3 className="text-white/40 font-mono text-xs md:text-sm tracking-[0.2em] uppercase mb-8">Before</h3>
+          <ul className="flex flex-col gap-6">
+            {data.before.map((item, i) => (
+              <li key={i} className="before-item relative w-fit text-white/80 text-xl md:text-4xl font-light tracking-tight break-words flex items-center">
+                <span className="text-content block will-change-transform">{item}</span>
+                <span className="strike-line absolute left-0 top-1/2 -translate-y-1/2 w-0 h-[2px] bg-white/60 shadow-[0_0_10px_rgba(255,255,255,0.3)] origin-left" />
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      {/* AFTER SECTION */}
-      <div className="after-block flex-1 w-full flex flex-col justify-center md:pl-12 origin-left md:origin-center will-change-transform">
-        <h3 className="text-[#00ffcc] font-mono text-xs md:text-sm tracking-[0.2em] uppercase mb-8 flex items-center gap-4">
-          <span className="w-8 h-px bg-[#00ffcc]"></span>
-          After
-        </h3>
-        <ul className="flex flex-col gap-6">
-          {data.after.map((item, i) => (
-            <li key={i} className="text-white text-2xl md:text-6xl font-black tracking-[-0.03em] leading-[1.1] break-words">
-              {item}
-            </li>
-          ))}
-        </ul>
+        {/* AFTER SECTION */}
+        <div className="after-block flex-1 w-full flex flex-col justify-center md:pl-12 origin-left md:origin-center will-change-transform">
+          <h3 className="text-[#00ffcc] font-mono text-xs md:text-sm tracking-[0.2em] uppercase mb-8 flex items-center gap-4">
+            <span className="w-8 h-px bg-[#00ffcc]"></span>
+            After
+          </h3>
+          <ul className="flex flex-col gap-6">
+            {data.after.map((item, i) => (
+              <li key={i} className="text-white text-2xl md:text-6xl font-black tracking-[-0.03em] leading-[1.1] break-words">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
