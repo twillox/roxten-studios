@@ -1,0 +1,438 @@
+PROJECT NAME
+
+Create an ultra-premium, futuristic, luxury software company website called ROXTEN STUDIOS.
+
+The company specializes in:
+
+Custom Websites
+Mobile Applications
+SaaS Products
+AI Solutions
+Business Automation
+UI/UX Design
+Branding
+Enterprise Software
+E-Commerce Development
+Startup MVP Development
+Custom Digital Products
+DESIGN DIRECTION
+
+Do NOT create a typical agency website.
+
+Do NOT create something that looks like Webflow templates.
+
+Do NOT create generic SaaS landing pages.
+
+This website should feel like:
+
+Apple Keynote
+Tesla
+Linear
+Stripe
+Vercel
+Nothing
+Rivian
+Luxury Architecture Studio
+High-End Fashion Editorial
+
+Combined into one experience.
+
+The feeling should be:
+
+Premium
+Expensive
+Confident
+Minimal
+Intelligent
+Cinematic
+Futuristic
+
+Visitors should instantly think:
+
+"These people build products at a world-class level."
+
+COLOR SYSTEM
+
+Primary Background:
+
+Pure Black (#000000)
+
+Secondary:
+
+#050505
+
+#0A0A0A
+
+Accent:
+
+Pure White
+
+Use gradients only when necessary.
+
+NO neon colors.
+
+NO rainbow colors.
+
+NO cheap glow effects.
+
+Everything must feel luxury.
+
+TYPOGRAPHY
+
+Use:
+
+Inter
+Neue Montreal
+General Sans
+SF Pro Display
+
+Huge typography.
+
+Massive headlines.
+
+Editorial spacing.
+
+Perfect hierarchy.
+
+Example:
+
+We Build
+Digital Products
+That Define Markets
+WEBSITE STRUCTURE
+HERO SECTION
+
+100vh fullscreen.
+
+Massive typography.
+
+Smooth cinematic reveal.
+
+Background should contain:
+
+Floating 3D structures
+Glass objects
+Metallic surfaces
+Dynamic reflections
+Abstract architecture
+
+Text:
+
+ROXTEN STUDIOS
+
+Building
+The Future Of Digital Products
+
+Button:
+Start a Project
+
+Secondary:
+View Our Work
+
+Mouse movement should subtly affect scene depth.
+
+SERVICES SECTION
+
+Do NOT use cards.
+
+Create luxury editorial blocks.
+
+Services:
+
+Websites
+Mobile Apps
+SaaS Platforms
+AI Products
+Branding
+Automation
+Enterprise Solutions
+
+Each service reveals itself with:
+
+Smooth motion
+Image transitions
+Video backgrounds
+Parallax effects
+COMPANY SHOWCASE
+
+Create immersive product showcases.
+
+Each project displayed like:
+
+A product launch event.
+
+Large imagery.
+
+Full-screen transitions.
+
+Case study experience.
+
+Not small portfolio cards.
+
+PROCESS SECTION
+
+Step 1
+
+Research
+
+↓
+
+Step 2
+
+Strategy
+
+↓
+
+Step 3
+
+Design
+
+↓
+
+Step 4
+
+Development
+
+↓
+
+Step 5
+
+Launch
+
+↓
+
+Step 6
+
+Growth
+
+Use cinematic scroll animations.
+
+TECHNOLOGY SECTION
+
+Show expertise in:
+
+React
+Next.js
+Flutter
+Node.js
+AI
+Cloud Infrastructure
+DevOps
+Databases
+Enterprise Systems
+
+Display technologies in a futuristic way.
+
+Not simple logo grids.
+
+DIFFERENTIATOR SECTION
+
+Title:
+
+Why Companies Choose Roxten
+
+Features:
+
+Faster Delivery
+Premium Design
+Scalable Architecture
+Dedicated Support
+AI Powered Development
+Enterprise Security
+
+Animations should reveal each point elegantly.
+
+TESTIMONIALS
+
+Luxury presentation.
+
+Not sliders.
+
+Use cinematic transitions.
+
+Minimalist design.
+
+ABOUT SECTION
+
+Tell a compelling story.
+
+Explain:
+
+"We don't build websites."
+
+"We build digital businesses."
+
+Use large typography.
+
+Magazine-style layout.
+
+INTERACTIVE PRODUCT DEMO SECTION
+
+Allow users to explore:
+
+Website concepts
+Mobile app concepts
+Dashboard concepts
+
+Through interactive previews.
+
+Everything should feel alive.
+
+CONTACT EXPERIENCE
+
+Instead of a boring form:
+
+Create a conversational project builder.
+
+Ask:
+
+What are you building?
+
+↓
+
+Website
+
+App
+
+Software
+
+AI Product
+
+↓
+
+Budget
+
+↓
+
+Timeline
+
+↓
+
+Goals
+
+↓
+
+Contact Details
+
+Display one question at a time.
+
+Smooth transitions.
+
+Premium UX.
+
+ANIMATION SYSTEM
+
+Use:
+
+Framer Motion
+GSAP
+Three.js
+React Three Fiber
+
+Animations must feel:
+
+Smooth
+Heavy
+Premium
+Cinematic
+
+Never fast.
+
+Never flashy.
+
+Every animation should have purpose.
+
+MICRO INTERACTIONS
+
+Buttons:
+
+Magnetic effect
+Smooth hover
+Depth movement
+
+Cards:
+
+Tilt effects
+Reflection effects
+
+Images:
+
+Cinematic zoom
+
+Text:
+
+Character reveal
+Word reveal
+Blur reveal
+3D EXPERIENCE
+
+Integrate:
+
+Floating monoliths
+Metallic sculptures
+Glass architecture
+Digital particles
+Product models
+Dynamic lighting
+
+Everything optimized for performance.
+
+60 FPS.
+
+MOBILE EXPERIENCE
+
+This is extremely important.
+
+Do NOT simply shrink desktop.
+
+Design mobile-first.
+
+The mobile version must feel even more premium than desktop.
+
+Perfect spacing.
+
+Large touch targets.
+
+Smooth transitions.
+
+No broken layouts.
+
+No hidden content.
+
+All animations optimized for mobile.
+
+PERFORMANCE
+
+Must score:
+
+95+ Performance
+100 Accessibility
+100 Best Practices
+
+Fast loading.
+
+Lazy loading.
+
+Code splitting.
+
+Image optimization.
+
+FINAL GOAL
+
+When someone visits this website they should feel:
+
+"We are looking at a billion-dollar software company."
+
+The experience should feel closer to a luxury product launch than a typical agency website.
+
+Every section should feel handcrafted, premium, cinematic, and unforgettable.
+
+No generic templates.
+No generic cards.
+No generic agency layouts.
+
+Create an industry-defining digital experience that sets a new benchmark for software company websites.
+
+For an even more elite result, add:
+
+"Use advanced scroll storytelling, WebGL effects, premium motion design, glass and metal materials, dynamic lighting, seamless page transitions, immersive 3D scenes, and award-winning Awwwards/SOTD-level execution while maintaining perfect usability and performance."

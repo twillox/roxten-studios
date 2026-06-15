@@ -1,0 +1,17 @@
+{
+  "name": "@workspace/firebase",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "dependencies": {
+    "firebase": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  }
+}
