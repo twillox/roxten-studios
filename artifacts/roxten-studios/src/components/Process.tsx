@@ -42,8 +42,8 @@ function TransformationCard({ data }: { data: typeof transformations[0] }) {
       }
     })
     .to(beforeBlock, {
-      x: -50,
-      opacity: 0,
+      x: -10,
+      opacity: 0.3,
       ease: "power1.inOut"
     }, 0)
     .fromTo(afterBlock, {
@@ -72,7 +72,7 @@ function TransformationCard({ data }: { data: typeof transformations[0] }) {
         <h3 className="text-white/40 font-mono text-xs md:text-sm tracking-[0.2em] uppercase mb-8">Before</h3>
         <ul className="flex flex-col gap-6">
           {data.before.map((item, i) => (
-            <li key={i} className="text-white/50 text-2xl md:text-4xl font-light tracking-tight line-through decoration-white/20">
+            <li key={i} className="text-white/50 text-xl md:text-4xl font-light tracking-tight line-through decoration-white/20 break-words">
               {item}
             </li>
           ))}
@@ -87,7 +87,7 @@ function TransformationCard({ data }: { data: typeof transformations[0] }) {
         </h3>
         <ul className="flex flex-col gap-6">
           {data.after.map((item, i) => (
-            <li key={i} className="text-white text-3xl md:text-6xl font-black tracking-[-0.03em] leading-[1.1]">
+            <li key={i} className="text-white text-2xl md:text-6xl font-black tracking-[-0.03em] leading-[1.1] break-words">
               {item}
             </li>
           ))}
