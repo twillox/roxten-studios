@@ -98,10 +98,6 @@ export default function Work() {
       const prevOverlay = prevCard.querySelector('.dim-overlay');
 
       const tl = masterTl.addLabel(`card${index}`)
-        .to(prevCard, {
-          scale: 0.94,
-          ease: "none"
-        }, `card${index}`)
         .to(card, {
           yPercent: 0,
           ease: "none"
@@ -109,7 +105,7 @@ export default function Work() {
         
       if (prevOverlay) {
         tl.to(prevOverlay, {
-          opacity: 0.6,
+          opacity: 0.7,
           ease: "none"
         }, `card${index}`);
       }
@@ -148,7 +144,7 @@ export default function Work() {
                 borderRadius: '40px',
                 transformOrigin: 'center top',
                 zIndex: i + 1,
-                willChange: 'transform, filter, opacity',
+                willChange: 'transform, opacity',
               }}
             >
               {/* Card Surface */}
@@ -191,13 +187,13 @@ export default function Work() {
                     </div>
 
                     {/* Card Content (On top of image) */}
-                    <div className="relative z-20 flex flex-col h-full p-8 md:p-14">
+                    <div className="relative z-20 flex flex-col h-full p-8 md:p-14 pointer-events-none">
                       
                       {/* Top Area */}
-                      <div className="flex justify-between items-start">
+                      <div className="flex justify-between items-start pointer-events-auto">
                         {/* Number */}
                         <div className="flex flex-col gap-8">
-                          <span className="text-white font-light font-mono text-4xl md:text-5xl tracking-tighter mix-blend-difference">
+                          <span className="text-white font-light font-mono text-4xl md:text-5xl tracking-tighter shadow-black drop-shadow-md">
                             {project.num}
                           </span>
                         </div>
@@ -217,9 +213,9 @@ export default function Work() {
                       </div>
 
                       {/* Bottom Area */}
-                      <div className="mt-auto flex flex-col md:flex-row md:items-end justify-between gap-8 pointer-events-none">
+                      <div className="mt-auto flex flex-col md:flex-row md:items-end justify-between gap-8">
                         <div>
-                          <h3 className="text-white text-5xl md:text-[clamp(4rem,8vw,10rem)] font-black tracking-[-0.04em] uppercase leading-none mix-blend-overlay">
+                          <h3 className="text-white text-5xl md:text-[clamp(4rem,8vw,10rem)] font-black tracking-[-0.04em] uppercase leading-none shadow-black drop-shadow-lg">
                             {project.name}
                           </h3>
                         </div>
