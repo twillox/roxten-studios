@@ -31,48 +31,65 @@ function TransformationCard({ data }: { data: typeof transformations[0] }) {
     if (!card) return;
 
     const beforeBlock = card.querySelector('.before-block');
+    const beforeTextSpans = card.querySelectorAll('.before-item > span.text-content');
+    const strikeLines = card.querySelectorAll('.strike-line');
     const afterBlock = card.querySelector('.after-block');
 
-    gsap.timeline({
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: card,
-        start: "top 70%",
-        end: "bottom 30%",
-        scrub: 1,
+        start: "top 80%",
+        toggleActions: "play none none reverse", // play on enter, reverse on leave back
       }
-    })
-    .to(beforeBlock, {
-      x: -10,
-      opacity: 0.3,
-      ease: "power1.inOut"
-    }, 0)
-    .fromTo(afterBlock, {
-      scale: 0.85,
-      opacity: 0.3,
-    }, {
-      scale: 1,
-      opacity: 1,
-      ease: "power2.out"
-    }, 0);
+    });
 
-    // Entrance animation for the card itself
-    gsap.from(card, {
-      scrollTrigger: {
-        trigger: card,
-        start: "top 85%",
-      },
-      y: 60,
+    // 1. First the box forms
+    tl.from(card, {
+      y: 80,
       opacity: 0,
-      duration: 1.2,
+      duration: 0.8,
       ease: "power3.out"
     });
+
+    // 2. Before text comes in (without strike at first)
+    tl.from(beforeTextSpans, {
+      y: 20,
+      opacity: 0,
+      duration: 0.5,
+      stagger: 0.1,
+      ease: "power2.out"
+    }, "-=0.3");
+
+    // 3. Strike out line draws across
+    tl.to(strikeLines, {
+      width: "100%",
+      duration: 0.4,
+      stagger: 0.1,
+      ease: "power2.inOut"
+    }, "+=0.1");
+
+    // 4. Slide and go placed in its position (dimming it slightly as it becomes background)
+    tl.to(beforeBlock, {
+      x: -20,
+      opacity: 0.3,
+      duration: 0.6,
+      ease: "power3.inOut"
+    }, "+=0.1");
+
+    // 5. Main text fades in and pops slightly
+    tl.from(afterBlock, {
+      scale: 0.9,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out"
+    }, "-=0.4");
 
   }, { scope: cardRef });
 
   return (
     <div
       ref={cardRef}
-      className="relative w-[95vw] md:w-[85vw] mx-auto min-h-[50vh] md:min-h-[60vh] bg-white/[0.02] border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md p-8 md:p-16 flex flex-col md:flex-row gap-12 md:gap-8 items-center"
+      className="relative w-[95vw] md:w-[85vw] mx-auto min-h-[50vh] md:min-h-[60vh] bg-white/[0.02] border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md p-8 md:p-16 flex flex-col md:flex-row gap-12 md:gap-8 items-center will-change-transform"
     >
       {/* Decorative ID */}
       <div className="absolute top-6 left-8 md:top-10 md:left-12 font-mono text-white/20 text-sm tracking-widest">
@@ -80,19 +97,20 @@ function TransformationCard({ data }: { data: typeof transformations[0] }) {
       </div>
 
       {/* BEFORE SECTION */}
-      <div className="before-block flex-1 w-full mt-8 md:mt-0 flex flex-col justify-center border-b border-white/10 md:border-b-0 md:border-r pb-12 md:pb-0 md:pr-12">
+      <div className="before-block flex-1 w-full mt-8 md:mt-0 flex flex-col justify-center border-b border-white/10 md:border-b-0 md:border-r pb-12 md:pb-0 md:pr-12 will-change-transform">
         <h3 className="text-white/40 font-mono text-xs md:text-sm tracking-[0.2em] uppercase mb-8">Before</h3>
         <ul className="flex flex-col gap-6">
           {data.before.map((item, i) => (
-            <li key={i} className="text-white/50 text-xl md:text-4xl font-light tracking-tight line-through decoration-white/20 break-words">
-              {item}
+            <li key={i} className="before-item relative w-fit text-white/80 text-xl md:text-4xl font-light tracking-tight break-words flex items-center">
+              <span className="text-content block will-change-transform">{item}</span>
+              <span className="strike-line absolute left-0 top-1/2 -translate-y-1/2 w-0 h-[2px] bg-white/60 shadow-[0_0_10px_rgba(255,255,255,0.3)] origin-left" />
             </li>
           ))}
         </ul>
       </div>
 
       {/* AFTER SECTION */}
-      <div className="after-block flex-1 w-full flex flex-col justify-center md:pl-12 origin-left md:origin-center">
+      <div className="after-block flex-1 w-full flex flex-col justify-center md:pl-12 origin-left md:origin-center will-change-transform">
         <h3 className="text-[#00ffcc] font-mono text-xs md:text-sm tracking-[0.2em] uppercase mb-8 flex items-center gap-4">
           <span className="w-8 h-px bg-[#00ffcc]"></span>
           After
