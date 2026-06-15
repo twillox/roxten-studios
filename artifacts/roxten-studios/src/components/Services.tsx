@@ -14,7 +14,10 @@ const services = [
 function ServiceRow({ service, i }: { service: typeof services[0]; i: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-8%" });
+  const isCenter = useInView(ref, { margin: "-30% 0px -30% 0px" });
   const [hovered, setHovered] = useState(false);
+
+  const isActive = hovered || isCenter;
 
   return (
     <motion.div
@@ -26,9 +29,9 @@ function ServiceRow({ service, i }: { service: typeof services[0]; i: number }) 
       onMouseLeave={() => setHovered(false)}
       className="relative border-b border-black/10 overflow-hidden cursor-default group"
     >
-      {/* Black flood fill on hover */}
+      {/* Black flood fill on hover or scroll focus */}
       <motion.div
-        animate={{ scaleX: hovered ? 1 : 0 }}
+        animate={{ scaleX: isActive ? 1 : 0 }}
         transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
         className="absolute inset-0 bg-black origin-left pointer-events-none z-0"
       />
@@ -36,30 +39,30 @@ function ServiceRow({ service, i }: { service: typeof services[0]; i: number }) 
       <div className="relative z-10 flex items-center gap-6 md:gap-12 py-7 md:py-9">
         <span
           className="text-[11px] font-mono tracking-widest min-w-[2.5rem] transition-colors duration-300"
-          style={{ color: hovered ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.25)" }}
+          style={{ color: isActive ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.25)" }}
         >
           {service.index}
         </span>
 
         <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-10">
           <motion.h3
-            animate={{ x: hovered ? 14 : 0 }}
+            animate={{ x: isActive ? 14 : 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="text-4xl md:text-[clamp(2.5rem,5vw,5rem)] font-black tracking-[-0.03em] uppercase leading-none transition-colors duration-300"
-            style={{ color: hovered ? "#fff" : "#000" }}
+            style={{ color: isActive ? "#fff" : "#000" }}
           >
             {service.name}
           </motion.h3>
           <p
             className="text-sm max-w-[280px] leading-relaxed transition-colors duration-300"
-            style={{ color: hovered ? "rgba(255,255,255,0.45)" : "rgba(0,0,0,0.38)" }}
+            style={{ color: isActive ? "rgba(255,255,255,0.45)" : "rgba(0,0,0,0.38)" }}
           >
             {service.desc}
           </p>
         </div>
 
         <motion.span
-          animate={{ x: hovered ? 0 : -10, opacity: hovered ? 1 : 0 }}
+          animate={{ x: isActive ? 0 : -10, opacity: isActive ? 1 : 0 }}
           transition={{ duration: 0.35 }}
           className="text-white text-xl pr-2 hidden md:block"
         >

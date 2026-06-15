@@ -21,8 +21,7 @@ export default function Work() {
     async function fetchWorks() {
       const q = query(
         collection(db, "works"),
-        where("isVisible", "==", true),
-        orderBy("order", "desc")
+        orderBy("order", "asc")
       );
       const snap = await getDocs(q);
       const fetched = snap.docs.map(doc => {

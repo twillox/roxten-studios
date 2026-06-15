@@ -34,8 +34,11 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 pt-8 border-t border-white/[0.06] flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-          <p className="text-[10px] font-mono text-white/18">© {year} Roxten Studios. All rights reserved.</p>
-          <p className="text-[10px] font-mono text-white/10">Built to define markets.</p>
+          <p className="text-[10px] font-mono text-white/30">© {year} Roxten Studios. All rights reserved.</p>
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-6 text-[10px] font-mono text-white/30">
+            <span>Email: roxtenstudios.help@gmail.com</span>
+            <span>Based in India</span>
+          </div>
         </div>
       </div>
     </footer>
