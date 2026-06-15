@@ -55,6 +55,18 @@ function TransformationCard({ data }: { data: typeof transformations[0] }) {
       ease: "power2.out"
     }, 0);
 
+    // Entrance animation for the card itself
+    gsap.from(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: "top 85%",
+      },
+      y: 60,
+      opacity: 0,
+      duration: 1.2,
+      ease: "power3.out"
+    });
+
   }, { scope: cardRef });
 
   return (
