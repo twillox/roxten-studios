@@ -181,10 +181,10 @@ export default function Work() {
                         <img 
                           src={project.image} 
                           alt={project.name}
-                          className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity pointer-events-none"
+                          className="absolute inset-0 w-full h-full object-cover opacity-50 pointer-events-none"
                         />
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/90 via-[#050505]/60 to-[#050505]/95 z-10" />
+                      <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/95 via-[#050505]/70 to-[#050505]/95 z-10" />
                     </div>
 
                     {/* Card Content */}

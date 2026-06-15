@@ -165,6 +165,18 @@ function WorkModal({ work, onClose }: any) {
               className="w-full bg-input border border-border rounded-md px-3 py-2"
             />
           </div>
+          {formData.showOnLandingPage && (
+            <div>
+              <label className="block text-sm font-medium mb-1 text-primary">Landing Page Background Image URL</label>
+              <input
+                type="text"
+                value={formData.imageUrl || ""}
+                onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                className="w-full bg-input border border-primary/50 rounded-md px-3 py-2"
+                placeholder="https://images.unsplash.com/..."
+              />
+            </div>
+          )}
           <div>
             <label className="block text-sm font-medium mb-1">External Link (Live Website URL)</label>
             <input
