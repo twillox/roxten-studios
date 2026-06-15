@@ -24,7 +24,7 @@ export default function Work() {
         orderBy("order", "asc")
       );
       const snap = await getDocs(q);
-      const fetched = snap.docs.map(doc => {
+      const fetched = snap.docs.slice(0, 3).map(doc => {
         const data = doc.data();
         return {
           id: doc.id,
@@ -32,7 +32,7 @@ export default function Work() {
           name: data.title,
           client: data.category,
           category: data.category,
-          year: new Date(data.createdAt).getFullYear().toString(),
+          year: new Date(data.createdAt || Date.now()).getFullYear().toString(),
           desc: data.description,
           tags: ["Dynamic", "Portfolio", "Roxten"],
           image: data.imageUrl,
