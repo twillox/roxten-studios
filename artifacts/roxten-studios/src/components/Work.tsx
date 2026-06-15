@@ -188,8 +188,11 @@ export default function Work() {
                       <div className="absolute bottom-0 left-0 w-full h-[60%] bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent z-10 pointer-events-none" />
                     </div>
 
-                    {/* Card Content */}
-                    <div className="relative z-20 flex flex-col h-full p-6 md:p-14 pointer-events-none">
+                    {/* Card Content - Clickable area */}
+                    <div 
+                      className="relative z-20 flex flex-col h-full p-6 md:p-14 cursor-pointer pointer-events-auto"
+                      onClick={() => setPreviewUrl(project.href)}
+                    >
                       
                       {/* Top Area */}
                       <div className="flex justify-between items-start pointer-events-auto relative z-10">
@@ -199,19 +202,6 @@ export default function Work() {
                             {project.num}
                           </span>
                         </div>
-
-                        {/* Live Preview Button */}
-                        <button 
-                          onClick={() => setPreviewUrl(project.href)}
-                          className="flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full border border-[rgba(255,255,255,0.1)] text-white text-[10px] md:text-[11px] uppercase tracking-widest font-semibold hover:bg-white hover:text-black hover:border-white transition-all duration-[800ms] ease-[cubic-bezier(0.22,0.61,0.36,1)] group/btn hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] bg-black/20 backdrop-blur-md"
-                        >
-                          <span className="hidden md:inline">Live Project</span>
-                          <span className="md:hidden">View</span>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover/btn:rotate-45 transition-transform duration-300">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                          </svg>
-                        </button>
                       </div>
 
                       {/* Bottom Area */}
