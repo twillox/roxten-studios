@@ -161,8 +161,8 @@ export default function Work() {
               }}
             >
               {/* Card Surface with Gradient Border */}
-              <div className="relative w-full h-full p-[1px] rounded-[40px] bg-gradient-to-b from-white/20 via-white/5 to-transparent group shadow-2xl shadow-black/50">
-                <div className="relative w-full h-full bg-[#0a0a0a] rounded-[39px] overflow-hidden">
+              <div className="relative w-full h-full p-[2px] rounded-[42px] bg-gradient-to-b from-white/40 via-white/10 to-transparent group shadow-2xl shadow-black/50">
+                <div className="relative w-full h-full bg-[#0a0a0a] rounded-[40px] overflow-hidden">
                   <div className="dim-overlay absolute inset-0 bg-black opacity-0 z-[100] pointer-events-none" />
                 
                 {project.isLink ? (
