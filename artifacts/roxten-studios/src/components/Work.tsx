@@ -191,7 +191,7 @@ export default function Work() {
                     <div className="relative z-20 flex flex-col h-full p-8 md:p-14 pointer-events-none">
                       
                       {/* Top Area */}
-                      <div className="flex justify-between items-start pointer-events-auto">
+                      <div className="flex justify-between items-start pointer-events-auto relative z-10">
                         {/* Number */}
                         <div className="flex flex-col gap-8">
                           <span className="text-white font-light font-mono text-4xl md:text-5xl tracking-tighter shadow-black drop-shadow-md">
@@ -213,8 +213,26 @@ export default function Work() {
                         </button>
                       </div>
 
+                      {/* Middle Area - Description */}
+                      <div className="flex-1 flex flex-col justify-center items-center pointer-events-auto relative z-10 my-8">
+                        {project.desc && (
+                          <div className="max-w-2xl mx-auto text-center">
+                            <p className="text-white/70 text-xl md:text-3xl font-light leading-relaxed tracking-tight">
+                              {project.desc}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Giant Watermark Background */}
+                      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none z-0 opacity-[0.03]">
+                        <h2 className="text-[20vw] font-black uppercase whitespace-nowrap tracking-tighter">
+                          {project.name}
+                        </h2>
+                      </div>
+
                       {/* Bottom Area */}
-                      <div className="mt-auto flex flex-col md:flex-row md:items-end justify-between gap-8 pointer-events-auto">
+                      <div className="mt-auto flex flex-col md:flex-row md:items-end justify-between gap-8 pointer-events-auto relative z-10">
                         <div>
                           <span className="text-white/60 font-mono text-xs tracking-[0.2em] uppercase block mb-6">
                             {project.client}
@@ -222,9 +240,6 @@ export default function Work() {
                           <h3 className="text-white text-5xl md:text-[clamp(4rem,8vw,8rem)] font-black tracking-[-0.04em] uppercase leading-none mb-4 shadow-black drop-shadow-lg">
                             {project.name}
                           </h3>
-                          <p className="text-white/70 text-lg md:text-xl max-w-xl leading-relaxed font-light hidden md:block">
-                            {project.desc}
-                          </p>
                         </div>
                       </div>
 
