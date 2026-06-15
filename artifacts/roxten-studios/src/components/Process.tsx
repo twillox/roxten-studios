@@ -98,15 +98,36 @@ function TransformationCard({ data }: { data: typeof transformations[0] }) {
 }
 
 export default function Process() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const headerLines = headerRef.current?.querySelectorAll('span.block');
+    
+    if (headerLines) {
+      gsap.from(headerLines, {
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: "top 80%",
+        },
+        y: 100,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.2,
+        ease: "power4.out"
+      });
+    }
+  }, { scope: sectionRef });
+
   return (
-    <section id="process" className="relative bg-[#030303] pt-40 pb-32 md:py-48 overflow-hidden z-10">
+    <section id="process" ref={sectionRef} className="relative bg-[#030303] pt-40 pb-32 md:py-48 overflow-hidden z-10">
       <div className="max-w-[1800px] mx-auto w-full flex flex-col items-center">
         
         {/* Massive Header */}
-        <div className="w-[95vw] md:w-[85vw] mb-24 md:mb-40">
+        <div ref={headerRef} className="w-[95vw] md:w-[85vw] mb-24 md:mb-40">
           <h2 className="text-[clamp(3rem,8vw,7rem)] font-black tracking-[-0.04em] uppercase leading-[0.9] text-white">
-            <span className="block text-white/40">We don't build websites.</span>
-            <span className="block mt-2">We transform businesses.</span>
+            <span className="block text-white/40 will-change-transform">We don't build websites.</span>
+            <span className="block mt-2 will-change-transform">We transform businesses.</span>
           </h2>
         </div>
 
