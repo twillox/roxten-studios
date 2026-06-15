@@ -67,20 +67,24 @@ export default function Work() {
 
     const cards = gsap.utils.toArray<HTMLElement>('.project-card');
     
-    // Initial setup:
-    // Card 0 is already at y: 0.
-    // Cards 1, 2, 3 are pushed completely off-screen below.
-    gsap.set(cards.slice(1), { y: "100vh" });
+    // Calculate exact distance to hide cards just below the fold to avoid "travel delay"
+    // We calculate from the top of the section (which is pinned) down to window height
+    const distanceToBottom = window.innerHeight; // since they are absolute top-0 relative to the container which is centered, window.innerHeight is a safe full-screen push.
+    // Actually, container is centered. To be perfectly precise:
+    // When section is pinned at top:0, container is at some top offset.
+    // Setting y to window.innerHeight is still a bit far. Let's use 80vh to be safe, or just 100% + some vh.
+    // Let's use a function based value so GSAP recalculates it if needed, or just a solid offset.
+    gsap.set(cards.slice(1), { y: () => window.innerHeight });
 
     // Master Timeline
     const masterTl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top top",
-        // The pinning duration depends on the number of cards.
-        end: `+=${cards.length * 100}%`, 
+        // Reduced duration for a snappier, continuous feel
+        end: `+=${cards.length * 60}%`, 
         pin: true,
-        scrub: true,
+        scrub: 1, // Smooth scrub
         onUpdate: (self) => {
           // Update the progress indicator based on scroll percentage
           const progress = self.progress;
@@ -103,7 +107,10 @@ export default function Work() {
       // Add a dynamic top gap so previous cards peak out
       const yOffset = index * 32; 
 
-      const tl = masterTl.addLabel(`card${index}`)
+      // Overlap animations so there is absolutely zero delay between cards
+      const position = index === 1 ? undefined : "-=0.3";
+
+      const tl = masterTl.addLabel(`card${index}`, position)
         .to(card, {
           yPercent: 0,
           y: yOffset, // Stacking gap
