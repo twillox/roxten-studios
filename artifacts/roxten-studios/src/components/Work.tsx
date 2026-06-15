@@ -175,16 +175,16 @@ export default function Work() {
                 ) : (
                   /* NORMAL CARD LAYOUT */
                   <>
-                    {/* Background Area (No Iframe to save performance) */}
+                    {/* Background Area */}
                     <div className="absolute inset-0 w-full h-full overflow-hidden rounded-[40px] bg-[#080808]">
                       {project.image && (
                         <img 
                           src={project.image} 
                           alt={project.name}
-                          className="absolute inset-0 w-full h-full object-cover opacity-50 pointer-events-none"
+                          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                         />
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/95 via-[#050505]/70 to-[#050505]/95 z-10" />
+                      <div className="absolute bottom-0 left-0 w-full h-[60%] bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent z-10 pointer-events-none" />
                     </div>
 
                     {/* Card Content */}
@@ -213,30 +213,9 @@ export default function Work() {
                         </button>
                       </div>
 
-                      {/* Middle Area - Description */}
-                      <div className="flex-1 flex flex-col justify-center items-center pointer-events-auto relative z-10 my-8">
-                        {project.desc && (
-                          <div className="max-w-2xl mx-auto text-center">
-                            <p className="text-white/70 text-xl md:text-3xl font-light leading-relaxed tracking-tight">
-                              {project.desc}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Giant Watermark Background */}
-                      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none z-0 opacity-[0.03]">
-                        <h2 className="text-[20vw] font-black uppercase whitespace-nowrap tracking-tighter">
-                          {project.name}
-                        </h2>
-                      </div>
-
                       {/* Bottom Area */}
                       <div className="mt-auto flex flex-col md:flex-row md:items-end justify-between gap-8 pointer-events-auto relative z-10">
                         <div>
-                          <span className="text-white/60 font-mono text-xs tracking-[0.2em] uppercase block mb-6">
-                            {project.client}
-                          </span>
                           <h3 className="text-white text-5xl md:text-[clamp(4rem,8vw,8rem)] font-black tracking-[-0.04em] uppercase leading-none mb-4 shadow-black drop-shadow-lg">
                             {project.name}
                           </h3>
