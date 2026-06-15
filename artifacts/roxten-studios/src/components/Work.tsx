@@ -150,9 +150,10 @@ export default function Work() {
                 willChange: 'transform, opacity',
               }}
             >
-              {/* Card Surface */}
-              <div className="relative w-full h-full bg-[#0a0a0a] border border-[rgba(255,255,255,0.1)] rounded-[40px] overflow-hidden group shadow-2xl shadow-black/50">
-                <div className="dim-overlay absolute inset-0 bg-black opacity-0 z-[100] pointer-events-none" />
+              {/* Card Surface with Gradient Border */}
+              <div className="relative w-full h-full p-[1px] rounded-[40px] bg-gradient-to-b from-white/20 via-white/5 to-transparent group shadow-2xl shadow-black/50">
+                <div className="relative w-full h-full bg-[#0a0a0a] rounded-[39px] overflow-hidden">
+                  <div className="dim-overlay absolute inset-0 bg-black opacity-0 z-[100] pointer-events-none" />
                 
                 {project.isLink ? (
                   /* LINK CARD LAYOUT */
@@ -225,6 +226,7 @@ export default function Work() {
                     </div>
                   </>
                 )}
+                </div>
               </div>
             </div>
           ))}
