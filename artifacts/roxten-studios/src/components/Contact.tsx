@@ -40,7 +40,7 @@ export default function Contact() {
   const [step, setStep] = useState(1);
   const [wizardError, setWizardError] = useState<string | null>(null);
   const [wizardData, setWizardData] = useState({
-    projectType: "", budget: "", timeline: "", description: "", name: "", email: "", mobile: "",
+    projectType: "", budget: "", customBudget: "", timeline: "", customTimeline: "", description: "", name: "", email: "", mobile: "",
   });
 
   // === SIMPLE FORM STATE (Contact Now) ===
@@ -81,6 +81,14 @@ export default function Contact() {
         setWizardError("Please fill out all fields before continuing.");
         return;
       }
+      if (wizardData.budget === "custom" && !wizardData.customBudget.trim()) {
+        setWizardError("Please enter your custom budget.");
+        return;
+      }
+      if (wizardData.timeline === "custom" && !wizardData.customTimeline.trim()) {
+        setWizardError("Please enter your custom timeline.");
+        return;
+      }
       setStep(3);
     }
     
@@ -102,9 +110,14 @@ export default function Contact() {
         const { db } = await import("@workspace/firebase");
         const { collection, addDoc } = await import("firebase/firestore");
         
+        const finalBudget = wizardData.budget === "custom" ? wizardData.customBudget : wizardData.budget;
+        const finalTimeline = wizardData.timeline === "custom" ? wizardData.customTimeline : wizardData.timeline;
+
         await addDoc(collection(db, "projects"), {
           ...wizardData,
-          details: wizardData.description + `\n\nTimeline: ${wizardData.timeline}\nType: ${wizardData.projectType}\nMobile: ${wizardData.mobile}`,
+          budget: finalBudget,
+          timeline: finalTimeline,
+          details: wizardData.description + `\n\nTimeline: ${finalTimeline}\nType: ${wizardData.projectType}\nMobile: ${wizardData.mobile}`,
           status: "new",
           createdAt: Date.now()
         });
@@ -209,21 +222,46 @@ export default function Contact() {
                     </div>
                     <div className="space-y-6">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-white/[0.03] border border-white/10 rounded-[20px] p-2 focus-within:border-white/30 transition-colors">
+                        {/* BUDGET DROPDOWN */}
+                        <div className="bg-white/[0.03] border border-white/10 rounded-[20px] p-2 focus-within:border-white/30 transition-colors flex flex-col">
                           <select value={wizardData.budget} onChange={(e) => handleWizardChange('budget', e.target.value)} className={`w-full bg-transparent p-4 outline-none cursor-pointer ${wizardData.budget ? 'text-white' : 'text-white/30'}`}>
-                            <option value="" disabled>Select Budget</option>
-                            <option value="25k" className="bg-black text-white">$25k - $50k</option>
-                            <option value="50k" className="bg-black text-white">$50k - $100k</option>
-                            <option value="100k" className="bg-black text-white">$100k+</option>
+                            <option value="" disabled>Select Budget (INR)</option>
+                            <option value="<50k" className="bg-black text-white">Under ₹50,000</option>
+                            <option value="50k-2L" className="bg-black text-white">₹50,000 - ₹2,00,000</option>
+                            <option value="2L-5L" className="bg-black text-white">₹2,00,000 - ₹5,00,000</option>
+                            <option value="5L-10L" className="bg-black text-white">₹5,00,000 - ₹10,00,000</option>
+                            <option value="10L+" className="bg-black text-white">₹10,00,000+</option>
+                            <option value="custom" className="bg-black text-white">Other (Custom)</option>
                           </select>
+                          {wizardData.budget === "custom" && (
+                            <input 
+                              type="text" 
+                              value={wizardData.customBudget} 
+                              onChange={(e) => handleWizardChange('customBudget', e.target.value)} 
+                              placeholder="Type your budget..." 
+                              className="w-full bg-transparent text-white px-4 pb-2 pt-2 border-t border-white/10 outline-none placeholder-white/30 text-sm mt-2" 
+                            />
+                          )}
                         </div>
-                        <div className="bg-white/[0.03] border border-white/10 rounded-[20px] p-2 focus-within:border-white/30 transition-colors">
+
+                        {/* TIMELINE DROPDOWN */}
+                        <div className="bg-white/[0.03] border border-white/10 rounded-[20px] p-2 focus-within:border-white/30 transition-colors flex flex-col">
                           <select value={wizardData.timeline} onChange={(e) => handleWizardChange('timeline', e.target.value)} className={`w-full bg-transparent p-4 outline-none cursor-pointer ${wizardData.timeline ? 'text-white' : 'text-white/30'}`}>
                             <option value="" disabled>Select Timeline</option>
                             <option value="1m" className="bg-black text-white">1-2 Months</option>
                             <option value="3m" className="bg-black text-white">3-6 Months</option>
                             <option value="6m" className="bg-black text-white">6+ Months</option>
+                            <option value="custom" className="bg-black text-white">Other (Custom)</option>
                           </select>
+                          {wizardData.timeline === "custom" && (
+                            <input 
+                              type="text" 
+                              value={wizardData.customTimeline} 
+                              onChange={(e) => handleWizardChange('customTimeline', e.target.value)} 
+                              placeholder="Type your timeline..." 
+                              className="w-full bg-transparent text-white px-4 pb-2 pt-2 border-t border-white/10 outline-none placeholder-white/30 text-sm mt-2" 
+                            />
+                          )}
                         </div>
                       </div>
                       <div className="bg-white/[0.03] border border-white/10 rounded-[20px] p-2 focus-within:border-white/30 transition-colors">
