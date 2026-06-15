@@ -60,6 +60,8 @@ export default function Work() {
   }, []);
 
   useGSAP(() => {
+    if (projects.length === 0) return;
+
     const cards = gsap.utils.toArray<HTMLElement>('.project-card');
     
     // Initial setup:
@@ -107,7 +109,7 @@ export default function Work() {
         }, `card${index}`);
     });
 
-  }, { scope: sectionRef });
+  }, { scope: sectionRef, dependencies: [projects] });
 
   return (
     <section 
