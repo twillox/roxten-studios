@@ -95,18 +95,24 @@ export default function Work() {
       if (index === 0) return; // First card is already in place
       
       const prevCard = cards[index - 1];
+      const prevOverlay = prevCard.querySelector('.dim-overlay');
 
-      masterTl.addLabel(`card${index}`)
+      const tl = masterTl.addLabel(`card${index}`)
         .to(prevCard, {
-          scale: 0.92,
-          opacity: 0.7,
-          filter: "blur(4px)",
+          scale: 0.94,
           ease: "none"
         }, `card${index}`)
         .to(card, {
           yPercent: 0,
           ease: "none"
         }, `card${index}`);
+        
+      if (prevOverlay) {
+        tl.to(prevOverlay, {
+          opacity: 0.6,
+          ease: "none"
+        }, `card${index}`);
+      }
     });
 
   }, { scope: sectionRef, dependencies: [projects] });
@@ -145,8 +151,9 @@ export default function Work() {
                 willChange: 'transform, filter, opacity',
               }}
             >
-              {/* Card Surface - Glassmorphism */}
-              <div className="relative w-full h-full bg-[rgba(255,255,255,0.05)] backdrop-blur-[20px] border border-[rgba(255,255,255,0.1)] rounded-[40px] overflow-hidden group shadow-2xl shadow-black/50">
+              {/* Card Surface */}
+              <div className="relative w-full h-full bg-[#0a0a0a] border border-[rgba(255,255,255,0.1)] rounded-[40px] overflow-hidden group shadow-2xl shadow-black/50">
+                <div className="dim-overlay absolute inset-0 bg-black opacity-0 z-[100] pointer-events-none" />
                 
                 {project.isLink ? (
                   /* LINK CARD LAYOUT */
@@ -210,26 +217,11 @@ export default function Work() {
                       </div>
 
                       {/* Bottom Area */}
-                      <div className="mt-auto flex flex-col md:flex-row md:items-end justify-between gap-8">
+                      <div className="mt-auto flex flex-col md:flex-row md:items-end justify-between gap-8 pointer-events-none">
                         <div>
-                          <span className="text-white/60 font-mono text-xs tracking-[0.2em] uppercase block mb-6">
-                            {project.client}
-                          </span>
-                          <h3 className="text-white text-5xl md:text-8xl font-black tracking-[-0.04em] uppercase leading-none mb-4 mix-blend-overlay">
+                          <h3 className="text-white text-5xl md:text-[clamp(4rem,8vw,10rem)] font-black tracking-[-0.04em] uppercase leading-none mix-blend-overlay">
                             {project.name}
                           </h3>
-                          <p className="text-white/70 text-lg md:text-xl max-w-xl leading-relaxed font-light hidden md:block">
-                            {project.desc}
-                          </p>
-                        </div>
-
-                        {/* Tags */}
-                        <div className="flex flex-wrap md:flex-col items-start md:items-end gap-3 shrink-0">
-                          {project.tags.map(tag => (
-                            <span key={tag} className="text-white/50 border border-white/10 px-4 py-2 rounded-full text-[10px] font-mono tracking-widest uppercase backdrop-blur-md bg-white/[0.02]">
-                              {tag}
-                            </span>
-                          ))}
                         </div>
                       </div>
 
