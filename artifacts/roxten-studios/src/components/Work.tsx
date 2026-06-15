@@ -70,7 +70,7 @@ export default function Work() {
     // Initial setup:
     // Card 0 is already at y: 0.
     // Cards 1, 2, 3 are pushed completely off-screen below.
-    gsap.set(cards.slice(1), { yPercent: 120, y: 0 });
+    gsap.set(cards.slice(1), { y: "100vh" });
 
     // Master Timeline
     const masterTl = gsap.timeline({
@@ -206,6 +206,22 @@ export default function Work() {
                             {project.num}
                           </span>
                         </div>
+
+                        {/* Live Preview Button */}
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setPreviewUrl(project.href);
+                          }}
+                          className="flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full border border-[rgba(255,255,255,0.1)] text-white text-[10px] md:text-[11px] uppercase tracking-widest font-semibold hover:bg-white hover:text-black hover:border-white transition-all duration-[800ms] ease-[cubic-bezier(0.22,0.61,0.36,1)] group/btn hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] bg-black/20 backdrop-blur-md"
+                        >
+                          <span className="hidden md:inline">Live Project</span>
+                          <span className="md:hidden">View</span>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover/btn:rotate-45 transition-transform duration-300">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                          </svg>
+                        </button>
                       </div>
 
                       {/* Bottom Area */}
