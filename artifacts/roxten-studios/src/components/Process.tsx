@@ -38,51 +38,47 @@ function TransformationCard({ data }: { data: typeof transformations[0] }) {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: card,
-        start: "top 80%",
-        toggleActions: "play none none reverse", // play on enter, reverse on leave back
+        start: "top 85%", // Start animating when the top of the card is at 85% of viewport
+        end: "center 55%", // Finish the animation when the card reaches the center of the screen
+        scrub: 1, // Smoothly link to scroll position
       }
     });
 
     // 1. First the box forms
     tl.from(card, {
-      y: 80,
+      y: 100,
       opacity: 0,
-      duration: 0.8,
-      ease: "power3.out"
+      ease: "none" // Linear ease works best for scroll scrubbing
     });
 
     // 2. Before text comes in (without strike at first)
     tl.from(beforeTextSpans, {
       y: 20,
       opacity: 0,
-      duration: 0.5,
       stagger: 0.1,
-      ease: "power2.out"
-    }, "-=0.3");
+      ease: "none"
+    });
 
     // 3. Strike out line draws across
     tl.to(strikeLines, {
       width: "100%",
-      duration: 0.4,
       stagger: 0.1,
-      ease: "power2.inOut"
-    }, "+=0.1");
+      ease: "none"
+    });
 
     // 4. Slide and go placed in its position (dimming it slightly as it becomes background)
     tl.to(beforeBlock, {
       x: -20,
       opacity: 0.3,
-      duration: 0.6,
-      ease: "power3.inOut"
-    }, "+=0.1");
+      ease: "none"
+    });
 
     // 5. Main text fades in and pops slightly
     tl.from(afterBlock, {
       scale: 0.9,
       opacity: 0,
-      duration: 0.8,
-      ease: "power3.out"
-    }, "-=0.4");
+      ease: "none"
+    });
 
   }, { scope: cardRef });
 
