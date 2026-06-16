@@ -149,12 +149,11 @@ export default function Contact() {
       const { db } = await import("@workspace/firebase");
       const { collection, addDoc } = await import("firebase/firestore");
       
-      await addDoc(collection(db, "projects"), {
+      await addDoc(collection(db, "contacts"), {
         name: contactData.name,
         email: contactData.email,
-        details: contactData.query,
+        message: contactData.query,
         status: "new",
-        type: "contact_query",
         createdAt: Date.now()
       });
 

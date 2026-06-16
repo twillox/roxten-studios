@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check if the user is authenticated as an admin
+    // Since only you have the ability to create users in the Firebase Auth console,
+    // any authenticated user is inherently considered an admin.
+    function isAdmin() {
+      return request.auth != null && request.auth.uid != null;
+    }
+
+    // ==========================================
+    // WORKS (Portfolio Projects)
+    // ==========================================
+    match /works/{workId} {
+      // Anyone can read the works to display them on the landing page
+      allow read: if true;
+      
+      // ONLY authenticated admins can create, edit, or delete works
+      allow write: if isAdmin();
+    }
+
+    // ==========================================
+    // PROJECTS (Leads from Start a Project Wizard)
+    // ==========================================
+    match /projects/{projectId} {
+      // Anyone can submit a project request
+      allow create: if true;
+      
+      // ONLY authenticated admins can read, update, or delete the leads
+      allow read, update, delete: if isAdmin();
+    }
+
+    // ==========================================
+    // CONTACTS (Queries from Contact Now form)
+    // ==========================================
+    match /contacts/{contactId} {
+      // Anyone can submit a contact form
+      allow create: if true;
+      
+      // ONLY authenticated admins can read, update, or delete the contacts
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Default deny all for any other unknown collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
