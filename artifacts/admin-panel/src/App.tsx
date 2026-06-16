@@ -1,10 +1,33 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
+import { useEffect } from "react";
 import Dashboard from "./pages/Dashboard";
 import Works from "./pages/Works";
 import Contacts from "./pages/Contacts";
 import Projects from "./pages/Projects";
 import Login from "./pages/Login";
 import Sidebar from "./components/Sidebar";
+import { useAuth } from "./lib/useAuth";
+
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const { user, loading } = useAuth();
+  const [, setLocation] = useLocation();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      setLocation("/login");
+    }
+  }, [user, loading, setLocation]);
+
+  if (loading) {
+    return <div className="flex h-screen items-center justify-center bg-background text-foreground">Loading...</div>;
+  }
+
+  if (!user) {
+    return null;
+  }
+
+  return <>{children}</>;
+}
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -20,24 +43,32 @@ function App() {
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/">
-        <AdminLayout>
-          <Dashboard />
-        </AdminLayout>
+        <ProtectedRoute>
+          <AdminLayout>
+            <Dashboard />
+          </AdminLayout>
+        </ProtectedRoute>
       </Route>
       <Route path="/works">
-        <AdminLayout>
-          <Works />
-        </AdminLayout>
+        <ProtectedRoute>
+          <AdminLayout>
+            <Works />
+          </AdminLayout>
+        </ProtectedRoute>
       </Route>
       <Route path="/contacts">
-        <AdminLayout>
-          <Contacts />
-        </AdminLayout>
+        <ProtectedRoute>
+          <AdminLayout>
+            <Contacts />
+          </AdminLayout>
+        </ProtectedRoute>
       </Route>
       <Route path="/projects">
-        <AdminLayout>
-          <Projects />
-        </AdminLayout>
+        <ProtectedRoute>
+          <AdminLayout>
+            <Projects />
+          </AdminLayout>
+        </ProtectedRoute>
       </Route>
     </Switch>
   );
