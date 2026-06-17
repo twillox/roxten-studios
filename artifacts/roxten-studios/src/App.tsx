@@ -9,6 +9,7 @@ import Cursor from "./components/Cursor";
 import GrainOverlay from "./components/GrainOverlay";
 import Home from "./pages/Home";
 import Archive from "./pages/Archive";
+import PartnershipQuery from "./pages/PartnershipQuery";
 import Loader from "./components/Loader";
 
 const queryClient = new QueryClient();
@@ -53,6 +54,7 @@ function App() {
           <Switch>
             <Route path="/" component={Home} />
             <Route path="/archive" component={Archive} />
+            <Route path="/partnership/:type" component={PartnershipQuery} />
           </Switch>
         </div>
         <Toaster />

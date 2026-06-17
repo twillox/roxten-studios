@@ -206,12 +206,7 @@ export default function Work() {
                       
                       {/* Top Area */}
                       <div className="flex justify-between items-start pointer-events-auto relative z-10">
-                        {/* Number */}
-                        <div className="flex flex-col gap-8">
-                          <span className="text-black font-medium font-mono text-3xl md:text-5xl tracking-tighter">
-                            {project.num}
-                          </span>
-                        </div>
+
 
                         {/* Live Preview Button */}
                         <button 

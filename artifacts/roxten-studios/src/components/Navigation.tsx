@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { label: "Services", href: "#services" },
   { label: "Work", href: "#work" },
   { label: "Process", href: "#process" },
+  { label: "Partnership Models", href: "#partnership-models" },
   { label: "Start Project", href: "#contact" },
 ];
 

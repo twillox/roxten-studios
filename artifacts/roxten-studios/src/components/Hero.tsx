@@ -97,12 +97,12 @@ export default function Hero() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </a>
             <a
-              href="#work"
-              onClick={(e) => { e.preventDefault(); document.getElementById("work")?.scrollIntoView({ behavior: "smooth" }); }}
+              href="#contact"
+              onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
               data-testid="button-view-work"
               className="px-8 py-4 rounded-[24px] border border-white/20 bg-white/[0.03] backdrop-blur-xl text-white text-xs md:text-sm font-bold uppercase tracking-[0.15em] hover:bg-white/10 hover:border-white/40 hover:scale-[1.03] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center gap-3"
             >
-              View Work
+              Refer Now
             </a>
           </div>
         </motion.div>

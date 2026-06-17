@@ -90,10 +90,7 @@ function TransformationCard({ data }: { data: typeof transformations[0] }) {
         ref={cardRef}
         className="relative w-[95vw] md:w-[85vw] mx-auto min-h-[50vh] md:min-h-[60vh] bg-white/[0.02] border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md p-8 md:p-16 flex flex-col md:flex-row gap-12 md:gap-8 items-center will-change-transform"
       >
-        {/* Decorative ID */}
-        <div className="absolute top-6 left-8 md:top-10 md:left-12 font-mono text-white/20 text-sm tracking-widest">
-          /{data.id}
-        </div>
+
 
         {/* BEFORE SECTION */}
         <div className="before-block flex-1 w-full mt-8 md:mt-0 flex flex-col justify-center border-b border-white/10 md:border-b-0 md:border-r pb-12 md:pb-0 md:pr-12 will-change-transform">

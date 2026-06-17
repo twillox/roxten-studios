@@ -61,7 +61,7 @@ export default function Cursor() {
           translateX: "-50%",
           translateY: "-50%",
         }}
-        className="hidden md:block fixed pointer-events-none z-[9998] w-10 h-10 rounded-full border border-white mix-blend-difference transition-transform duration-300"
+        className="hidden md:block fixed pointer-events-none z-[99998] w-10 h-10 rounded-full border border-white mix-blend-difference transition-transform duration-300"
       />
       {/* Dot — instant */}
       <motion.div
@@ -71,7 +71,7 @@ export default function Cursor() {
           translateX: "-50%",
           translateY: "-50%",
         }}
-        className="hidden md:block fixed pointer-events-none z-[9999] w-1.5 h-1.5 rounded-full bg-white mix-blend-difference"
+        className="hidden md:block fixed pointer-events-none z-[99999] w-1.5 h-1.5 rounded-full bg-white mix-blend-difference"
       />
     </>
   );

@@ -10,6 +10,8 @@ import Testimonials from "../components/Testimonials";
 import About from "../components/About";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
+import PartnershipModels from "../components/PartnershipModels";
+import Referral from "../components/Referral";
 
 // Hairline dividers between sections
 function DarkLine() {
@@ -56,6 +58,14 @@ export default function Home() {
 
         {/* DARK: Technology */}
         <Technology />
+
+        <LightLine />
+
+        {/* DARK: Partnership Models */}
+        <PartnershipModels />
+
+        {/* DARK: Referral */}
+        <Referral />
 
         {/* dark → white divider */}
         <DarkLine />
