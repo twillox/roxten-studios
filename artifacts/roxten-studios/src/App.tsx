@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch, useLocation } from "wouter";
+import { HelmetProvider } from "react-helmet-async";
 
 import Cursor from "./components/Cursor";
 import GrainOverlay from "./components/GrainOverlay";
@@ -11,6 +12,14 @@ import Home from "./pages/Home";
 import Archive from "./pages/Archive";
 import PartnershipQuery from "./pages/PartnershipQuery";
 import Loader from "./components/Loader";
+
+// SEO Pages
+import WhiteLabelWebDevelopment from "./pages/seo/WhiteLabelWebDevelopment";
+import AgencyDevelopmentPartner from "./pages/seo/AgencyDevelopmentPartner";
+import MarketingAgencies from "./pages/seo/MarketingAgencies";
+import AIAutomation from "./pages/seo/AIAutomation";
+import BlogIndex from "./pages/seo/BlogIndex";
+import BlogPost from "./pages/seo/BlogPost";
 
 const queryClient = new QueryClient();
 
@@ -44,8 +53,9 @@ function App() {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Loader />
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <Loader />
       <TooltipProvider>
         <GrainOverlay />
         <Cursor />
@@ -55,11 +65,22 @@ function App() {
             <Route path="/" component={Home} />
             <Route path="/archive" component={Archive} />
             <Route path="/partnership/:type" component={PartnershipQuery} />
+            
+            {/* SEO Landing Pages */}
+            <Route path="/white-label-web-development" component={WhiteLabelWebDevelopment} />
+            <Route path="/agency-development-partner" component={AgencyDevelopmentPartner} />
+            <Route path="/website-development-for-marketing-agencies" component={MarketingAgencies} />
+            <Route path="/ai-automation-for-agencies" component={AIAutomation} />
+            
+            {/* Blog */}
+            <Route path="/blog" component={BlogIndex} />
+            <Route path="/blog/:id" component={BlogPost} />
           </Switch>
         </div>
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
+    </HelmetProvider>
   );
 }
 

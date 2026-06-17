@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -33,7 +34,16 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 pt-8 border-t border-white/[0.06] flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+        {/* SEO Internal Links */}
+        <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/[0.06] pt-8 text-[11px] font-medium tracking-wide text-white/40">
+          <Link href="/white-label-web-development"><a className="hover:text-white transition-colors">White Label Web Development</a></Link>
+          <Link href="/agency-development-partner"><a className="hover:text-white transition-colors">Agency Development Partner</a></Link>
+          <Link href="/website-development-for-marketing-agencies"><a className="hover:text-white transition-colors">Web Development for Marketing Agencies</a></Link>
+          <Link href="/ai-automation-for-agencies"><a className="hover:text-white transition-colors">AI Automation for Agencies</a></Link>
+          <Link href="/blog"><a className="hover:text-white transition-colors">Agency Growth Blog</a></Link>
+        </div>
+
+        <div className="mt-8 pt-8 border-t border-white/[0.06] flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
           <p className="text-[10px] font-mono text-white/30">© {year} Roxten Studios. All rights reserved.</p>
           <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-6 text-[10px] font-mono text-white/30">
             <span>Email: roxtenstudios.help@gmail.com</span>

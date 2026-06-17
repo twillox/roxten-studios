@@ -12,6 +12,7 @@ import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import PartnershipModels from "../components/PartnershipModels";
 import Referral from "../components/Referral";
+import SEO from "../components/SEO";
 
 // Hairline dividers between sections
 function DarkLine() {
@@ -22,8 +23,74 @@ function LightLine() {
 }
 
 export default function Home() {
+  const homeSchema = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Roxten Studios",
+      "url": "https://roxtenstudios.com",
+      "logo": "https://roxtenstudios.com/favicon.svg"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Roxten Studios",
+      "image": "https://roxtenstudios.com/og-image.jpg",
+      "url": "https://roxtenstudios.com",
+      "telephone": "+1234567890",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "San Francisco",
+        "addressRegion": "CA",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Roxten Studios",
+      "url": "https://roxtenstudios.com"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "White Label Software Development",
+      "provider": {
+        "@type": "Organization",
+        "name": "Roxten Studios"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is white label web development?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "White label web development is a partnership where we build websites and applications under your agency's brand. You sell the service to your clients, and we handle the technical execution invisibly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you act as an agency development partner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we act as a dedicated technical partner for marketing and design agencies looking to scale without hiring internal developers."
+          }
+        }
+      ]
+    }
+  ];
+
   return (
     <>
+      <SEO 
+        title="White Label Web & Software Development for Agencies"
+        description="Scale your agency without the overhead. Roxten Studios provides premium white-label web development, eCommerce, and AI automation for marketing & design agencies."
+        schema={homeSchema}
+      />
       <Navigation />
       <main>
         {/* DARK: Hero — video background */}

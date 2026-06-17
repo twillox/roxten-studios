@@ -191,7 +191,7 @@ export default function Work() {
                       {project.image && (
                         <img 
                           src={project.image} 
-                          alt={project.name}
+                          alt={`${project.name} - Custom Software and Web Development Case Study`}
                           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                         />
                       )}

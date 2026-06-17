@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useScroll } from "framer-motion";
 import { Link } from "wouter";
 import ProjectPreviewModal from "../components/ProjectPreviewModal";
+import SEO from "../components/SEO";
 import { db } from "@workspace/firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
@@ -37,7 +38,33 @@ export default function Archive() {
     fetchArchive();
   }, []);
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://roxtenstudios.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Archive",
+        "item": "https://roxtenstudios.com/archive"
+      }
+    ]
+  };
+
   return (
+    <>
+    <SEO 
+      title="Our Work & Case Studies | Custom Software & Web Experiences"
+      description="Explore our archive of high-performance websites, eCommerce platforms, and custom software built by Roxten Studios for our agency partners and clients."
+      canonicalUrl="https://roxtenstudios.com/archive"
+      schema={breadcrumbSchema}
+    />
     <div ref={containerRef} className="relative w-full min-h-screen bg-[#030303] font-sans text-white z-10">
       
       {/* Interactive Grid Background */}
@@ -117,10 +144,9 @@ export default function Archive() {
                     <div 
                       className="relative w-full aspect-[4/3] md:aspect-[16/10] rounded-[24px] overflow-hidden bg-white/5 border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] transition-all duration-700 hover:scale-[1.03] hover:rotate-y-[-2deg] hover:border-white/30"
                     >
-                      {/* Iframe for project preview */}
                       <iframe 
                         src={project.link.startsWith('http') ? project.link : `https://${project.link}`}
-                        title={project.name}
+                        title={`${project.name} - White Label Web Development Case Study`}
                         loading="lazy"
                         className="absolute inset-0 w-full h-full border-none pointer-events-none opacity-60 group-hover:opacity-100 transition-all duration-700 ease-out group-hover:scale-110 blur-[2px] group-hover:blur-0"
                       />
@@ -158,5 +184,6 @@ export default function Archive() {
       />
 
     </div>
+    </>
   );
 }

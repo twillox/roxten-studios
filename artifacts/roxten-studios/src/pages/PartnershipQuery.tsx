@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
+import SEO from "../components/SEO";
 
 const formVariants = {
   enter: { opacity: 0, y: 50, scale: 0.95 },
@@ -121,7 +122,38 @@ export default function PartnershipQuery({ params }: { params?: { type: string }
 
   const currentQ = questions[step];
 
+  let seoTitle = "Partner With Roxten Studios";
+  let seoDesc = "Become a Roxten Studios partner.";
+
+  if (type === "agency") {
+    seoTitle = "White Label Program | Agency Development Partner | Roxten";
+    seoDesc = "Join our White Label Program. Roxten Studios serves as your invisible, dedicated development team, delivering premium websites and software under your brand.";
+  } else if (type === "venture") {
+    seoTitle = "Strategic Growth Program | Startup Incubation | Roxten";
+    seoDesc = "Our Strategic Growth Program partners with visionaries. We provide technical execution, UI/UX, and development for startups in exchange for equity or profit sharing.";
+  } else if (type === "growth") {
+    seoTitle = "Technology Partner Program | Revenue Share | Roxten";
+    seoDesc = "Scale with our Technology Partner Program. Offset upfront costs through a mutually beneficial revenue-share and long-term development collaboration.";
+  }
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://roxtenstudios.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Partnership Models", "item": `https://roxtenstudios.com/#partnership-models` },
+      { "@type": "ListItem", "position": 3, "name": seoTitle.split(' |')[0], "item": `https://roxtenstudios.com/partnership/${type}` }
+    ]
+  };
+
   return (
+    <>
+    <SEO 
+      title={seoTitle} 
+      description={seoDesc} 
+      canonicalUrl={`https://roxtenstudios.com/partnership/${type}`}
+      schema={breadcrumbSchema} 
+    />
     <div className="min-h-screen bg-[#050505] text-white flex flex-col relative overflow-hidden">
       {/* Background ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
@@ -200,7 +232,6 @@ export default function PartnershipQuery({ params }: { params?: { type: string }
         </AnimatePresence>
       </main>
 
-      {/* Progress Bar (Bottom) */}
       <div className="absolute bottom-0 left-0 w-full h-1.5 bg-white/5">
         <motion.div 
           className="h-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.5)]"
@@ -210,5 +241,6 @@ export default function PartnershipQuery({ params }: { params?: { type: string }
         />
       </div>
     </div>
+    </>
   );
 }

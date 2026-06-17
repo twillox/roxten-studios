@@ -39,7 +39,7 @@ export default function Hero() {
       >
         <img
           src="https://i.ibb.co/LDdgnTzM/Chat-GPT-Image-Jun-15-2026-05-06-54-PM.png"
-          alt="Homepage Background"
+          alt="Roxten Studios - White Label Web Development Agency"
           className="absolute inset-0 w-full h-full object-cover"
         />
       </motion.div>
@@ -70,7 +70,10 @@ export default function Hero() {
           <span className="text-[10px] md:text-[11px] font-mono tracking-[0.3em] text-white/40 uppercase">Digital Product Studio</span>
         </motion.div>
 
-        <div className="text-[clamp(2.6rem,7.2vw,8.5rem)] leading-[0.9] font-black tracking-[-0.025em] uppercase select-none mb-7">
+        <h1 className="sr-only">
+          Premium White-Label Web & Software Development for Agencies
+        </h1>
+        <div aria-hidden="true" className="text-[clamp(2.6rem,7.2vw,8.5rem)] leading-[0.9] font-black tracking-[-0.025em] uppercase select-none mb-7">
           <div><SplitReveal text="BUILDING" delay={0.15} /></div>
           <div><SplitReveal text="THE FUTURE" delay={0.48} dim /></div>
           <div><SplitReveal text="OF DIGITAL" delay={0.82} /></div>
