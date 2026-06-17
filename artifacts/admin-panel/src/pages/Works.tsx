@@ -98,6 +98,7 @@ export default function Works() {
       {(isAdding || isEditing) && (
         <WorkModal
           work={isEditing}
+          works={works}
           onClose={() => {
             setIsAdding(false);
             setIsEditing(null);
@@ -108,10 +109,12 @@ export default function Works() {
   );
 }
 
-function WorkModal({ work, onClose }: any) {
+function WorkModal({ work, works, onClose }: any) {
   const queryClient = useQueryClient();
-  const [formData, setFormData] = useState(
-    work || {
+  const [formData, setFormData] = useState(() => {
+    if (work) return work;
+    const maxOrder = works && works.length > 0 ? Math.max(...works.map((w: any) => w.order || 0)) : 0;
+    return {
       title: "",
       description: "",
       imageUrl: "",
@@ -119,9 +122,12 @@ function WorkModal({ work, onClose }: any) {
       category: "other",
       isVisible: true,
       showOnLandingPage: false,
-      order: 0,
-    }
-  );
+      order: maxOrder + 1,
+    };
+  });
+
+  const landingPageCount = works?.filter((w: any) => w.showOnLandingPage && w.id !== work?.id).length || 0;
+  const isLandingPageMaxed = landingPageCount >= 4;
 
   const saveMutation = useMutation({
     mutationFn: async (data: any) => {
@@ -220,10 +226,13 @@ function WorkModal({ work, onClose }: any) {
                   type="checkbox"
                   id="showOnLandingPage"
                   checked={formData.showOnLandingPage || false}
+                  disabled={isLandingPageMaxed && !formData.showOnLandingPage}
                   onChange={(e) => setFormData({ ...formData, showOnLandingPage: e.target.checked })}
-                  className="w-4 h-4 rounded border-border bg-input"
+                  className="w-4 h-4 rounded border-border bg-input disabled:opacity-50"
                 />
-                <label htmlFor="showOnLandingPage" className="text-sm font-medium">Show on Landing Page Stack</label>
+                <label htmlFor="showOnLandingPage" className={`text-sm font-medium ${isLandingPageMaxed && !formData.showOnLandingPage ? "text-muted-foreground" : ""}`}>
+                  Show on Landing Page Stack {isLandingPageMaxed && !formData.showOnLandingPage ? "(Max 4 Reached)" : ""}
+                </label>
               </div>
             </div>
           </div>

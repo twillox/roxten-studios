@@ -263,16 +263,22 @@ export default function PartnershipModels() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 1, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-32 text-center max-w-2xl mx-auto"
+          className="mt-32 md:mt-48 text-center max-w-5xl mx-auto px-4"
         >
-          <div className="w-px h-16 bg-gradient-to-b from-white/20 to-transparent mx-auto mb-8" />
-          <p className="text-xl md:text-2xl font-medium leading-relaxed text-white/80">
-            Not every business needs a website.<br/>
-            Some need a technical partner.
-          </p>
-          <p className="mt-6 text-sm uppercase tracking-widest text-white/40 font-bold">
-            Roxten Studios adapts to the way you want to grow.
-          </p>
+          <div className="w-px h-24 bg-gradient-to-b from-white/30 to-transparent mx-auto mb-12" />
+          <h2 className="text-4xl md:text-6xl font-black tracking-[-0.03em] leading-[1.1] text-balance">
+            <span className="text-white">Not every business needs a website.</span>
+            <br className="hidden md:block" />
+            <span className="text-white/40"> Some need a technical partner.</span>
+          </h2>
+          
+          <div className="mt-12 flex items-center justify-center gap-6 opacity-60">
+            <div className="hidden md:block h-px w-24 bg-gradient-to-r from-transparent to-white/30" />
+            <p className="text-[10px] md:text-xs uppercase tracking-[0.3em] font-mono text-white">
+              Roxten Studios adapts to the way you want to grow.
+            </p>
+            <div className="hidden md:block h-px w-24 bg-gradient-to-l from-transparent to-white/30" />
+          </div>
         </motion.div>
 
       </div>

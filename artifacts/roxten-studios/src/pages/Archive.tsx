@@ -1,30 +1,41 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll } from "framer-motion";
 import { Link } from "wouter";
 import ProjectPreviewModal from "../components/ProjectPreviewModal";
-
-// Real Client Projects for the archive
-const archiveProjects = [
-  { id: 1, name: "Twillox", category: "Fashion E-Commerce", link: "https://twilloxclothing.vercel.app/", img: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=1200" },
-  { id: 2, name: "Srija", category: "Web Experience", link: "https://srija-alpha.vercel.app/", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200" },
-  { id: 3, name: "iCarss", category: "Automotive", link: "https://iCarss.netlify.app", img: "https://images.unsplash.com/photo-1503376760367-13beada424b9?auto=format&fit=crop&q=80&w=1200" },
-  { id: 4, name: "Monarch Living", category: "Interior Design", link: "https://monarch-living.netlify.app", img: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=1200" },
-  { id: 5, name: "Kitchora", category: "Kitchenware", link: "https://kitchora.netlify.app", img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=1200" },
-  { id: 6, name: "Veloura", category: "E-Commerce", link: "https://velourashopping.netlify.app/", img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=1200" },
-  { id: 7, name: "Aura Events", category: "Event Management", link: "https://auraeventss.netlify.app/", img: "https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?auto=format&fit=crop&q=80&w=1200" },
-  { id: 8, name: "Inkora Novels", category: "Publishing Platform", link: "https://inkoranovels.netlify.app/", img: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=1200" },
-  { id: 9, name: "Bazaar Bolt", category: "Retail Marketplace", link: "https://bazaarbolt.in", img: "https://images.unsplash.com/photo-1472851294608-062f184c7715?auto=format&fit=crop&q=80&w=1200" },
-];
+import { db } from "@workspace/firebase";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
 export default function Archive() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [projects, setProjects] = useState<any[]>([]);
 
   // Track the scroll progress of the entire page
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
+
+  useEffect(() => {
+    async function fetchArchive() {
+      const q = query(collection(db, "works"), orderBy("order", "asc"));
+      const snap = await getDocs(q);
+      const fetched = snap.docs
+        .map(doc => ({ id: doc.id, ...(doc.data() as any) }))
+        .filter((data: any) => data.isVisible)
+        .map((data) => {
+          return {
+            id: data.id,
+            name: data.title,
+            category: data.category,
+            link: data.link || "",
+            img: data.imageUrl || "",
+          };
+        });
+      setProjects(fetched);
+    }
+    fetchArchive();
+  }, []);
 
   return (
     <div ref={containerRef} className="relative w-full min-h-screen bg-[#030303] font-sans text-white z-10">
@@ -77,7 +88,7 @@ export default function Archive() {
 
         {/* Project Nodes */}
         <div className="flex flex-col gap-12 md:gap-32 relative z-20">
-          {archiveProjects.map((project, index) => {
+          {projects.map((project, index) => {
             const isEven = index % 2 === 0;
 
             return (

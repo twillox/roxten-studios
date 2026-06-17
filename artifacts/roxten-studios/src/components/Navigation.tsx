@@ -173,7 +173,7 @@ export default function Navigation() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-[9998] bg-[#050505] flex flex-col justify-center items-center px-6"
           >
-            <nav className="flex flex-col items-center gap-8">
+            <nav className="flex flex-col items-center gap-5">
               {NAV_LINKS.map((link, i) => (
                 <motion.a
                   key={link.label}
@@ -182,7 +182,7 @@ export default function Navigation() {
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 + (i * 0.1), ease: "easeOut" }}
-                  className="text-4xl font-black tracking-[-0.02em] uppercase text-white hover:text-[#00ffcc] transition-colors"
+                  className="text-[clamp(1.5rem,6vw,2.5rem)] text-center leading-[1.1] font-black tracking-[-0.02em] uppercase text-white hover:text-[#00ffcc] transition-colors"
                 >
                   {link.label}
                 </motion.a>

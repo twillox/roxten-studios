@@ -29,7 +29,7 @@ function StatBlock({ stat, i }: { stat: typeof stats[0]; i: number }) {
 export default function About() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(headerRef, { once: true, margin: "-10%" });
+  const headerInView = useInView(headerRef, { once: false, margin: "-20% 0px -20% 0px" });
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const ghostY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
@@ -54,20 +54,28 @@ export default function About() {
             <div className="overflow-hidden">
               <motion.h2
                 initial={{ y: "105%" }}
-                animate={headerInView ? { y: "0%" } : {}}
+                animate={headerInView ? { y: "0%" } : { y: "105%" }}
                 transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl md:text-5xl lg:text-6xl font-black tracking-[-0.03em] uppercase leading-tight text-black"
+                className="text-[clamp(2.5rem,9vw,4rem)] md:text-[clamp(3rem,6vw,5rem)] font-black tracking-[-0.03em] uppercase leading-[0.95] text-black"
               >
                 We Don't Build<br />
-                <span className="text-black/25">Websites.</span>
+                <span className="relative inline-block text-black/25">
+                  Websites.
+                  <motion.span
+                    initial={{ scaleX: 0 }}
+                    animate={headerInView ? { scaleX: 1 } : { scaleX: 0 }}
+                    transition={{ duration: 0.8, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute left-0 top-1/2 w-[110%] h-[10%] bg-black origin-left -translate-y-1/2 -ml-[5%]"
+                  />
+                </span>
               </motion.h2>
             </div>
             <div className="overflow-hidden mt-1">
               <motion.h2
                 initial={{ y: "105%" }}
-                animate={headerInView ? { y: "0%" } : {}}
+                animate={headerInView ? { y: "0%" } : { y: "105%" }}
                 transition={{ duration: 1.1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl md:text-5xl lg:text-6xl font-black tracking-[-0.03em] uppercase leading-tight text-black"
+                className="text-[clamp(2.5rem,9vw,4rem)] md:text-[clamp(3rem,6vw,5rem)] font-black tracking-[-0.03em] uppercase leading-[0.95] text-black mt-2"
               >
                 We Build Digital<br />
                 <span className="text-black/25">Businesses.</span>

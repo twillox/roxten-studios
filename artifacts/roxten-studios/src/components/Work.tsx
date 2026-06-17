@@ -25,9 +25,9 @@ export default function Work() {
       );
       const snap = await getDocs(q);
       const fetched = snap.docs
-        .map(doc => ({ id: doc.id, ...doc.data() }))
-        .filter(data => data.showOnLandingPage)
-        .slice(0, 3)
+        .map(doc => ({ id: doc.id, ...(doc.data() as any) }))
+        .filter((data: any) => data.showOnLandingPage)
+        .slice(0, 4)
         .map((data, index) => {
           return {
             id: data.id,
