@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { referralService, commissionService, activityService } from "../../lib/firebase-services";
 import { Referral, Commission, ActivityLog } from "../../lib/mock-api/models";
 import { useAuth } from "../../hooks/useAuth";
-import { Users, CheckCircle, Clock, DollarSign, ArrowUpRight } from "lucide-react";
+import { Users, CheckCircle, Clock, IndianRupee, ArrowUpRight } from "lucide-react";
 
 export default function ReferralDashboardHome() {
   const { user, loading: authLoading } = useAuth();
@@ -57,7 +57,7 @@ export default function ReferralDashboardHome() {
     { label: "Total Referrals", value: referrals.length, icon: <Users className="text-[#00ffcc]" />, prefix: "" },
     { label: "Approved Projects", value: approvedReferrals, icon: <CheckCircle className="text-blue-400" />, prefix: "" },
     { label: "Pending Referrals", value: pendingReferrals, icon: <Clock className="text-orange-400" />, prefix: "" },
-    { label: "Total Earnings", value: totalEarnings.toLocaleString(), icon: <DollarSign className="text-green-400" />, prefix: "$" }
+    { label: "Total Earnings", value: totalEarnings.toLocaleString(), icon: <IndianRupee className="text-green-400" />, prefix: "₹" }
   ];
 
   return (
@@ -141,21 +141,21 @@ export default function ReferralDashboardHome() {
                   <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold text-xs">1</div>
                   <span className="text-sm font-medium">Sarah M.</span>
                 </div>
-                <span className="text-[#00ffcc] font-mono text-xs">$12k</span>
+                <span className="text-[#00ffcc] font-mono text-xs">₹12k</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold text-xs">2</div>
                   <span className="text-sm font-medium">David O.</span>
                 </div>
-                <span className="text-[#00ffcc] font-mono text-xs">$8.5k</span>
+                <span className="text-[#00ffcc] font-mono text-xs">₹8.5k</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold text-xs">3</div>
                   <span className="text-sm font-medium">You</span>
                 </div>
-                <span className="text-[#00ffcc] font-mono text-xs">${(totalEarnings/1000).toFixed(1)}k</span>
+                <span className="text-[#00ffcc] font-mono text-xs">₹{(totalEarnings/1000).toFixed(1)}k</span>
               </div>
             </div>
             <button className="mt-6 w-full py-2 bg-white/5 border border-white/10 text-white font-bold uppercase tracking-widest text-[10px] rounded-lg hover:bg-white/10 transition-colors flex items-center justify-center gap-2">

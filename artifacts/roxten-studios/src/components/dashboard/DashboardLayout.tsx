@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { authService } from "../../lib/firebase-services";
 import { useAuth } from "../../hooks/useAuth";
 import { 
-  LayoutDashboard, Users, Link2, DollarSign, CreditCard, 
+  LayoutDashboard, Users, Link2, IndianRupee, CreditCard, 
   Trophy, FolderOpen, User as UserIcon, Settings, LogOut, Menu, X 
 } from "lucide-react";
 
@@ -27,7 +27,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     { label: "Dashboard", href: "/dashboard/referral", icon: <LayoutDashboard className="w-5 h-5" /> },
     { label: "My Referrals", href: "/dashboard/referral/list", icon: <Users className="w-5 h-5" /> },
     { label: "Referral Link", href: "/dashboard/referral/link", icon: <Link2 className="w-5 h-5" /> },
-    { label: "Commissions", href: "/dashboard/referral/commissions", icon: <DollarSign className="w-5 h-5" /> },
+    { label: "Commissions", href: "/dashboard/referral/commissions", icon: <IndianRupee className="w-5 h-5" /> },
     { label: "Payouts", href: "/dashboard/referral/payouts", icon: <CreditCard className="w-5 h-5" /> },
     { label: "Leaderboard", href: "/dashboard/referral/leaderboard", icon: <Trophy className="w-5 h-5" /> },
     { label: "Resources", href: "/dashboard/referral/resources", icon: <FolderOpen className="w-5 h-5" /> },

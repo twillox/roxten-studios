@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { db, storage } from "@workspace/firebase";
+import { db } from "@workspace/firebase";
 import { collection, getDocs, query, updateDoc, doc, where } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { Users, MousePointerClick, TrendingUp, CheckCircle, DollarSign, X, Upload } from "lucide-react";
+import { Users, MousePointerClick, TrendingUp, CheckCircle, IndianRupee, X } from "lucide-react";
 
 async function fetchReferralsData() {
   let partners: any[] = [];
@@ -86,7 +85,7 @@ export default function Referrals() {
         <StatCard title="Total Clicks" value={stats?.totalClicks} icon={MousePointerClick} />
         <StatCard title="Total Leads" value={stats?.totalLeads} icon={TrendingUp} />
         <StatCard title="Approved Projects" value={stats?.approvedProjects} icon={CheckCircle} />
-        <StatCard title="Total Revenue" value={`$${stats?.totalRevenue || 0}`} icon={DollarSign} />
+        <StatCard title="Total Revenue" value={`₹${stats?.totalRevenue || 0}`} icon={IndianRupee} />
       </div>
 
       <div className="bg-card border border-border rounded-lg overflow-hidden">
@@ -120,9 +119,9 @@ export default function Referrals() {
                   </td>
                   <td className="px-6 py-4 capitalize">{sub.projectType}</td>
                   <td className="px-6 py-4">
-                    {sub.amount || sub.projectValue ? `$${sub.amount || sub.projectValue}` : "TBD"}
+                    {sub.amount || sub.projectValue ? `₹${sub.amount || sub.projectValue}` : "TBD"}
                     {sub.commissionEarned && (
-                      <div className="text-xs text-[#00ffcc] mt-1">Comm: ${sub.commissionEarned}</div>
+                      <div className="text-xs text-[#00ffcc] mt-1">Comm: ₹{sub.commissionEarned}</div>
                     )}
                   </td>
                   <td className="px-6 py-4">
@@ -206,7 +205,6 @@ function StatCard({ title, value, icon: Icon }: any) {
 function MarkAsPaidModal({ leadId, onClose, onSuccess }: { leadId: string, onClose: () => void, onSuccess: () => void }) {
   const [amount, setAmount] = useState("");
   const [percent, setPercent] = useState("");
-  const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -215,16 +213,6 @@ function MarkAsPaidModal({ leadId, onClose, onSuccess }: { leadId: string, onClo
     
     setLoading(true);
     try {
-      let invoiceUrl = "";
-      let invoiceName = "";
-
-      if (file) {
-        const storageRef = ref(storage, `invoices/${leadId}/${file.name}`);
-        await uploadBytes(storageRef, file);
-        invoiceUrl = await getDownloadURL(storageRef);
-        invoiceName = file.name;
-      }
-
       const totalAmount = parseFloat(amount);
       const commissionPct = parseFloat(percent);
       const commissionEarned = totalAmount * (commissionPct / 100);
@@ -234,8 +222,6 @@ function MarkAsPaidModal({ leadId, onClose, onSuccess }: { leadId: string, onClo
         amount: totalAmount,
         commissionPercentage: commissionPct,
         commissionEarned,
-        invoiceUrl: invoiceUrl || null,
-        invoiceName: invoiceName || null,
       });
 
       onSuccess();
@@ -257,7 +243,7 @@ function MarkAsPaidModal({ leadId, onClose, onSuccess }: { leadId: string, onClo
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-muted-foreground mb-1">Total Amount Paid ($)</label>
+            <label className="block text-sm font-medium text-muted-foreground mb-1">Total Amount Paid (₹)</label>
             <input 
               type="number" 
               required 
@@ -278,27 +264,12 @@ function MarkAsPaidModal({ leadId, onClose, onSuccess }: { leadId: string, onClo
               placeholder="e.g. 10"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-muted-foreground mb-1">Upload Invoice (Optional)</label>
-            <label className="flex items-center gap-2 w-full bg-input border border-border border-dashed rounded-lg px-4 py-4 cursor-pointer hover:bg-secondary/20 transition-colors">
-              <Upload size={20} className="text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">
-                {file ? file.name : "Click to upload PDF or Image"}
-              </span>
-              <input 
-                type="file" 
-                className="hidden" 
-                onChange={e => setFile(e.target.files?.[0] || null)}
-                accept="application/pdf,image/*"
-              />
-            </label>
-          </div>
           
           <div className="bg-secondary/20 p-4 rounded-lg mt-6">
             <p className="text-sm text-muted-foreground flex justify-between">
               Calculated Commission:
               <span className="font-bold text-foreground">
-                ${(parseFloat(amount || "0") * (parseFloat(percent || "0") / 100)).toFixed(2)}
+                ₹{(parseFloat(amount || "0") * (parseFloat(percent || "0") / 100)).toFixed(2)}
               </span>
             </p>
           </div>

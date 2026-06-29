@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { authService } from "../../lib/firebase-services";
+import { useAuth } from "../../hooks/useAuth";
 import { ArrowLeft, Loader2 } from "lucide-react";
 
 export default function Signup() {
@@ -17,6 +18,17 @@ export default function Signup() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { user, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      if (user.role === "admin") {
+        setLocation("/admin/referrals");
+      } else {
+        setLocation("/dashboard/referral");
+      }
+    }
+  }, [user, authLoading, setLocation]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

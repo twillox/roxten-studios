@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { payoutService, commissionService } from "../../lib/firebase-services";
 import { Payout, Commission } from "../../lib/mock-api/models";
 import { useAuth } from "../../hooks/useAuth";
-import { CreditCard, ArrowRight, Loader2, Info } from "lucide-react";
+import { CreditCard, ArrowRight, Loader2, Info, IndianRupee } from "lucide-react";
 
 export default function Payouts() {
   const { user, loading: authLoading } = useAuth();
@@ -50,7 +50,7 @@ export default function Payouts() {
       return;
     }
     if (amt < 500) {
-      setError("Minimum payout amount is $500");
+      setError("Minimum payout amount is ₹500");
       return;
     }
 
@@ -81,7 +81,7 @@ export default function Payouts() {
         <div className="bg-white/5 border border-white/10 rounded-2xl p-8 flex flex-col justify-between">
           <div>
             <h2 className="text-lg font-bold uppercase tracking-widest mb-2">Available Balance</h2>
-            <p className="text-5xl font-black font-mono text-[#00ffcc] mb-6">${availableAmount.toLocaleString()}</p>
+            <p className="text-5xl font-black font-mono text-[#00ffcc] mb-6">₹{availableAmount.toLocaleString()}</p>
             
             <form onSubmit={handleRequestPayout} className="space-y-4">
               {error && <div className="p-3 bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg text-sm">{error}</div>}
@@ -142,32 +142,37 @@ export default function Payouts() {
       </div>
 
       {/* PAYOUT HISTORY */}
-      <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <h2 className="text-lg font-bold uppercase tracking-widest mb-6">Payout History</h2>
+      <div className="lg:col-span-2 bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div className="p-6 border-b border-white/10 flex justify-between items-center bg-black/20">
+          <h2 className="text-lg font-bold uppercase tracking-widest flex items-center gap-2">
+            <History className="w-5 h-5 text-white/50" /> Payout History
+          </h2>
+        </div>
         
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-white/10 bg-black/40">
                 <th className="p-4 text-xs font-bold uppercase tracking-widest text-white/50">ID</th>
-                <th className="p-4 text-xs font-bold uppercase tracking-widest text-white/50">Amount</th>
+                <th className="p-4 text-xs font-bold uppercase tracking-widest text-white/50">Date</th>
                 <th className="p-4 text-xs font-bold uppercase tracking-widest text-white/50">Method</th>
-                <th className="p-4 text-xs font-bold uppercase tracking-widest text-white/50">Status</th>
-                <th className="p-4 text-xs font-bold uppercase tracking-widest text-white/50">Requested Date</th>
+                <th className="p-4 text-xs font-bold uppercase tracking-widest text-white/50">Amount</th>
+                <th className="p-4 text-xs font-bold uppercase tracking-widest text-white/50 text-right">Status</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-white/10">
               {payouts.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="p-8 text-center text-white/40">No payout requests yet.</td>
+                  <td colSpan={5} className="p-8 text-center text-white/40">No payouts requested yet.</td>
                 </tr>
               ) : (
                 payouts.map((payout) => (
-                  <tr key={payout.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                  <tr key={payout.id} className="hover:bg-white/5 transition-colors">
                     <td className="p-4 font-mono text-sm text-white/50">{payout.id}</td>
-                    <td className="p-4 font-mono text-sm font-bold">${payout.amount.toLocaleString()}</td>
-                    <td className="p-4 uppercase text-sm">{payout.method}</td>
-                    <td className="p-4">
+                    <td className="p-4 text-sm text-white/70">{new Date(payout.requestedAt).toLocaleDateString()}</td>
+                    <td className="p-4 text-sm uppercase tracking-widest font-bold">{payout.method}</td>
+                    <td className="p-4 font-mono text-sm font-bold">₹{payout.amount.toLocaleString()}</td>
+                    <td className="p-4 text-right">
                       <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${
                         payout.status === "Completed" ? "text-green-400 bg-green-400/10 border-green-400/20" :
                         payout.status === "Processing" ? "text-orange-400 bg-orange-400/10 border-orange-400/20" :

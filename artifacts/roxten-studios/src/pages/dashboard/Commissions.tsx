@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { commissionService } from "../../lib/firebase-services";
 import { Commission } from "../../lib/mock-api/models";
 import { useAuth } from "../../hooks/useAuth";
-import { DollarSign, ArrowUpRight, Download, History } from "lucide-react";
+import { IndianRupee, ArrowUpRight, Download, History } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Commissions() {
@@ -53,40 +53,45 @@ export default function Commissions() {
             className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col justify-between h-40"
           >
             <p className="text-sm text-white/50 uppercase tracking-widest font-bold">{stat.label}</p>
-            <p className={`text-4xl font-black font-mono ${stat.color}`}>${stat.amount.toLocaleString()}</p>
+            <p className={`text-4xl font-black font-mono ${stat.color}`}>₹{stat.amount.toLocaleString()}</p>
           </motion.div>
         ))}
       </div>
 
-      <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <div className="flex items-center gap-2 mb-6">
-          <History className="w-5 h-5 text-white/50" />
-          <h2 className="text-lg font-bold uppercase tracking-widest">Commission History</h2>
+      {/* HISTORY */}
+      <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div className="p-6 border-b border-white/10 flex justify-between items-center bg-black/20">
+          <h2 className="text-lg font-bold uppercase tracking-widest flex items-center gap-2">
+            <History className="w-5 h-5 text-[#00ffcc]" /> Earning History
+          </h2>
         </div>
         
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-white/10 bg-black/40">
-                <th className="p-4 text-xs font-bold uppercase tracking-widest text-white/50">ID</th>
-                <th className="p-4 text-xs font-bold uppercase tracking-widest text-white/50">Referral ID</th>
-                <th className="p-4 text-xs font-bold uppercase tracking-widest text-white/50">Amount</th>
-                <th className="p-4 text-xs font-bold uppercase tracking-widest text-white/50">Status</th>
-                <th className="p-4 text-xs font-bold uppercase tracking-widest text-white/50">Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {commissions.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className="p-8 text-center text-white/40">No commissions yet.</td>
+          {commissions.length === 0 ? (
+            <div className="p-12 text-center text-white/40">
+              <IndianRupee className="w-12 h-12 mx-auto mb-4 opacity-20" />
+              <p>No commissions recorded yet.</p>
+            </div>
+          ) : (
+            <table className="w-full text-left border-collapse min-w-[800px]">
+              <thead>
+                <tr className="border-b border-white/10 bg-black/40">
+                  <th className="p-4 text-[10px] uppercase tracking-widest text-white/40 font-bold">Client / Project</th>
+                  <th className="p-4 text-[10px] uppercase tracking-widest text-white/40 font-bold">Amount</th>
+                  <th className="p-4 text-[10px] uppercase tracking-widest text-white/40 font-bold">Status</th>
+                  <th className="p-4 text-[10px] uppercase tracking-widest text-white/40 font-bold">Date</th>
+                  <th className="p-4 text-[10px] uppercase tracking-widest text-white/40 font-bold text-right">Details</th>
                 </tr>
-              ) : (
-                commissions.map((comm) => (
-                  <tr key={comm.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                    <td className="p-4 font-mono text-sm text-white/50">{comm.id}</td>
-                    <td className="p-4 font-mono text-sm">{comm.referralId}</td>
-                    <td className="p-4 font-mono text-sm text-[#00ffcc] font-bold">
-                      +${comm.amount.toLocaleString()}
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                {commissions.map((comm) => (
+                  <tr key={comm.id} className="hover:bg-white/5 transition-colors group">
+                    <td className="p-4">
+                      <p className="font-bold">{comm.clientName}</p>
+                      <p className="text-xs text-white/50">{comm.projectType}</p>
+                    </td>
+                    <td className="p-4 font-mono text-[#00ffcc] font-bold">
+                      +₹{comm.amount.toLocaleString()}
                     </td>
                     <td className="p-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${
@@ -100,11 +105,16 @@ export default function Commissions() {
                     <td className="p-4 text-sm text-white/60">
                       {new Date(comm.createdAt).toLocaleDateString()}
                     </td>
+                    <td className="p-4 text-right">
+                      <button className="p-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100">
+                        <ArrowUpRight className="w-4 h-4" />
+                      </button>
+                    </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </div>

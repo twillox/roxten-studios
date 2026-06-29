@@ -124,11 +124,12 @@ export const commissionService = {
   async getCommissions(partnerId: string): Promise<Commission[]> {
     const q = query(
       collection(db, "commissions"),
-      where("partnerId", "==", partnerId),
-      orderBy("createdAt", "desc")
+      where("partnerId", "==", partnerId)
     );
     const snapshot = await getDocs(q);
-    return snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Commission));
+    let comms = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Commission));
+    comms.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    return comms;
   }
 };
 
@@ -137,11 +138,12 @@ export const payoutService = {
   async getPayouts(partnerId: string): Promise<Payout[]> {
     const q = query(
       collection(db, "payouts"),
-      where("partnerId", "==", partnerId),
-      orderBy("requestedAt", "desc")
+      where("partnerId", "==", partnerId)
     );
     const snapshot = await getDocs(q);
-    return snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Payout));
+    let payouts = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Payout));
+    payouts.sort((a, b) => new Date(b.requestedAt).getTime() - new Date(a.requestedAt).getTime());
+    return payouts;
   },
   
   async requestPayout(partnerId: string, amount: number, method: "bank" | "upi" | "paypal"): Promise<Payout> {
@@ -189,10 +191,11 @@ export const activityService = {
   async getLogs(partnerId: string): Promise<ActivityLog[]> {
     const q = query(
       collection(db, "activity_logs"),
-      where("partnerId", "==", partnerId),
-      orderBy("timestamp", "desc")
+      where("partnerId", "==", partnerId)
     );
     const snapshot = await getDocs(q);
-    return snapshot.docs.map(d => ({ ...d.data(), id: d.id } as ActivityLog));
+    let logs = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as ActivityLog));
+    logs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    return logs;
   }
 };
