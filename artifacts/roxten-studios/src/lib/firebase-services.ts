@@ -149,15 +149,28 @@ export const payoutService = {
   async requestPayout(partnerId: string, amount: number, method: "bank" | "upi" | "paypal"): Promise<Payout> {
     if (!auth.currentUser || auth.currentUser.uid !== partnerId) throw new Error("Unauthorized");
     
-    // To safely do this in a real app, a Cloud Function should verify available balance.
     // We will do a basic check here.
-    const commissions = await commissionService.getCommissions(partnerId);
+    const [commissions, referrals, payouts] = await Promise.all([
+      commissionService.getCommissions(partnerId),
+      referralService.getReferrals(partnerId),
+      payoutService.getPayouts(partnerId)
+    ]);
+
     const approvedTotal = commissions
       .filter(c => c.status === "Approved")
-      .reduce((sum, c) => sum + c.amount, 0);
+      .reduce((sum, c) => sum + c.amount, 0) +
+      referrals
+      .filter(r => r.status === "Paid" && r.commissionEarned)
+      .reduce((sum, r) => sum + (r.commissionEarned || 0), 0);
+
+    const requestedTotal = payouts
+      .filter(p => p.status !== "Rejected" && p.status !== "Failed")
+      .reduce((sum, p) => sum + p.amount, 0);
       
-    if (amount > approvedTotal) {
-      throw new Error("Insufficient approved commissions for this payout amount.");
+    const availableTotal = approvedTotal - requestedTotal;
+      
+    if (amount > availableTotal) {
+      throw new Error(`Insufficient approved commissions. Available: ₹${availableTotal}, Requested: ₹${amount}`);
     }
     
     const newPayoutData = {

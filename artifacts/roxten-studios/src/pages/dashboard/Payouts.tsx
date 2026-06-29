@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { payoutService, commissionService } from "../../lib/firebase-services";
+import { payoutService, commissionService, referralService } from "../../lib/firebase-services";
 import { Payout, Commission } from "../../lib/mock-api/models";
 import { useAuth } from "../../hooks/useAuth";
 import { CreditCard, ArrowRight, Loader2, Info, IndianRupee } from "lucide-react";
@@ -14,15 +14,18 @@ export default function Payouts() {
   const [requesting, setRequesting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [referrals, setReferrals] = useState<any[]>([]);
 
   const fetchData = async () => {
     if (user) {
-      const [ps, cs] = await Promise.all([
+      const [ps, cs, rs] = await Promise.all([
         payoutService.getPayouts(user.id),
-        commissionService.getCommissions(user.id)
+        commissionService.getCommissions(user.id),
+        referralService.getReferrals(user.id)
       ]);
       setPayouts(ps);
       setCommissions(cs);
+      setReferrals(rs);
     }
     setDataLoading(false);
   };
@@ -33,7 +36,10 @@ export default function Payouts() {
     }
   }, [user, authLoading]);
 
-  const availableAmount = commissions.filter(c => c.status === "Approved").reduce((s, c) => s + c.amount, 0);
+  const approvedTotal = commissions.filter(c => c.status === "Approved").reduce((s, c) => s + c.amount, 0) +
+    referrals.filter(r => r.status === "Paid" && r.commissionEarned).reduce((s, r) => s + (r.commissionEarned || 0), 0);
+  const requestedTotal = payouts.filter(p => p.status !== "Rejected" && p.status !== "Failed").reduce((s, p) => s + p.amount, 0);
+  const availableAmount = approvedTotal - requestedTotal;
 
   const handleRequestPayout = async (e: React.FormEvent) => {
     e.preventDefault();
