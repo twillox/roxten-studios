@@ -4,18 +4,36 @@ import { collection, getDocs, query, updateDoc, doc, where } from "firebase/fire
 import { Users, MousePointerClick, TrendingUp, CheckCircle, DollarSign } from "lucide-react";
 
 async function fetchReferralsData() {
-  // 1. Fetch Partners from 'users' collection
-  const partnersSnap = await getDocs(query(collection(db, "users"), where("role", "==", "partner")));
-  const partners = partnersSnap.docs.map(d => ({ id: d.id, ...d.data() } as any));
+  let partners: any[] = [];
+  let submissions: any[] = [];
+  let fetchError = null;
 
-  // 2. Fetch Leads from 'referrals' collection
-  const leadsSnap = await getDocs(collection(db, "referrals"));
-  const submissions = leadsSnap.docs.map(d => ({ id: d.id, ...d.data() } as any))
-    .sort((a, b) => {
-      const dateA = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : (a.createdAt ? new Date(a.createdAt).getTime() : 0);
-      const dateB = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : (b.createdAt ? new Date(b.createdAt).getTime() : 0);
-      return dateB - dateA;
-    });
+  try {
+    // 1. Fetch Partners from 'users' collection
+    const partnersSnap = await getDocs(query(collection(db, "users"), where("role", "==", "partner")));
+    partners = partnersSnap.docs.map(d => ({ id: d.id, ...d.data() } as any));
+  } catch (err: any) {
+    console.error("Error fetching partners:", err);
+    fetchError = "Failed to fetch partners. You may not have Admin permissions. " + err.message;
+  }
+
+  try {
+    // 2. Fetch Leads from 'referrals' collection
+    const leadsSnap = await getDocs(collection(db, "referrals"));
+    submissions = leadsSnap.docs.map(d => ({ id: d.id, ...d.data() } as any))
+      .sort((a, b) => {
+        const dateA = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : (a.createdAt ? new Date(a.createdAt).getTime() : 0);
+        const dateB = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : (b.createdAt ? new Date(b.createdAt).getTime() : 0);
+        return dateB - dateA;
+      });
+  } catch (err: any) {
+    console.error("Error fetching referrals:", err);
+    fetchError = fetchError || ("Failed to fetch referrals. You may not have Admin permissions. " + err.message);
+  }
+
+  if (fetchError) {
+    throw new Error(fetchError);
+  }
 
   const totalPartners = partners.length;
   // Clicks and commissions can be calculated if those fields exist, else default to 0
@@ -38,14 +56,22 @@ async function fetchReferralsData() {
 }
 
 export default function Referrals() {
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["referrals-data"],
-    queryFn: fetchReferralsData,
+    queryFn: async () => {
+      try {
+        return await fetchReferralsData();
+      } catch (err) {
+        console.error("fetchReferralsData Error:", err);
+        throw err;
+      }
+    },
   });
 
 
 
   if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div className="text-red-500 p-8 bg-red-500/10 rounded-xl font-mono">Error: {error?.toString()}</div>;
 
   const { submissions, stats } = data || { submissions: [], stats: {} as any };
 
