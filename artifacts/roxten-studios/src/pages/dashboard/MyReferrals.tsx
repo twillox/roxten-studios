@@ -13,8 +13,11 @@ export default function MyReferrals() {
 
   useEffect(() => {
     if (!authLoading && user) {
-      referralService.getReferrals(user.id).then(refs => {
+      referralService.getReferrals(user.id, user.referralCode).then(refs => {
         setReferrals(refs);
+        setDataLoading(false);
+      }).catch(err => {
+        console.error("Failed to load referrals:", err);
         setDataLoading(false);
       });
     }

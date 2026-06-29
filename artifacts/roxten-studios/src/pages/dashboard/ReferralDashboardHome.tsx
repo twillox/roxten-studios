@@ -18,7 +18,7 @@ export default function ReferralDashboardHome() {
       
       try {
         const [refs, comms, acts] = await Promise.all([
-          referralService.getReferrals(user.id),
+          referralService.getReferrals(user.id, user.referralCode),
           commissionService.getCommissions(user.id),
           activityService.getLogs(user.id)
         ]);

@@ -72,11 +72,16 @@ export const referralService = {
 
     const q = query(
       collection(db, "referrals"),
-      where("referralCode", "==", referralCode),
-      orderBy("createdAt", "desc")
+      where("referralCode", "==", referralCode)
     );
     const snapshot = await getDocs(q);
-    return snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Referral));
+    let refs = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Referral));
+    refs.sort((a, b) => {
+      const dateA = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : new Date(a.createdAt).getTime();
+      const dateB = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : new Date(b.createdAt).getTime();
+      return dateB - dateA; // Descending
+    });
+    return refs;
   },
   
   async createReferral(data: Partial<Referral>): Promise<Referral> {

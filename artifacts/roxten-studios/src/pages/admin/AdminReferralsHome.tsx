@@ -9,9 +9,15 @@ export default function AdminReferralsHome() {
   useEffect(() => {
     const fetchReferrals = async () => {
       try {
-        const q = query(collection(db, "referrals"), orderBy("createdAt", "desc"));
+        const q = query(collection(db, "referrals"));
         const snap = await getDocs(q);
-        setReferrals(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        let refs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        refs.sort((a: any, b: any) => {
+          const dateA = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : new Date(a.createdAt).getTime();
+          const dateB = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : new Date(b.createdAt).getTime();
+          return dateB - dateA; // Descending
+        });
+        setReferrals(refs);
       } catch (err) {
         console.error("Error fetching referrals in admin:", err);
       } finally {
