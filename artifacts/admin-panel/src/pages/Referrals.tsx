@@ -4,21 +4,28 @@ import { collection, getDocs, query, updateDoc, doc, where } from "firebase/fire
 import { Users, MousePointerClick, TrendingUp, CheckCircle, DollarSign } from "lucide-react";
 
 async function fetchReferralsData() {
-  const referralsSnap = await getDocs(collection(db, "referrals"));
-  const referrals = referralsSnap.docs.map(d => ({ id: d.id, ...d.data() } as any));
+  // 1. Fetch Partners from 'users' collection
+  const partnersSnap = await getDocs(query(collection(db, "users"), where("role", "==", "partner")));
+  const partners = partnersSnap.docs.map(d => ({ id: d.id, ...d.data() } as any));
 
-  const submissionsSnap = await getDocs(query(collection(db, "projects"), where("referred", "==", true)));
-  const submissions = submissionsSnap.docs.map(d => ({ id: d.id, ...d.data() } as any))
-    .sort((a, b) => b.createdAt - a.createdAt);
+  // 2. Fetch Leads from 'referrals' collection
+  const leadsSnap = await getDocs(collection(db, "referrals"));
+  const submissions = leadsSnap.docs.map(d => ({ id: d.id, ...d.data() } as any))
+    .sort((a, b) => {
+      const dateA = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : (a.createdAt ? new Date(a.createdAt).getTime() : 0);
+      const dateB = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : (b.createdAt ? new Date(b.createdAt).getTime() : 0);
+      return dateB - dateA;
+    });
 
-  const totalPartners = referrals.length;
-  const totalClicks = referrals.reduce((acc, curr) => acc + (curr.clicks || 0), 0);
-  const totalLeads = referrals.reduce((acc, curr) => acc + (curr.leads || curr.totalLeads || 0), 0);
-  const approvedProjects = referrals.reduce((acc, curr) => acc + (curr.approvedProjects || 0), 0);
-  const totalRevenue = referrals.reduce((acc, curr) => acc + (curr.commission || 0), 0);
+  const totalPartners = partners.length;
+  // Clicks and commissions can be calculated if those fields exist, else default to 0
+  const totalClicks = partners.reduce((acc, curr) => acc + (curr.clicks || 0), 0);
+  const totalLeads = submissions.length;
+  const approvedProjects = submissions.filter(s => s.status === "Won" || s.status === "Paid").length;
+  const totalRevenue = submissions.reduce((acc, curr) => acc + (curr.commissionEarned || curr.projectValue || 0), 0);
 
   return {
-    referrals,
+    referrals: partners, // Keep the key as 'referrals' for backward compatibility if needed, though it's partners now
     submissions,
     stats: {
       totalPartners,
@@ -85,31 +92,45 @@ export default function Referrals() {
             <tbody className="divide-y divide-border">
               {submissions.map((sub: any) => (
                 <tr key={sub.id} className="hover:bg-secondary/10 transition-colors">
-                  <td className="px-6 py-4 font-medium">{sub.name}</td>
+                  <td className="px-6 py-4 font-medium">
+                    {sub.clientName}
+                    <div className="text-xs text-muted-foreground">{sub.company || sub.businessName}</div>
+                  </td>
                   <td className="px-6 py-4 text-muted-foreground">
-                    <div>{sub.email}</div>
-                    <div>{sub.phone}</div>
+                    <div>{sub.email || sub.clientEmail}</div>
+                    <div>{sub.phone || sub.clientPhone}</div>
                   </td>
                   <td className="px-6 py-4 capitalize">{sub.projectType}</td>
-                  <td className="px-6 py-4">{sub.budget}</td>
+                  <td className="px-6 py-4">{sub.amount || sub.projectValue ? `$${sub.amount || sub.projectValue}` : "TBD"}</td>
                   <td className="px-6 py-4">
                     <span className="font-mono bg-secondary px-2 py-1 rounded text-xs">
                       {sub.referralCode || "N/A"}
                     </span>
                   </td>
-                  <td className="px-6 py-4">{sub.referralPartnerId || "N/A"}</td>
+                  <td className="px-6 py-4">{sub.partnerId || "N/A"}</td>
                   <td className="px-6 py-4 text-muted-foreground">
-                    {new Date(sub.createdAt).toLocaleDateString()}
+                    {sub.createdAt?.toDate ? sub.createdAt.toDate().toLocaleDateString() : (sub.createdAt ? new Date(sub.createdAt).toLocaleDateString() : "N/A")}
                   </td>
                   <td className="px-6 py-4">
                     <select
-                      value={sub.status}
-                      onChange={(e) => handleStatusChange(sub.id, e.target.value)}
+                      value={sub.status || "Pending"}
+                      onChange={async (e) => {
+                        try {
+                          await updateDoc(doc(db, "referrals", sub.id), { status: e.target.value });
+                          refetch();
+                        } catch (err) {
+                          console.error(err);
+                        }
+                      }}
                       className="bg-input border border-border text-sm rounded-md px-3 py-1"
                     >
-                      <option value="new">New</option>
-                      <option value="read">Read</option>
-                      <option value="replied">Replied</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Contacted">Contacted</option>
+                      <option value="Proposal Sent">Proposal Sent</option>
+                      <option value="Negotiation">Negotiation</option>
+                      <option value="Won">Won</option>
+                      <option value="Paid">Paid</option>
+                      <option value="Lost">Lost</option>
                     </select>
                   </td>
                 </tr>
