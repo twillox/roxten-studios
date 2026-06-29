@@ -11,7 +11,9 @@ import GrainOverlay from "./components/GrainOverlay";
 import Home from "./pages/Home";
 import Archive from "./pages/Archive";
 import PartnershipQuery from "./pages/PartnershipQuery";
+import StartProject from "./pages/StartProject";
 import Loader from "./components/Loader";
+import useReferralTracking from "./hooks/useReferralTracking";
 
 // SEO Pages
 import WhiteLabelWebDevelopment from "./pages/seo/WhiteLabelWebDevelopment";
@@ -20,6 +22,24 @@ import MarketingAgencies from "./pages/seo/MarketingAgencies";
 import AIAutomation from "./pages/seo/AIAutomation";
 import BlogIndex from "./pages/seo/BlogIndex";
 import BlogPost from "./pages/seo/BlogPost";
+
+// Referral Portal
+import ReferralLanding from "./pages/referral/ReferralLanding";
+import Login from "./pages/referral/Login";
+import Signup from "./pages/referral/Signup";
+import DashboardLayout from "./components/dashboard/DashboardLayout";
+import ReferralDashboardHome from "./pages/dashboard/ReferralDashboardHome";
+import ReferralLinkPage from "./pages/dashboard/ReferralLinkPage";
+import MyReferrals from "./pages/dashboard/MyReferrals";
+import Commissions from "./pages/dashboard/Commissions";
+import Payouts from "./pages/dashboard/Payouts";
+import Leaderboard from "./pages/dashboard/Leaderboard";
+import Resources from "./pages/dashboard/Resources";
+import ProfileSettings from "./pages/dashboard/ProfileSettings";
+
+// Admin Portal
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminReferralsHome from "./pages/admin/AdminReferralsHome";
 
 const queryClient = new QueryClient();
 
@@ -32,7 +52,11 @@ function ScrollToTop() {
   return null;
 }
 
+import { AuthProvider } from "./hooks/useAuth";
+
 function App() {
+  useReferralTracking();
+
   useEffect(() => {
     document.documentElement.classList.add("dark");
 
@@ -55,8 +79,9 @@ function App() {
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
-        <Loader />
-      <TooltipProvider>
+        <AuthProvider>
+          <Loader />
+          <TooltipProvider>
         <GrainOverlay />
         <Cursor />
         <ScrollToTop />
@@ -65,6 +90,7 @@ function App() {
             <Route path="/" component={Home} />
             <Route path="/archive" component={Archive} />
             <Route path="/partnership/:type" component={PartnershipQuery} />
+            <Route path="/start-project" component={StartProject} />
             
             {/* SEO Landing Pages */}
             <Route path="/white-label-web-development" component={WhiteLabelWebDevelopment} />
@@ -75,10 +101,30 @@ function App() {
             {/* Blog */}
             <Route path="/blog" component={BlogIndex} />
             <Route path="/blog/:id" component={BlogPost} />
+
+            {/* Referral Portal */}
+            <Route path="/referral" component={ReferralLanding} />
+            <Route path="/referral/login" component={Login} />
+            <Route path="/referral/signup" component={Signup} />
+            
+            <Route path="/dashboard/referral" component={() => <DashboardLayout><ReferralDashboardHome /></DashboardLayout>} />
+            <Route path="/dashboard/referral/link" component={() => <DashboardLayout><ReferralLinkPage /></DashboardLayout>} />
+            <Route path="/dashboard/referral/list" component={() => <DashboardLayout><MyReferrals /></DashboardLayout>} />
+            <Route path="/dashboard/referral/commissions" component={() => <DashboardLayout><Commissions /></DashboardLayout>} />
+            <Route path="/dashboard/referral/payouts" component={() => <DashboardLayout><Payouts /></DashboardLayout>} />
+            <Route path="/dashboard/referral/leaderboard" component={() => <DashboardLayout><Leaderboard /></DashboardLayout>} />
+            <Route path="/dashboard/referral/resources" component={() => <DashboardLayout><Resources /></DashboardLayout>} />
+            <Route path="/dashboard/referral/profile" component={() => <DashboardLayout><ProfileSettings /></DashboardLayout>} />
+            <Route path="/dashboard/referral/settings" component={() => <DashboardLayout><ProfileSettings /></DashboardLayout>} />
+
+            {/* Admin Portal */}
+            <Route path="/admin/referrals" component={() => <AdminLayout><AdminReferralsHome /></AdminLayout>} />
+            <Route path="/admin/:page" component={() => <AdminLayout><AdminReferralsHome /></AdminLayout>} />
           </Switch>
         </div>
         <Toaster />
       </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
     </HelmetProvider>
   );

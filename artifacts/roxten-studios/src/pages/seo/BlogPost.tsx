@@ -27,7 +27,7 @@ export default function BlogPost() {
       <SEO 
         title={`${post.title} | Roxten Studios Blog`}
         description={post.excerpt}
-        canonicalUrl={`https://roxtenstudios.com/blog/${post.id}`}
+        canonicalUrl={`https://roxtenstudios.in/blog/${post.id}`}
         openGraph={{
           type: "article",
           image: post.image,

@@ -37,7 +37,7 @@ export default function AgencyDevelopmentPartner() {
       <SEO 
         title="Your Dedicated Agency Development Partner"
         description="Looking for a reliable agency development partner? Roxten Studios provides dedicated technical teams for marketing and design agencies to scale flawlessly."
-        canonicalUrl="https://roxtenstudios.com/agency-development-partner"
+        canonicalUrl="https://roxtenstudios.in/agency-development-partner"
         schema={schema}
       />
       <Navigation />

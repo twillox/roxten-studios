@@ -37,7 +37,7 @@ export default function MarketingAgencies() {
       <SEO 
         title="Website Development for Marketing Agencies"
         description="Custom website development for marketing agencies. We solve technical challenges so you can focus on strategy, SEO, and scaling your clients' growth."
-        canonicalUrl="https://roxtenstudios.com/website-development-for-marketing-agencies"
+        canonicalUrl="https://roxtenstudios.in/website-development-for-marketing-agencies"
         schema={schema}
       />
       <Navigation />

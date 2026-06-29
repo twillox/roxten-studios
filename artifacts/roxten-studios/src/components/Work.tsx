@@ -19,45 +19,49 @@ export default function Work() {
 
   useEffect(() => {
     async function fetchWorks() {
-      const q = query(
-        collection(db, "works"),
-        orderBy("order", "asc")
-      );
-      const snap = await getDocs(q);
-      const fetched = snap.docs
-        .map(doc => ({ id: doc.id, ...(doc.data() as any) }))
-        .filter((data: any) => data.showOnLandingPage)
-        .slice(0, 4)
-        .map((data, index) => {
-          return {
-            id: data.id,
-            num: `/0${index + 1}`,
-            name: data.title,
-            client: data.category,
-            category: data.category,
-            year: new Date(data.createdAt || Date.now()).getFullYear().toString(),
-            desc: data.description,
-            tags: ["Dynamic", "Portfolio", "Roxten"],
-            image: data.imageUrl,
-            href: data.link
-          };
+      try {
+        const q = query(
+          collection(db, "works"),
+          orderBy("order", "asc")
+        );
+        const snap = await getDocs(q);
+        const fetched = snap.docs
+          .map(doc => ({ id: doc.id, ...(doc.data() as any) }))
+          .filter((data: any) => data.showOnLandingPage)
+          .slice(0, 4)
+          .map((data, index) => {
+            return {
+              id: data.id,
+              num: `/0${index + 1}`,
+              name: data.title,
+              client: data.category,
+              category: data.category,
+              year: new Date(data.createdAt || Date.now()).getFullYear().toString(),
+              desc: data.description,
+              tags: ["Dynamic", "Portfolio", "Roxten"],
+              image: data.imageUrl,
+              href: data.link
+            };
+          });
+        
+        // Add the final archive link
+        fetched.push({
+          num: "/0X",
+          name: "View Archive",
+          client: "Explore",
+          category: "Archive",
+          year: "2026",
+          desc: "Discover more of our digital experiences, experiments, and case studies.",
+          tags: [],
+          image: "", 
+          isLink: true,
+          href: "/archive"
         });
-      
-      // Add the final archive link
-      fetched.push({
-        num: "/0X",
-        name: "View Archive",
-        client: "Explore",
-        category: "Archive",
-        year: "2026",
-        desc: "Discover more of our digital experiences, experiments, and case studies.",
-        tags: [],
-        image: "", 
-        isLink: true,
-        href: "/archive"
-      });
 
-      setProjects(fetched);
+        setProjects(fetched);
+      } catch (err) {
+        console.error("Error fetching works on landing page:", err);
+      }
     }
     fetchWorks();
   }, []);

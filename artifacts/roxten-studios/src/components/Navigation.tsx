@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useLocation } from "wouter";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,10 +12,11 @@ const NAV_LINKS = [
   { label: "Work", href: "#work" },
   { label: "Process", href: "#process" },
   { label: "Partnership Models", href: "#partnership-models" },
-  { label: "Start Project", href: "#contact" },
+  { label: "Start Project", href: "/start-project" },
 ];
 
 export default function Navigation() {
+  const [, setLocation] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const headerRef = useRef<HTMLElement>(null);
@@ -72,9 +74,13 @@ export default function Navigation() {
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setIsOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth" });
+    if (href.startsWith('/')) {
+      setLocation(href);
+    } else {
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 

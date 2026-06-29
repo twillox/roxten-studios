@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useScroll, useTransform } from "framer-motion";
+import { useLocation } from "wouter";
 
 const VIDEO_URL =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260514_102933_4e8f73b5-775a-4179-b2fb-472f59063dcd.mp4";
@@ -25,6 +26,7 @@ function SplitReveal({ text, delay = 0, dim = false }: { text: string; delay?: n
 }
 
 export default function Hero() {
+  const [, setLocation] = useLocation();
   const { scrollY } = useScroll();
   const videoY = useTransform(scrollY, [0, 800], ["0%", "20%"]);
   const contentY = useTransform(scrollY, [0, 700], [0, 160]);
@@ -91,8 +93,8 @@ export default function Hero() {
           </p>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mt-6 md:mt-0">
             <a
-              href="#contact"
-              onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
+              href="/start-project"
+              onClick={(e) => { e.preventDefault(); setLocation("/start-project"); }}
               data-testid="button-start-project"
               className="px-8 py-4 rounded-[24px] bg-white text-black text-xs md:text-sm font-black uppercase tracking-[0.15em] hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center gap-3 border border-white"
             >

@@ -2,65 +2,65 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage -->
   <url>
-    <loc>https://roxtenstudios.com/</loc>
+    <loc>https://roxtenstudios.in/</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <!-- Archive / Work -->
   <url>
-    <loc>https://roxtenstudios.com/archive</loc>
+    <loc>https://roxtenstudios.in/archive</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- Partnership Routes -->
   <url>
-    <loc>https://roxtenstudios.com/partnership/agency</loc>
+    <loc>https://roxtenstudios.in/partnership/agency</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://roxtenstudios.com/partnership/venture</loc>
+    <loc>https://roxtenstudios.in/partnership/venture</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://roxtenstudios.com/partnership/growth</loc>
+    <loc>https://roxtenstudios.in/partnership/growth</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- SEO Landing Pages -->
   <url>
-    <loc>https://roxtenstudios.com/white-label-web-development</loc>
+    <loc>https://roxtenstudios.in/white-label-web-development</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://roxtenstudios.com/agency-development-partner</loc>
+    <loc>https://roxtenstudios.in/agency-development-partner</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://roxtenstudios.com/website-development-for-marketing-agencies</loc>
+    <loc>https://roxtenstudios.in/website-development-for-marketing-agencies</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://roxtenstudios.com/ai-automation-for-agencies</loc>
+    <loc>https://roxtenstudios.in/ai-automation-for-agencies</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <!-- Blog -->
   <url>
-    <loc>https://roxtenstudios.com/blog</loc>
+    <loc>https://roxtenstudios.in/blog</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>

@@ -14,9 +14,9 @@ interface SEOProps {
 export default function SEO({
   title,
   description,
-  canonicalUrl = "https://roxtenstudios.com",
+  canonicalUrl = "https://roxtenstudios.in",
   ogType = "website",
-  ogImage = "https://roxtenstudios.com/og-image.jpg",
+  ogImage = "https://roxtenstudios.in/og-image.jpg",
   schema,
   keywords,
 }: SEOProps) {

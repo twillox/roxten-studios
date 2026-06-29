@@ -28,15 +28,15 @@ export default function Home() {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Roxten Studios",
-      "url": "https://roxtenstudios.com",
-      "logo": "https://roxtenstudios.com/favicon.svg"
+      "url": "https://roxtenstudios.in",
+      "logo": "https://roxtenstudios.in/favicon.svg"
     },
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "Roxten Studios",
-      "image": "https://roxtenstudios.com/og-image.jpg",
-      "url": "https://roxtenstudios.com",
+      "image": "https://roxtenstudios.in/og-image.jpg",
+      "url": "https://roxtenstudios.in",
       "telephone": "+1234567890",
       "address": {
         "@type": "PostalAddress",
@@ -49,7 +49,7 @@ export default function Home() {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Roxten Studios",
-      "url": "https://roxtenstudios.com"
+      "url": "https://roxtenstudios.in"
     },
     {
       "@context": "https://schema.org",

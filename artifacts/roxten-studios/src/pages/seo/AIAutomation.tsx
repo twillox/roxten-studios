@@ -37,7 +37,7 @@ export default function AIAutomation() {
       <SEO 
         title="White-Label AI Automation Services for Agencies"
         description="Offer AI automation to your clients without hiring engineers. We build custom AI chatbots, lead qualification systems, and automated workflows under your brand."
-        canonicalUrl="https://roxtenstudios.com/ai-automation-for-agencies"
+        canonicalUrl="https://roxtenstudios.in/ai-automation-for-agencies"
         schema={schema}
       />
       <Navigation />

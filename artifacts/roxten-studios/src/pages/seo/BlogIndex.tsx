@@ -10,7 +10,7 @@ export default function BlogIndex() {
       <SEO 
         title="Insights & Strategies for Digital Agencies | Roxten Studios Blog"
         description="Read our latest insights on scaling your agency, white-label partnerships, AI automation, and technical web development strategies."
-        canonicalUrl="https://roxtenstudios.com/blog"
+        canonicalUrl="https://roxtenstudios.in/blog"
       />
       <Navigation />
       <main className="pt-32 pb-20 px-6 md:px-12 bg-[#050505] min-h-screen">

@@ -77,13 +77,33 @@ export default function PartnershipQuery({ params }: { params?: { type: string }
       setSubmitStatus("submitting");
       try {
         const { db } = await import("@workspace/firebase");
-        const { collection, addDoc } = await import("firebase/firestore");
-        await addDoc(collection(db, "partnership_queries"), {
+        const { collection, addDoc, doc, updateDoc, increment } = await import("firebase/firestore");
+        const { getStoredReferralCode } = await import("../hooks/useReferralTracking");
+        const referralCode = getStoredReferralCode();
+
+        const leadData: any = {
+          type: "partnership",
           model: type,
           ...formData,
           status: "new",
           createdAt: Date.now()
-        });
+        };
+
+        if (referralCode) {
+          leadData.referralCode = referralCode;
+        }
+
+        await addDoc(collection(db, "leads"), leadData);
+
+        if (referralCode) {
+          try {
+            const docRef = doc(db, "referrals", referralCode);
+            await updateDoc(docRef, { leads: increment(1) });
+          } catch (e) {
+            console.error("Failed to update referral leads count", e);
+          }
+        }
+        
         setSubmitStatus("success");
       } catch (err: any) {
         setErrorMsg(err.message || "Failed to submit. Please try again.");
@@ -140,9 +160,9 @@ export default function PartnershipQuery({ params }: { params?: { type: string }
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://roxtenstudios.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Partnership Models", "item": `https://roxtenstudios.com/#partnership-models` },
-      { "@type": "ListItem", "position": 3, "name": seoTitle.split(' |')[0], "item": `https://roxtenstudios.com/partnership/${type}` }
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://roxtenstudios.in/" },
+      { "@type": "ListItem", "position": 2, "name": "Partnership Models", "item": `https://roxtenstudios.in/#partnership-models` },
+      { "@type": "ListItem", "position": 3, "name": seoTitle.split(' |')[0], "item": `https://roxtenstudios.in/partnership/${type}` }
     ]
   };
 
@@ -151,7 +171,7 @@ export default function PartnershipQuery({ params }: { params?: { type: string }
     <SEO 
       title={seoTitle} 
       description={seoDesc} 
-      canonicalUrl={`https://roxtenstudios.com/partnership/${type}`}
+      canonicalUrl={`https://roxtenstudios.in/partnership/${type}`}
       schema={breadcrumbSchema} 
     />
     <div className="min-h-screen bg-[#050505] text-white flex flex-col relative overflow-hidden">

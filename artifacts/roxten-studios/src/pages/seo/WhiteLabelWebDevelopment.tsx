@@ -37,7 +37,7 @@ export default function WhiteLabelWebDevelopment() {
       <SEO 
         title="White Label Web Development Services for Agencies"
         description="Scale your agency with premium white label web development services. We build high-performance websites and applications entirely under your brand."
-        canonicalUrl="https://roxtenstudios.com/white-label-web-development"
+        canonicalUrl="https://roxtenstudios.in/white-label-web-development"
         schema={schema}
       />
       <Navigation />

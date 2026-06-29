@@ -19,21 +19,25 @@ export default function Archive() {
 
   useEffect(() => {
     async function fetchArchive() {
-      const q = query(collection(db, "works"), orderBy("order", "asc"));
-      const snap = await getDocs(q);
-      const fetched = snap.docs
-        .map(doc => ({ id: doc.id, ...(doc.data() as any) }))
-        .filter((data: any) => data.isVisible)
-        .map((data) => {
-          return {
-            id: data.id,
-            name: data.title,
-            category: data.category,
-            link: data.link || "",
-            img: data.imageUrl || "",
-          };
-        });
-      setProjects(fetched);
+      try {
+        const q = query(collection(db, "works"), orderBy("order", "asc"));
+        const snap = await getDocs(q);
+        const fetched = snap.docs
+          .map(doc => ({ id: doc.id, ...(doc.data() as any) }))
+          .filter((data: any) => data.isVisible)
+          .map((data) => {
+            return {
+              id: data.id,
+              name: data.title,
+              category: data.category,
+              link: data.link || "",
+              img: data.imageUrl || "",
+            };
+          });
+        setProjects(fetched);
+      } catch (err) {
+        console.error("Error fetching works archive:", err);
+      }
     }
     fetchArchive();
   }, []);
@@ -46,13 +50,13 @@ export default function Archive() {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://roxtenstudios.com/"
+        "item": "https://roxtenstudios.in/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Archive",
-        "item": "https://roxtenstudios.com/archive"
+        "item": "https://roxtenstudios.in/archive"
       }
     ]
   };
@@ -62,7 +66,7 @@ export default function Archive() {
     <SEO 
       title="Our Work & Case Studies | Custom Software & Web Experiences"
       description="Explore our archive of high-performance websites, eCommerce platforms, and custom software built by Roxten Studios for our agency partners and clients."
-      canonicalUrl="https://roxtenstudios.com/archive"
+      canonicalUrl="https://roxtenstudios.in/archive"
       schema={breadcrumbSchema}
     />
     <div ref={containerRef} className="relative w-full min-h-screen bg-[#030303] font-sans text-white z-10">
