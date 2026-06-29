@@ -2,39 +2,23 @@ import { useEffect } from "react";
 
 export default function useReferralTracking() {
   useEffect(() => {
-    const checkReferral = async () => {
+    const checkReferral = () => {
       const urlParams = new URLSearchParams(window.location.search);
       const refCode = urlParams.get("ref");
 
       // To avoid multiple triggers if the hook mounts twice in strict mode
       if (refCode && !sessionStorage.getItem(`tracked_ref_${refCode}`)) {
         try {
-          const { db } = await import("@workspace/firebase");
-          const { doc, getDoc, updateDoc, increment } = await import("firebase/firestore");
+          // Save to localStorage
+          localStorage.setItem("referralCode", refCode);
 
-          const docRef = doc(db, "referrals", refCode);
-          const docSnap = await getDoc(docRef);
+          // Save to cookie (30 days)
+          const date = new Date();
+          date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000));
+          document.cookie = `referralCode=${refCode};expires=${date.toUTCString()};path=/`;
 
-          if (docSnap.exists()) {
-            const partnerId = docSnap.data()?.userId || "";
-            // Save to localStorage
-            localStorage.setItem("referralCode", refCode);
-            localStorage.setItem("referralPartnerId", partnerId);
-
-            // Save to cookie (30 days)
-            const date = new Date();
-            date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000));
-            document.cookie = `referralCode=${refCode};expires=${date.toUTCString()};path=/`;
-            document.cookie = `referralPartnerId=${encodeURIComponent(partnerId)};expires=${date.toUTCString()};path=/`;
-
-            // Increment clicks
-            await updateDoc(docRef, {
-              clicks: increment(1)
-            });
-
-            // Mark as tracked for this session
-            sessionStorage.setItem(`tracked_ref_${refCode}`, "true");
-          }
+          // Mark as tracked for this session
+          sessionStorage.setItem(`tracked_ref_${refCode}`, "true");
         } catch (error) {
           console.error("Error tracking referral:", error);
         }
@@ -74,12 +58,4 @@ export function getStoredReferralCode() {
   return getCookieValue("referralCode");
 }
 
-export function getStoredReferralPartnerId() {
-  let partnerId = null;
-  try {
-    partnerId = localStorage.getItem("referralPartnerId");
-  } catch (e) {}
-  
-  if (partnerId) return partnerId;
-  return getCookieValue("referralPartnerId");
-}
+

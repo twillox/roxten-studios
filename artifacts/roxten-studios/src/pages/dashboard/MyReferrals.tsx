@@ -21,8 +21,9 @@ export default function MyReferrals() {
   }, [user, authLoading]);
 
   const filteredReferrals = referrals.filter(r => {
+    const compName = r.company || r.businessName || "";
     const matchesSearch = r.clientName.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          r.businessName.toLowerCase().includes(searchTerm.toLowerCase());
+                          compName.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === "All" || r.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -117,7 +118,7 @@ export default function MyReferrals() {
                   <tr key={ref.id} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
                     <td className="p-4">
                       <p className="font-bold">{ref.clientName}</p>
-                      <p className="text-xs text-white/50">{ref.businessName}</p>
+                      <p className="text-xs text-white/50">{ref.company || ref.businessName || "No Company"}</p>
                     </td>
                     <td className="p-4 text-sm text-white/80">{ref.projectType}</td>
                     <td className="p-4 font-mono text-sm">

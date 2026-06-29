@@ -59,10 +59,20 @@ export const authService = {
 
 // --- Referral Service ---
 export const referralService = {
-  async getReferrals(partnerId: string): Promise<Referral[]> {
+  async getReferrals(partnerId: string, referralCode?: string): Promise<Referral[]> {
+    if (!referralCode) {
+      // Fallback: fetch user to get referralCode
+      const userDoc = await getDoc(doc(db, "users", partnerId));
+      if (userDoc.exists()) {
+        referralCode = userDoc.data().referralCode;
+      }
+    }
+
+    if (!referralCode) return [];
+
     const q = query(
       collection(db, "referrals"),
-      where("partnerId", "==", partnerId),
+      where("referralCode", "==", referralCode),
       orderBy("createdAt", "desc")
     );
     const snapshot = await getDocs(q);
@@ -72,16 +82,21 @@ export const referralService = {
   async createReferral(data: Partial<Referral>): Promise<Referral> {
     if (!auth.currentUser) throw new Error("Not authenticated");
     
+    // Get the partner's referralCode
+    const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+    const referralCode = userDoc.exists() ? userDoc.data().referralCode : undefined;
+
     const newRefData = {
       partnerId: auth.currentUser.uid,
+      referralCode: referralCode || "UNKNOWN",
       clientName: data.clientName,
       clientEmail: data.clientEmail,
       businessName: data.businessName,
       projectType: data.projectType,
       commissionRate: 0.1, // Default 10%
       status: "Pending",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
       notes: data.notes || ""
     };
     
@@ -91,7 +106,7 @@ export const referralService = {
     await addDoc(collection(db, "activity_logs"), {
       partnerId: auth.currentUser.uid,
       action: "Referral Submitted",
-      details: `You referred ${data.clientName} (${data.businessName}).`,
+      details: `You referred ${data.clientName} (${data.businessName || 'N/A'}).`,
       timestamp: new Date().toISOString()
     });
     

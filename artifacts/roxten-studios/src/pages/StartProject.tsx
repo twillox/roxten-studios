@@ -91,12 +91,11 @@ export default function StartProject() {
       try {
         const { db } = await import("@workspace/firebase");
         const { collection, addDoc, doc, updateDoc, increment } = await import("firebase/firestore");
-        const { getStoredReferralCode, getStoredReferralPartnerId } = await import("../hooks/useReferralTracking");
+        const { getStoredReferralCode } = await import("../hooks/useReferralTracking");
         
         const finalBudget = wizardData.budget === "custom" ? wizardData.customBudget : wizardData.budget;
         const finalTimeline = wizardData.timeline === "custom" ? wizardData.customTimeline : wizardData.timeline;
         const referralCode = getStoredReferralCode();
-        const referralPartnerId = getStoredReferralPartnerId();
 
         const leadData: any = {
           name: wizardData.name,
@@ -113,31 +112,31 @@ export default function StartProject() {
         if (referralCode) {
           leadData.referralCode = referralCode;
           leadData.referred = true;
-          if (referralPartnerId) {
-            leadData.referralPartnerId = referralPartnerId;
-          }
         }
 
         const projectDocRef = await addDoc(collection(db, "projects"), leadData);
 
         if (referralCode) {
           try {
-            const refDocRef = doc(db, "referrals", referralCode);
-            await updateDoc(refDocRef, { leads: increment(1) });
-            
+            // We just record the submission in a referral_leads collection for admin to process
+            // (or admin can just use the referralCode on the project document directly).
+            // We will just keep it simple and rely on the referralCode field added to the project.
+            // If the portal expects a document in 'referrals' collection, we should add it there:
             const leadDataRef = {
               leadId: projectDocRef.id,
               referralCode: referralCode,
-              referralPartnerId: referralPartnerId || "",
               clientName: wizardData.name,
               email: wizardData.email,
               phone: wizardData.mobile,
               projectType: wizardData.projectType,
               budget: finalBudget,
-              status: "pending",
-              createdAt: Date.now()
+              status: "Pending",
+              createdAt: new Date().toISOString(),
             };
-            await addDoc(collection(db, "projectSubmissions"), leadDataRef);
+            // Note: Since users cannot query partners directly, the admin will need to link the partnerId 
+            // when they process the lead. Or a Firebase Cloud Function would do this securely.
+            // For now, we save it to 'referrals' so it exists in the system.
+            await addDoc(collection(db, "referrals"), leadDataRef);
           } catch (e) {
             console.error("Failed to update referral portal", e);
           }

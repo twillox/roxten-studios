@@ -27,6 +27,7 @@ import BlogPost from "./pages/seo/BlogPost";
 import ReferralLanding from "./pages/referral/ReferralLanding";
 import Login from "./pages/referral/Login";
 import Signup from "./pages/referral/Signup";
+import ReferredLeadForm from "./pages/ReferredLeadForm";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import ReferralDashboardHome from "./pages/dashboard/ReferralDashboardHome";
 import ReferralLinkPage from "./pages/dashboard/ReferralLinkPage";
@@ -106,6 +107,7 @@ function App() {
             <Route path="/referral" component={ReferralLanding} />
             <Route path="/referral/login" component={Login} />
             <Route path="/referral/signup" component={Signup} />
+            <Route path="/ref/:code" component={ReferredLeadForm} />
             
             <Route path="/dashboard/referral" component={() => <DashboardLayout><ReferralDashboardHome /></DashboardLayout>} />
             <Route path="/dashboard/referral/link" component={() => <DashboardLayout><ReferralLinkPage /></DashboardLayout>} />

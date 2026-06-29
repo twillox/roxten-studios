@@ -26,18 +26,21 @@ export type ReferralStatus = "Pending" | "Contacted" | "Proposal Sent" | "Negoti
 
 export interface Referral {
   id: string;
-  partnerId: string;
+  partnerId?: string; // Optional if we move to referralCode mostly
+  referralCode?: string;
   clientName: string;
   clientEmail: string;
   clientPhone?: string;
-  businessName: string;
+  businessName?: string; // Legacy
+  company?: string; // New
   projectType: string;
+  description?: string;
   projectValue?: number; // In USD
-  commissionRate: number; // e.g., 0.1 for 10%
+  commissionRate?: number; // e.g., 0.1 for 10%
   commissionEarned?: number; // In USD
   status: ReferralStatus;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: any;
+  updatedAt?: any;
   notes?: string;
 }
 

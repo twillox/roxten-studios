@@ -9,7 +9,7 @@ export default function ReferralLinkPage() {
 
   if (loading || !user) return <div className="animate-pulse h-64 bg-white/5 rounded-2xl"></div>;
 
-  const referralUrl = `https://roxtenstudios.in/ref/${user.referralCode}`;
+  const referralUrl = `${window.location.origin}/ref/${user.referralCode}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(referralUrl);
