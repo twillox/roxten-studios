@@ -48,7 +48,8 @@ export default function ReferralDashboardHome() {
     </div>;
   }
 
-  const totalEarnings = commissions.reduce((sum, c) => sum + c.amount, 0);
+  const totalEarnings = commissions.reduce((sum, c) => sum + c.amount, 0) + 
+    referrals.filter(r => r.status === "Paid" && r.commissionEarned).reduce((sum, r) => sum + (r.commissionEarned || 0), 0);
   const approvedReferrals = referrals.filter(r => r.status === "Won" || r.status === "Paid").length;
   const pendingReferrals = referrals.filter(r => !["Won", "Paid", "Lost"].includes(r.status)).length;
 

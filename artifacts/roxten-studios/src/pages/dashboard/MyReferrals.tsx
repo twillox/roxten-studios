@@ -124,8 +124,13 @@ export default function MyReferrals() {
                       <p className="text-xs text-white/50">{ref.company || ref.businessName || "No Company"}</p>
                     </td>
                     <td className="p-4 text-sm text-white/80">{ref.projectType}</td>
-                    <td className="p-4 font-mono text-sm">
-                      {ref.projectValue ? `$${ref.projectValue.toLocaleString()}` : <span className="text-white/30">TBD</span>}
+                    <td className="p-4">
+                      <div className="font-mono text-sm">
+                        {ref.amount || ref.projectValue ? `$${(ref.amount || ref.projectValue).toLocaleString()}` : <span className="text-white/30">TBD</span>}
+                      </div>
+                      {ref.commissionEarned && (
+                        <div className="text-xs text-[#00ffcc] mt-1 font-bold">Earned: ${ref.commissionEarned.toLocaleString()}</div>
+                      )}
                     </td>
                     <td className="p-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${getStatusColor(ref.status)}`}>
@@ -133,7 +138,19 @@ export default function MyReferrals() {
                       </span>
                     </td>
                     <td className="p-4 text-sm text-white/60">
-                      {new Date(ref.createdAt).toLocaleDateString()}
+                      {ref.createdAt?.toDate ? ref.createdAt.toDate().toLocaleDateString() : (ref.createdAt ? new Date(ref.createdAt).toLocaleDateString() : "N/A")}
+                      {ref.invoiceUrl && (
+                        <div className="mt-2">
+                          <a 
+                            href={ref.invoiceUrl} 
+                            target="_blank" 
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest font-bold text-white hover:text-[#00ffcc] transition-colors border border-white/20 hover:border-[#00ffcc]/50 px-2 py-1 rounded bg-white/5"
+                          >
+                            <Download className="w-3 h-3" /> Invoice
+                          </a>
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))
