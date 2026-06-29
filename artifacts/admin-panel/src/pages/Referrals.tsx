@@ -43,14 +43,7 @@ export default function Referrals() {
     queryFn: fetchReferralsData,
   });
 
-  const handleStatusChange = async (id: string, newStatus: string) => {
-    try {
-      await updateDoc(doc(db, "projects", id), { status: newStatus });
-      refetch();
-    } catch (e) {
-      console.error("Failed to update status", e);
-    }
-  };
+
 
   if (isLoading) return <div>Loading...</div>;
 
