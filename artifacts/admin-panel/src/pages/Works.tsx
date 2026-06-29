@@ -9,12 +9,17 @@ export default function Works() {
   const [isEditing, setIsEditing] = useState<any>(null);
   const [isAdding, setIsAdding] = useState(false);
 
-  const { data: works, isLoading } = useQuery({
+  const { data: works, isLoading, error, isError } = useQuery({
     queryKey: ["works"],
     queryFn: async () => {
-      const q = query(collection(db, "works"), orderBy("order", "desc"));
-      const snap = await getDocs(q);
-      return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      try {
+        const q = query(collection(db, "works"), orderBy("order", "desc"));
+        const snap = await getDocs(q);
+        return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      } catch (err) {
+        console.error("Error fetching works:", err);
+        throw err;
+      }
     },
   });
 
@@ -26,6 +31,7 @@ export default function Works() {
   });
 
   if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div className="p-8 text-red-500 bg-red-100 rounded-lg">Error loading works: {(error as Error).message} <br/><br/> Please check the console for the index creation link.</div>;
 
   return (
     <div className="space-y-6">

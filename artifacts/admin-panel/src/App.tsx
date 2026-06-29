@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Works from "./pages/Works";
 import Contacts from "./pages/Contacts";
 import Projects from "./pages/Projects";
+import Referrals from "./pages/Referrals";
 import Login from "./pages/Login";
 import Sidebar from "./components/Sidebar";
 import { useAuth } from "./lib/useAuth";
@@ -67,6 +68,13 @@ function App() {
         <ProtectedRoute>
           <AdminLayout>
             <Projects />
+          </AdminLayout>
+        </ProtectedRoute>
+      </Route>
+      <Route path="/referrals">
+        <ProtectedRoute>
+          <AdminLayout>
+            <Referrals />
           </AdminLayout>
         </ProtectedRoute>
       </Route>
