@@ -29,7 +29,7 @@ export default function Home() {
       "@type": "Organization",
       "name": "Roxten Studios",
       "url": "https://roxtenstudios.in",
-      "logo": "https://roxtenstudios.in/favicon.svg"
+      "logo": "https://roxtenstudios.in/favicon.png"
     },
     {
       "@context": "https://schema.org",
