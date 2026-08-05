@@ -36,8 +36,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       
       {/* MOBILE HEADER */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-black/50 backdrop-blur-md border-b border-white/10 z-50 flex items-center justify-between px-6">
-        <div className="font-black text-lg uppercase tracking-tight text-white flex items-center gap-1.5">
-          ROXTEN <span className="font-medium opacity-60 text-xs tracking-widest text-red-500">ADMIN</span>
+        <div className="font-black text-lg uppercase tracking-tight text-white flex items-center gap-2">
+          <img src="/favicon.png" alt="Roxten" className="h-5 w-auto object-contain" />
+          <span className="font-medium opacity-60 text-xs tracking-widest text-red-500">ADMIN</span>
         </div>
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white">
           {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -50,8 +51,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         ${isMobileMenuOpen ? "translate-x-0 pt-16 md:pt-0" : "-translate-x-full md:translate-x-0"}
       `}>
         <div className="hidden md:flex h-20 items-center px-8 border-b border-white/5">
-          <div className="font-black text-xl uppercase tracking-tight text-white flex items-center gap-1.5">
-            ROXTEN <span className="font-medium opacity-60 text-xs tracking-widest text-red-500 flex items-center gap-1"><ShieldAlert className="w-3 h-3"/> ADMIN</span>
+          <div className="font-black text-xl uppercase tracking-tight text-white flex items-center gap-2">
+            <img src="/favicon.png" alt="Roxten" className="h-6 w-auto object-contain" />
+            <span className="font-medium opacity-60 text-xs tracking-widest text-red-500 flex items-center gap-1"><ShieldAlert className="w-3 h-3"/> ADMIN</span>
           </div>
         </div>
 

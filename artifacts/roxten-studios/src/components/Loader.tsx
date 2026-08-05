@@ -49,7 +49,7 @@ export default function Loader() {
             }}
             className="text-white text-5xl md:text-7xl font-black tracking-[-0.04em] uppercase"
           >
-            ROXTEN <span className="text-white/40">STUDIOS</span>
+            <img src="/favicon.png" alt="Roxten Studios" className="h-16 md:h-24 w-auto object-contain inline-block" />
           </motion.h1>
         </div>
       </div>
