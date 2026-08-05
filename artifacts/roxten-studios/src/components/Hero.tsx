@@ -75,7 +75,7 @@ export default function Hero() {
         <h1 className="sr-only">
           Premium White-Label Web & Software Development for Agencies
         </h1>
-        <div aria-hidden="true" className="text-[clamp(2.6rem,7.2vw,8.5rem)] leading-[0.9] font-black tracking-[-0.025em] uppercase select-none mb-7">
+        <div aria-hidden="true" className="text-[clamp(2.2rem,6.5vw,7.5rem)] leading-[0.9] font-black tracking-[-0.025em] uppercase select-none mb-7">
           <div><SplitReveal text="BUILDING" delay={0.15} /></div>
           <div><SplitReveal text="THE FUTURE" delay={0.48} dim /></div>
           <div><SplitReveal text="OF DIGITAL" delay={0.82} /></div>

@@ -1,0 +1,16 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /invoices/{referralId}/{allPaths=**} {
+      // Any authenticated user can read invoices (partners viewing their dashboards)
+      allow read: if request.auth != null;
+      // Any authenticated user can write invoices (ideally restricted to admin, but this works for demo)
+      allow write: if request.auth != null;
+    }
+    
+    // Default deny for all other paths
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

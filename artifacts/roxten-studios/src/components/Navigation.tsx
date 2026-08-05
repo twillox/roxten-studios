@@ -90,7 +90,7 @@ export default function Navigation() {
     <>
       <style>{`
         .scrolled-nav {
-          height: 60px !important;
+          height: 54px !important;
         }
         .magnetic-link {
           position: relative;
@@ -127,7 +127,7 @@ export default function Navigation() {
         <div 
           ref={containerRef}
           className={`
-            relative w-full max-w-[1200px] h-[80px] px-8 md:px-12 flex items-center justify-between
+            relative w-full max-w-[1200px] h-[64px] px-8 md:px-12 flex items-center justify-between
             rounded-full backdrop-blur-[25px]
             transition-all duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] pointer-events-auto
             ${isLightText 
