@@ -12,6 +12,7 @@ export default function ReferralNavbar() {
           href="/" 
           onClick={(e) => { e.preventDefault(); setLocation("/"); }}
           className="font-black text-[18px] md:text-[20px] tracking-[-0.04em] uppercase hover:opacity-80 transition-opacity flex items-center gap-1.5"
+        >
           <img src="/favicon.png" alt="Roxten Partners" className="h-6 md:h-7 w-auto object-contain" />
         </a>
 
