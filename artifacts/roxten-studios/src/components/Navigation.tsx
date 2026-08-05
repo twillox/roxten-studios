@@ -141,7 +141,7 @@ export default function Navigation() {
             onClick={(e) => handleLinkClick(e, "body")}
             className="font-black text-[18px] md:text-[20px] tracking-[-0.04em] uppercase hover:opacity-80 transition-opacity flex items-center gap-1.5"
           >
-            <img src="/favicon.png" alt="Roxten Studios" className="h-6 md:h-7 w-auto object-contain" />
+            ROXTEN <span className="font-medium opacity-60 text-[14px] md:text-[16px] tracking-widest hidden sm:inline-block">STUDIOS</span>
           </a>
 
           {/* DESKTOP NAV */}
