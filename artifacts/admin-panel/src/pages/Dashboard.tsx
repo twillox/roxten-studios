@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Briefcase, Mail, Folders } from "lucide-react";
+import { Briefcase, Mail, Folders, Rocket } from "lucide-react";
 import { db } from "@workspace/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
@@ -13,10 +13,14 @@ async function fetchStats() {
   const projectsQuery = query(collection(db, "projects"), where("status", "==", "new"));
   const projectsSnap = await getDocs(projectsQuery);
 
+  const venturesQuery = query(collection(db, "venture_applications"), where("status", "==", "new"));
+  const venturesSnap = await getDocs(venturesQuery).catch(() => null);
+
   return {
     works: worksSnap.size,
     contacts: contactsSnap.size,
     projects: projectsSnap.size,
+    ventures: venturesSnap?.size ?? 0,
   };
 }
 
@@ -33,7 +37,7 @@ export default function Dashboard() {
         <p className="text-muted-foreground mt-2">Welcome to your Roxten admin panel.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         <StatCard
           title="Portfolio Works"
           value={isLoading ? "..." : data?.works}
@@ -54,6 +58,13 @@ export default function Dashboard() {
           icon={Folders}
           href="/projects"
           description="Pending project requests"
+        />
+        <StatCard
+          title="New Venture Applications"
+          value={isLoading ? "..." : data?.ventures}
+          icon={Rocket}
+          href="/ventures"
+          description="FORGE program submissions"
         />
       </div>
     </div>

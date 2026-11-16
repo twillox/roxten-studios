@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { LayoutDashboard, Briefcase, Mail, Folders, LogOut, Users } from "lucide-react";
+import { LayoutDashboard, Briefcase, Mail, Folders, LogOut, Users, Rocket } from "lucide-react";
 import clsx from "clsx";
 
 const navItems = [
@@ -8,6 +8,7 @@ const navItems = [
   { href: "/contacts", label: "Contacts", icon: Mail },
   { href: "/projects", label: "Projects", icon: Folders },
   { href: "/referrals", label: "Referrals", icon: Users },
+  { href: "/ventures", label: "Ventures (FORGE)", icon: Rocket },
 ];
 
 export default function Sidebar() {

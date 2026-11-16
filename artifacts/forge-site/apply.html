@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Apply — FORGE by Roxten Studios</title>
+  <meta name="description" content="Apply to FORGE, the venture-building initiative by Roxten Studios. A few quick questions — about 3 minutes." />
+  <meta name="theme-color" content="#F1EEE8" />
+  <meta property="og:title" content="Apply to FORGE — Your idea. Our build." />
+  <meta property="og:image" content="assets/og.png" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230D0D0C'/%3E%3Cpath d='M14 46 L22 18 H52 L44 46 Z' fill='%23DCF21E'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="apply.css" />
+</head>
+<body class="ap">
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="ap-top">
+    <a href="./" class="brand" aria-label="Back to FORGE home">
+      <span class="brand__rx">ROXTEN<br/>STUDIOS</span>
+      <span class="brand__sep">/</span>
+      <span class="brand__prog">FORGE</span>
+    </a>
+    <ol class="ap-secs mono" id="secs" aria-label="Sections">
+      <li data-sec="you">You</li>
+      <li data-sec="profile">Profile</li>
+      <li data-sec="idea">Idea</li>
+      <li data-sec="stage">Stage</li>
+      <li data-sec="commit">Commitment</li>
+    </ol>
+    <a href="./" class="ap-exit mono"><span>Save &amp; exit</span> ✕</a>
+  </header>
+  <div class="ap-progress" aria-hidden="true"><i id="progress"></i></div>
+
+  <main class="ap-main" id="main">
+    <!-- Live venture brief: starts as a sketch, fills in as you answer -->
+    <aside class="brief" id="brief" aria-label="Your venture brief (preview)">
+      <div class="brief__bar mono">
+        <span class="brief__dots"><i></i><i></i><i></i></span>
+        <span class="brief__file">venture_brief.forge</span>
+        <span><b id="briefPct">0</b>% built</span>
+      </div>
+      <div class="brief__meter"><i id="briefMeter"></i></div>
+      <div class="brief__body">
+        <p class="brief__k mono">Venture</p>
+        <h2 class="brief__title is-empty" data-b="pitch">Untitled venture</h2>
+        <dl class="brief__rows">
+          <div class="brief__row is-empty" data-row="founder"><dt class="mono">Founder</dt><dd data-b="founder"></dd></div>
+          <div class="brief__row is-empty" data-row="profile"><dt class="mono">Profile</dt><dd data-b="profile"></dd></div>
+          <div class="brief__row is-empty" data-row="problem"><dt class="mono">Problem</dt><dd data-b="problem"></dd></div>
+          <div class="brief__row is-empty" data-row="audience"><dt class="mono">First users</dt><dd data-b="audience"></dd></div>
+          <div class="brief__row is-empty" data-row="stage"><dt class="mono">Stage</dt><dd data-b="stage"></dd></div>
+          <div class="brief__row is-empty" data-row="needs"><dt class="mono">Build</dt><dd data-b="needs"></dd></div>
+          <div class="brief__row is-empty" data-row="commitment"><dt class="mono">Time / week</dt><dd data-b="commitment"></dd></div>
+        </dl>
+      </div>
+      <span class="brief__stamp mono" id="briefStamp">Draft</span>
+    </aside>
+
+    <section class="stage" aria-live="polite">
+      <form id="flow" novalidate autocomplete="on">
+        <input type="text" name="company_website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="q-host" id="qHost"></div>
+      </form>
+      <footer class="ap-nav">
+        <span class="mono ap-nav__count"><b id="qNow">01</b> / <span id="qTotal">15</span></span>
+        <span class="mono ap-nav__save" id="saveNote">Progress saves automatically</span>
+        <span class="ap-nav__arrows">
+          <button type="button" id="prevQ" aria-label="Previous question">↑</button>
+          <button type="button" id="nextQ" aria-label="Next question">↓</button>
+        </span>
+      </footer>
+    </section>
+  </main>
+
+  <!-- Success -->
+  <section class="done" id="done" hidden>
+    <div class="done__inner">
+      <p class="mono done__ok">&gt; application.submit() <b>ok</b></p>
+      <h1 class="done__title">IDEA<br/><span class="slab">RECEIVED.</span></h1>
+      <p class="done__lede">Thank you<span id="doneName"></span>. Your venture brief is with the Roxten team.</p>
+      <p class="mono done__ref" id="doneRef">REF RX-0000</p>
+      <ol class="done__next">
+        <li><span class="mono">01</span><b>We read every brief</b><em>Our team reviews each application personally.</em></li>
+        <li><span class="mono">02</span><b>Discovery call</b><em>If your idea is shortlisted, we'll reach out to talk it through.</em></li>
+        <li><span class="mono">03</span><b>We build together</b><em>Strategy, design, engineering and launch — as partners.</em></li>
+      </ol>
+      <a href="./" class="btn btn--lime btn--xl"><span>Back to FORGE</span><b>↗</b></a>
+    </div>
+  </section>
+
+  <script type="module" src="apply.js"></script>
+</body>
+</html>

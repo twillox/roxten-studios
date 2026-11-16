@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FORGE — A Venture-Building Initiative by Roxten Studios</title>
+  <meta name="description" content="Some ideas deserve more than a pitch. FORGE by Roxten Studios partners with ambitious founders to turn promising ideas into real, functioning businesses — built together, grown together." />
+  <meta name="theme-color" content="#F1EEE8" />
+  <meta property="og:title" content="FORGE by Roxten Studios — Your idea. Our build." />
+  <meta property="og:description" content="A venture-building initiative. We contribute product, design, engineering and brand. You bring the vision. Together we build the business." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/og.png" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230D0D0C'/%3E%3Cpath d='M14 46 L22 18 H52 L44 46 Z' fill='%23DCF21E'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+  <!-- ============ INTRO: sketch → build → launch, then the screen rolls up like a projector screen ============ -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="intro__screen" id="introScreen">
+    <div class="intro__hud mono">
+      <span class="intro__tl">Roxten Studios</span>
+      <span class="intro__tr">Venture program</span>
+      <span class="intro__bl"><b id="introStage">v0.1</b> <span id="introStageName">sketch</span></span>
+      <span class="intro__br"><b id="introPct">000</b>%</span>
+    </div>
+    <div class="intro__stage">
+      <svg class="intro__svg" viewBox="0 0 1000 440" overflow="visible">
+        <defs>
+          <filter id="introRough" x="-5%" y="-10%" width="110%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+          <clipPath id="introClip"><rect id="introClipRect" x="0" y="-100" width="0" height="600"/></clipPath>
+        </defs>
+        <g class="intro__guides"></g>
+        <rect class="intro__slab" id="introSlab" x="0" y="0" width="0" height="0"/>
+        <text class="intro__txt intro__sketch" x="500" y="330" text-anchor="middle" textLength="780" lengthAdjust="spacingAndGlyphs" filter="url(#introRough)" data-name>FORGE</text>
+        <text class="intro__txt intro__solid" x="500" y="330" text-anchor="middle" textLength="780" lengthAdjust="spacingAndGlyphs" clip-path="url(#introClip)" data-name>FORGE</text>
+        <g class="intro__full"><text>FROM ORIGINAL IDEA TO REVENUE-GENERATING ENTERPRISE</text></g>
+        <rect class="intro__scan" id="introScan" x="-20" y="0" width="12" height="0"/>
+        <g class="intro__note">
+          <text x="1010" y="-6">your idea!</text>
+          <path d="M1010 8 C 1012 40, 990 62, 948 70" pathLength="1"/>
+          <path d="M948 70 l 15 -11 M948 70 l 17 5" pathLength="1"/>
+        </g>
+      </svg>
+    </div>
+    <div class="intro__bar" aria-hidden="true"><span class="intro__cord"></span><span class="intro__tab"></span></div>
+    </div>
+  </div>
+
+  <!-- Ambient layers -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="spot" aria-hidden="true"></div>
+  <div class="frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="cursor" aria-hidden="true"><div class="cursor__x"></div><div class="cursor__y"></div><div class="cursor__box"><i></i><i></i><i></i><i></i></div><div class="cursor__pt"></div><div class="cursor__tag"></div></div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <a href="#top" class="brand" data-magnetic>
+      <span class="brand__rx">ROXTEN<br/>STUDIOS</span>
+      <span class="brand__sep">/</span>
+      <span class="brand__prog" data-name>FORGE</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#concept">Concept</a>
+      <a href="#bring">What we bring</a>
+      <a href="#process">Process</a>
+      <a href="#model">Model</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="apply.html" class="btn btn--lime btn--sm" data-magnetic><span>Apply</span><b>↗</b></a>
+    <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
+  </header>
+
+  <div class="menu" id="menu" aria-hidden="true">
+    <a href="#concept"><em>01</em>Concept</a>
+    <a href="#bring"><em>02</em>What we bring</a>
+    <a href="#process"><em>03</em>Process</a>
+    <a href="#model"><em>04</em>Model</a>
+    <a href="#faq"><em>05</em>FAQ</a>
+    <a href="apply.html" class="menu__cta"><em>→</em>Apply now</a>
+  </div>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero__meta mono">
+        <span>Applications open — Cohort 01</span>
+        <span>A venture-building initiative by Roxten Studios</span>
+      </div>
+
+      <div class="hero__grid">
+        <div class="hero__copy">
+          <h1 class="hero__title" aria-label="Your idea, our build.">
+            <span class="hero__line1"><span class="clip"><span class="reveal-up hero__outline">YOUR IDEA,</span></span></span>
+            <span class="hero__line2">
+              <span class="clip"><span class="reveal-up">OUR</span></span>
+              <span class="hero__product">
+                <span class="hero__slab" aria-hidden="true"></span>
+                <span class="clip"><span class="reveal-up">BUILD.</span></span>
+              </span>
+            </span>
+          </h1>
+          <p class="hero__lede"><span data-name>FORGE</span> partners with ambitious founders to turn promising ideas into real, working businesses. You bring the vision. We bring product, design, engineering and brand — and build it with you.</p>
+
+          <form class="prompt" id="prompt" autocomplete="off">
+            <div class="prompt__field">
+              <input id="ideaInput" aria-label="Name your idea" maxlength="60" placeholder="e.g. Home-chef lunch delivery" />
+              <button type="submit" class="btn btn--ink" data-magnetic><span>Build this</span><b>→</b></button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Sketch → Product morph -->
+        <div class="morph" id="morph" style="--pos: 100%">
+          <div class="morph__frame">
+            <!-- PRODUCT layer (underneath) -->
+            <div class="morph__layer morph__product" aria-hidden="true">
+              <div class="pp pp-top" style="--x:0;--y:0;--w:640;--h:50">
+                <span class="pp-dots"><i></i><i></i><i></i></span>
+                <span class="pp-url"><span data-slug>yourventure</span>.app</span>
+              </div>
+              <div class="pp pp-side" style="--x:0;--y:50;--w:138;--h:430">
+                <span class="pp-logo"></span>
+                <span class="pp-nav is-on"><i></i>Overview</span>
+                <span class="pp-nav"><i></i>Customers</span>
+                <span class="pp-nav"><i></i>Orders</span>
+                <span class="pp-nav"><i></i>Settings</span>
+              </div>
+              <div class="pp pp-head" style="--x:160;--y:62;--w:440;--h:60">
+                <small>Dashboard</small>
+                <strong data-idea-title>Your big idea</strong>
+              </div>
+              <div class="pp pp-kpi" style="--x:160;--y:135;--w:140;--h:80"><small>Active users</small><strong data-count="12480">0</strong><em>▲ 18%</em></div>
+              <div class="pp pp-kpi" style="--x:316;--y:135;--w:140;--h:80"><small>Revenue</small><strong data-count="4.2" data-prefix="₹" data-suffix="L" data-dec="1">0</strong><em>▲ 32%</em></div>
+              <div class="pp pp-kpi pp-kpi--lime" style="--x:472;--y:135;--w:148;--h:80"><small>Retention</small><strong data-count="68" data-suffix="%">0</strong><em>▲ 6%</em></div>
+              <div class="pp pp-chart" style="--x:160;--y:232;--w:296;--h:224">
+                <small>Monthly growth</small>
+                <svg viewBox="0 0 280 170" preserveAspectRatio="none">
+                  <defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCF21E" stop-opacity=".45"/><stop offset="1" stop-color="#DCF21E" stop-opacity="0"/></linearGradient></defs>
+                  <g class="pp-gridlines"><line x1="0" y1="42" x2="280" y2="42"/><line x1="0" y1="85" x2="280" y2="85"/><line x1="0" y1="128" x2="280" y2="128"/></g>
+                  <path class="pp-area" d="M0 150 C30 146 45 132 70 128 S110 120 130 104 S175 90 195 70 S240 40 280 18 L280 170 L0 170Z" fill="url(#pg)"/>
+                  <path class="pp-line" pathLength="1" d="M0 150 C30 146 45 132 70 128 S110 120 130 104 S175 90 195 70 S240 40 280 18"/>
+                  <circle class="pp-pt" cx="280" cy="18" r="4.5"/>
+                </svg>
+              </div>
+              <div class="pp pp-list" style="--x:472;--y:232;--w:148;--h:224">
+                <small>New signups</small>
+                <span><i style="--c:#DCF21E"></i>Ananya R.<b>now</b></span>
+                <span><i style="--c:#9AD8FF"></i>Karthik M.<b>2m</b></span>
+                <span><i style="--c:#FFB4A2"></i>Sara P.<b>9m</b></span>
+                <span><i style="--c:#C7B8FF"></i>Rahul V.<b>14m</b></span>
+              </div>
+              <span class="morph__tag morph__tag--r mono">v1.0 · product</span>
+            </div>
+
+            <!-- SKETCH layer (on top, clipped) -->
+            <div class="morph__layer morph__sketch" aria-hidden="true">
+              <svg viewBox="0 0 640 480" class="sk">
+                <defs>
+                  <filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter>
+                </defs>
+                <g class="sk-ink" filter="url(#rough)">
+                  <rect pathLength="1" x="12" y="12" width="616" height="456" rx="10"/>
+                  <path pathLength="1" d="M12 50 H628"/>
+                  <circle pathLength="1" cx="34" cy="31" r="6"/><circle pathLength="1" cx="54" cy="31" r="6"/><circle pathLength="1" cx="74" cy="31" r="6"/>
+                  <rect pathLength="1" x="200" y="21" width="240" height="20" rx="10"/>
+                  <path pathLength="1" d="M138 52 V466"/>
+                  <rect pathLength="1" x="30" y="70" width="30" height="30" rx="4"/>
+                  <path pathLength="1" d="M30 132 q20 -6 40 0 t40 0"/>
+                  <path pathLength="1" d="M30 162 q16 -5 32 0 t36 0"/>
+                  <path pathLength="1" d="M30 192 q18 -6 36 0 t34 0"/>
+                  <path pathLength="1" d="M30 222 q14 -5 28 0 t30 0"/>
+                  <path pathLength="1" d="M162 112 q60 -8 120 0 t90 -2"/>
+                  <rect pathLength="1" x="160" y="135" width="140" height="80" rx="6"/>
+                  <rect pathLength="1" x="316" y="135" width="140" height="80" rx="6"/>
+                  <rect pathLength="1" x="472" y="135" width="148" height="80" rx="6"/>
+                  <rect pathLength="1" x="160" y="232" width="296" height="224" rx="6"/>
+                  <path pathLength="1" d="M178 420 C210 414 220 396 246 392 S290 384 312 362 S350 344 372 320 S410 284 436 262"/>
+                  <rect pathLength="1" x="472" y="232" width="148" height="224" rx="6"/>
+                  <circle pathLength="1" cx="494" cy="282" r="9"/><path pathLength="1" d="M512 282 h80"/>
+                  <circle pathLength="1" cx="494" cy="318" r="9"/><path pathLength="1" d="M512 318 h64"/>
+                  <circle pathLength="1" cx="494" cy="354" r="9"/><path pathLength="1" d="M512 354 h72"/>
+                  <circle pathLength="1" cx="494" cy="390" r="9"/><path pathLength="1" d="M512 390 h56"/>
+                </g>
+                <g class="sk-note" filter="url(#rough)">
+                  <ellipse pathLength="1" cx="430" cy="266" rx="30" ry="22"/>
+                  <path pathLength="1" d="M402 252 C384 232 372 222 356 214"/>
+                  <path pathLength="1" d="M364 208 l-9 5 l6 8"/>
+                </g>
+                <g class="sk-text">
+                  <text x="162" y="96" class="sk-title" data-idea-sketch>your big idea</text>
+                  <text x="176" y="182">users?</text>
+                  <text x="332" y="182">money $$</text>
+                  <text x="488" y="182">keep 'em %</text>
+                  <text x="176" y="262" class="sk-small">growth goes here</text>
+                  <text x="262" y="210" class="sk-note-t">make it pop!</text>
+                  <text x="488" y="262" class="sk-small">signups</text>
+                </g>
+              </svg>
+              <span class="morph__tag morph__tag--l mono">v0.1 · sketch</span>
+            </div>
+
+            <!-- Handle -->
+            <div class="morph__handle" id="morphHandle" role="slider" tabindex="0" aria-label="Compare the idea sketch with the built product" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+              <span class="morph__knob"><b>‹</b><b>›</b></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__foot">
+        <p class="mono">Let's build<br/>what's next.</p>
+        <span class="hero__line" aria-hidden="true"></span>
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <div class="marquee__seq"><span><u>F</u>rom <u>O</u>riginal idea</span><i>→</i><span>to <u>R</u>evenue-<u>G</u>enerating <u>E</u>nterprise</span><i>✦</i><span class="marquee__name" data-name>FORGE</span><i>✦</i></div>
+        <div class="marquee__seq"><span><u>F</u>rom <u>O</u>riginal idea</span><i>→</i><span>to <u>R</u>evenue-<u>G</u>enerating <u>E</u>nterprise</span><i>✦</i><span class="marquee__name" data-name>FORGE</span><i>✦</i></div>
+        <div class="marquee__seq"><span><u>F</u>rom <u>O</u>riginal idea</span><i>→</i><span>to <u>R</u>evenue-<u>G</u>enerating <u>E</u>nterprise</span><i>✦</i><span class="marquee__name" data-name>FORGE</span><i>✦</i></div>
+        <div class="marquee__seq"><span><u>F</u>rom <u>O</u>riginal idea</span><i>→</i><span>to <u>R</u>evenue-<u>G</u>enerating <u>E</u>nterprise</span><i>✦</i><span class="marquee__name" data-name>FORGE</span><i>✦</i></div>
+      </div>
+    </div>
+
+    <!-- ============ MANIFESTO ============ -->
+    <section class="manifesto section" id="manifesto">
+      <div class="tag mono"><span>00</span> The belief</div>
+      <p class="manifesto__text" data-words>
+        Some ideas deserve more than just a pitch. <em>They deserve to be built.</em> <span class="m-hide">Great ideas shouldn't stay ideas just because someone lacks the team, the tech or the infrastructure to bring them to life.</span>
+      </p>
+      <figure class="mani-fig" data-slot data-file="assets/studio.png">
+        <img src="assets/studio.png" alt="Inside Roxten Studios" loading="lazy" data-optional />
+        <figcaption class="mono">inside the studio</figcaption>
+      </figure>
+      <div class="manifesto__sig">
+        <span class="serif">— Roxten Studios</span>
+        <span class="mono">We don't just build websites or apps. We build the complete digital foundation of a venture.</span>
+      </div>
+    </section>
+
+    <!-- ============ CONCEPT / MODEL SWITCH ============ -->
+    <section class="concept section" id="concept">
+      <div class="concept__head">
+        <div class="tag mono"><span>01</span> The concept</div>
+        <h2 class="h2">Not the agency model.<br/><span class="serif">A</span> <mark>venture</mark> model.</h2>
+        <p class="lede">We identify promising ideas, evaluate their potential and partner with selected founders to turn them into market-ready products and businesses. Roxten contributes expertise, team, time, technology and execution. You bring the vision, business understanding, commitment and direction.</p>
+      </div>
+
+      <div class="switcher" id="switcher">
+        <div class="switch" role="tablist" aria-label="Compare models">
+          <button role="tab" aria-selected="false" data-mode="agency">Conventional agency</button>
+          <button role="tab" aria-selected="true" data-mode="forge"><span data-name>FORGE</span> by Roxten</button>
+          <span class="switch__pill" aria-hidden="true"></span>
+        </div>
+
+        <div class="compare" data-mode="forge">
+          <div class="compare__row">
+            <span class="compare__k mono">Upfront cost</span>
+            <span class="compare__v" data-agency="Client pays full development fees upfront." data-forge="No conventional upfront development fees for selected founders.">No conventional upfront development fees for selected founders.</span>
+          </div>
+          <div class="compare__row">
+            <span class="compare__k mono">Relationship</span>
+            <span class="compare__v" data-agency="Project delivered. Invoice sent. Done." data-forge="A long-term partnership that continues after launch.">A long-term partnership that continues after launch.</span>
+          </div>
+          <div class="compare__row">
+            <span class="compare__k mono">Approach</span>
+            <span class="compare__v" data-agency="Take requirements, deliver code." data-forge="Understand the vision, challenge assumptions, shape the product.">Understand the vision, challenge assumptions, shape the product.</span>
+          </div>
+          <div class="compare__row">
+            <span class="compare__k mono">Incentive</span>
+            <span class="compare__v" data-agency="Billable hours and scope." data-forge="The venture actually succeeding.">The venture actually succeeding.</span>
+          </div>
+          <div class="compare__row">
+            <span class="compare__k mono">Return</span>
+            <span class="compare__v" data-agency="A one-time fee." data-forge="An agreed share of the venture's future earnings.">An agreed share of the venture's future earnings.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHAT WE BRING ============ -->
+    <section class="bring section" id="bring">
+      <div class="bring__head">
+        <div class="tag mono"><span>02</span> What we bring to the table</div>
+        <h2 class="h2">Four disciplines.<br/>One <span class="serif">build</span> team.</h2>
+      </div>
+
+      <div class="panels" id="panels">
+        <article class="panel">
+          <div class="panel__top"><span class="mono">01</span><span class="panel__file mono">product.strategy</span></div>
+          <h3 class="panel__title">Product Design &amp; Strategy</h3>
+          <div class="panel__body"><div><p>Understanding the idea, identifying the problem, defining the product, planning features, designing user experiences and setting a clear product direction.</p>
+            <ul class="chips"><li>Problem framing</li><li>Feature planning</li><li>UX design</li><li>Product direction</li></ul></div></div>
+          <span class="panel__glyph" aria-hidden="true"><b>◐</b></span>
+        </article>
+        <article class="panel">
+          <div class="panel__top"><span class="mono">02</span><span class="panel__file mono">dev.engineering</span></div>
+          <h3 class="panel__title">Development &amp; Engineering</h3>
+          <div class="panel__body"><div><p>Websites, applications, platforms, backend systems, databases, dashboards, APIs and integrations. Turning concepts into fully functional products.</p>
+            <ul class="chips"><li>Web &amp; mobile apps</li><li>Backend &amp; APIs</li><li>Dashboards</li><li>Integrations</li></ul></div></div>
+          <span class="panel__glyph" aria-hidden="true"><b>&lt;/&gt;</b></span>
+        </article>
+        <article class="panel">
+          <div class="panel__top"><span class="mono">03</span><span class="panel__file mono">launch.scale</span></div>
+          <h3 class="panel__title">Launch &amp; Scale</h3>
+          <div class="panel__body"><div><p>Preparing products for launch: deployment, infrastructure, performance optimisation, technical improvements and continuous development.</p>
+            <ul class="chips"><li>Deployment</li><li>Infrastructure</li><li>Performance</li><li>Iteration</li></ul></div></div>
+          <span class="panel__glyph" aria-hidden="true"><b>↗</b></span>
+        </article>
+        <article class="panel">
+          <div class="panel__top"><span class="mono">04</span><span class="panel__file mono">brand.experience</span></div>
+          <h3 class="panel__title">Brand &amp; Experience</h3>
+          <div class="panel__body"><div><p>Brand identities, visual systems, digital presence, marketing foundations and meaningful customer experiences.</p>
+            <ul class="chips"><li>Identity</li><li>Visual systems</li><li>Digital presence</li><li>Marketing base</li></ul></div></div>
+          <span class="panel__glyph" aria-hidden="true"><b>✦</b></span>
+        </article>
+      </div>
+      <div class="pager" id="panelsPager" aria-hidden="true">
+        <span class="mono pager__count"><b id="panelsNow">01</b> / 04</span>
+        <span class="pager__track"><i id="panelsBar"></i></span>
+      </div>
+    </section>
+
+    <!-- ============ PROCESS (dark) ============ -->
+    <section class="process" id="process">
+      <div class="process__inner">
+        <aside class="process__aside">
+          <div class="tag tag--dark mono"><span>03</span> How it works</div>
+          <div class="process__count" aria-hidden="true">
+            <span class="process__num"><span id="stepNum">01</span></span><span class="process__of mono">/06</span>
+          </div>
+          <div class="process__bar" id="processBar" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <p class="mono process__hint">$ forge --run pipeline</p>
+        </aside>
+
+        <ol class="steps" id="steps">
+          <li class="step">
+            <span class="step__n mono">01</span>
+            <div><h3>Application &amp; Discovery</h3><p>Submit your idea, the problem you want to solve and your vision. A short survey — that's it.</p></div>
+          </li>
+          <li class="step">
+            <span class="step__n mono">02</span>
+            <div><h3>Evaluation &amp; Selection</h3><p>We assess potential, feasibility, market opportunity, originality and founder commitment. Only selected ideas move forward.</p></div>
+          </li>
+          <li class="step">
+            <span class="step__n mono">03</span>
+            <div><h3>Strategy &amp; Planning</h3><p>Together we define the product, business requirements, roadmap, technical approach and execution strategy.</p></div>
+          </li>
+          <li class="step">
+            <span class="step__n mono">04</span>
+            <div><h3>Building the Venture</h3><p>Our team handles product design, development, engineering, branding and the digital infrastructure the business needs.</p></div>
+          </li>
+          <li class="step">
+            <span class="step__n mono">05</span>
+            <div><h3>Launch &amp; Deployment</h3><p>The product goes live with the technical foundation, documentation and agreed deliverables in place.</p></div>
+          </li>
+          <li class="step">
+            <span class="step__n mono">06</span>
+            <div><h3>Growth &amp; Partnership</h3><p>We stay involved as agreed and participate in the venture's future earnings through a mutually agreed revenue share.</p></div>
+          </li>
+        </ol>
+        <div class="pager pager--dark" aria-hidden="true">
+          <span class="mono pager__count"><b id="stepsNow">01</b> / 06</span>
+          <span class="pager__track"><i id="stepsBar"></i></span>
+          </div>
+      </div>
+    </section>
+
+    <!-- ============ PARTNERSHIP MODEL ============ -->
+    <section class="model section" id="model">
+      <div class="model__head">
+        <div class="tag mono"><span>04</span> The partnership model</div>
+        <h2 class="h2">Building a business is a <span class="serif">collaborative</span> effort.</h2>
+      </div>
+
+      <div class="equation">
+        <div class="eq-card eq-card--rx" data-from="left">
+          <div class="eq-card__top"><span class="mono">roxten.brings()</span><span class="eq-card__badge">RX</span></div>
+          <ul>
+            <li>Product &amp; technical expertise</li>
+            <li>Design &amp; development capabilities</li>
+            <li>Engineering &amp; infrastructure</li>
+            <li>Branding &amp; digital experience</li>
+            <li>Time, resources &amp; execution</li>
+          </ul>
+        </div>
+        <div class="eq-op" aria-hidden="true">+</div>
+        <div class="eq-card eq-card--you" data-from="right">
+          <div class="eq-card__top"><span class="mono">founder.brings()</span><span class="eq-card__badge">YOU</span></div>
+          <ul>
+            <li>The original idea &amp; vision</li>
+            <li>Business direction &amp; industry understanding</li>
+            <li>Commitment &amp; active involvement</li>
+            <li>Market knowledge &amp; business operations</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="result">
+        <span class="result__eq" aria-hidden="true">=</span>
+        <p class="result__text">A venture built together. <span class="serif">Earnings shared together.</span></p>
+      </div>
+      <p class="fine mono">* Revenue-share percentage, responsibilities, IP ownership, duration and all other terms are set through a mutual agreement for each selected venture.</p>
+    </section>
+
+    <!-- ============ WHO CAN APPLY ============ -->
+    <section class="who section" id="who">
+      <div class="who__head">
+        <div class="tag mono"><span>05</span> Who can apply</div>
+        <h2 class="h2">For people with something <mark>worth building.</mark></h2>
+      </div>
+
+      <img class="who__float" alt="" aria-hidden="true" />
+      <ul class="who__list">
+        <li data-img="assets/who-a.png"><span class="mono">A</span><b>Individuals with promising startup ideas</b><i>↗</i></li>
+        <li data-img="assets/who-b.png"><span class="mono">B</span><b>First-time entrepreneurs</b><i>↗</i></li>
+        <li data-img="assets/who-c.png"><span class="mono">C</span><b>Early-stage startups needing technical execution</b><i>↗</i></li>
+        <li data-img="assets/who-d.png"><span class="mono">D</span><b>Founders with validated ideas but no dev team</b><i>↗</i></li>
+        <li data-img="assets/who-e.png"><span class="mono">E</span><b>Businesses building or transforming digital products</b><i>↗</i></li>
+      </ul>
+
+      <div class="need">
+        <p class="need__label mono">You don't need</p>
+        <p class="need__items">
+          <s class="strike">an existing company</s>
+          <s class="strike">a technical background</s>
+          <s class="strike">a finished product</s>
+        </p>
+        <p class="need__matter">What matters is the <mark>potential</mark> of your idea and your <mark>commitment</mark> to making it happen.</p>
+      </div>
+    </section>
+
+    <!-- ============ DIFFERENT ============ -->
+    <section class="diff section" id="diff">
+      <div class="tag mono"><span>06</span> What makes this different</div>
+      <p class="diff__not">We're not <s class="strike strike--lime">an agency.</s> <s class="strike strike--lime">a fund.</s> <s class="strike strike--lime">a startup competition.</s></p>
+      <p class="diff__are">We build <span class="serif">alongside</span> founders.</p>
+      <div class="diff__cols">
+        <p><span class="mono">Traditional agencies</span>Deliver projects.</p>
+        <p><span class="mono">We</span>Aim to build long-term partnerships.</p>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="faq section" id="faq">
+      <div class="faq__head">
+        <div class="tag mono"><span>07</span> Questions</div>
+        <h2 class="h2">Before you <span class="serif">apply.</span></h2>
+      </div>
+      <div class="faq__list">
+        <details>
+          <summary>Do I pay development fees upfront?<i></i></summary>
+          <div><p>No conventional upfront development fees for selected founders. Roxten contributes its capabilities and resources in exchange for an agreed share of the venture's future earnings.</p></div>
+        </details>
+        <details>
+          <summary>Who owns the intellectual property?<i></i></summary>
+          <div><p>IP ownership, revenue-share percentage, responsibilities and duration are all defined in a mutual agreement for each selected venture — before any building starts.</p></div>
+        </details>
+        <details>
+          <summary>Do I need a company or a technical background?<i></i></summary>
+          <div><p>No. You don't need an existing company, technical skills or a developed product. We look for idea potential and founder commitment.</p></div>
+        </details>
+        <details>
+          <summary>How do you choose which ideas to build?<i></i></summary>
+          <div><p>We evaluate each idea on potential, feasibility, market opportunity, originality and the founder's commitment.</p></div>
+        </details>
+        <details>
+          <summary>What happens after I apply?<i></i></summary>
+          <div><p>Our team reviews every application personally. If your idea is shortlisted, we'll reach out to set up a discovery conversation.</p></div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============ APPLY ============ -->
+    <section class="apply" id="apply">
+      <div class="apply__intro">
+        <div class="tag tag--dark mono"><span>08</span> Apply</div>
+        <h2 class="apply__title">Pitch it.<br/>We'll <span class="slab">build it.</span></h2>
+        <p class="apply__lede">Go all in with the full application for the strongest case — or send a quick 4-question pitch. No deck, no documents. Watch your venture brief build itself as you answer.</p>
+        <ul class="apply__meta mono">
+          <li><b>1–3</b> min</li>
+          <li><b>4/14</b> questions</li>
+          <li><b>0</b> upfront fees</li>
+        </ul>
+      </div>
+
+      <a href="apply.html" class="launch" data-launch>
+        <div class="launch__bar mono">
+          <span class="launch__dots"><i></i><i></i><i></i></span>
+          <span>venture_brief.forge</span>
+          <span><b>0</b>% built</span>
+        </div>
+        <div class="launch__body">
+          <p class="mono launch__k">Venture</p>
+          <p class="launch__title" data-launch-title>Untitled venture</p>
+          <ul class="launch__rows">
+            <li><span class="mono">Founder</span><i></i></li>
+            <li><span class="mono">Problem</span><i></i></li>
+            <li><span class="mono">Stage</span><i></i></li>
+            <li><span class="mono">Build</span><i></i></li>
+          </ul>
+        </div>
+        <div class="launch__cta">
+          <span class="launch__label">Start your application</span>
+          <span class="launch__go">→</span>
+        </div>
+      </a>
+    </section>
+
+    <!-- ============ FINAL CTA ============ -->
+    <section class="final">
+      <div class="final__pics" aria-hidden="true">
+        <figure class="pic pic--1" data-slot data-file="assets/cta-1.png"><img src="assets/cta-1.png" alt="" loading="lazy" data-optional /></figure>
+        <figure class="pic pic--2" data-slot data-file="assets/cta-2.png"><img src="assets/cta-2.png" alt="" loading="lazy" data-optional /></figure>
+        <figure class="pic pic--3" data-slot data-file="assets/cta-3.png"><img src="assets/cta-3.png" alt="" loading="lazy" data-optional /></figure>
+      </div>
+      <p class="final__kicker serif">Your idea. Our build.</p>
+      <h2 class="final__title"><span>LET'S BUILD</span><span>WHAT'S <span class="slab">NEXT.</span></span></h2>
+      <a href="apply.html" class="btn btn--lime btn--xl" data-magnetic><span>Work with us</span><b>↗</b></a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="#top" class="brand">
+          <span class="brand__rx">ROXTEN<br/>STUDIOS</span>
+          <span class="brand__sep">/</span>
+          <span class="brand__prog" data-name>FORGE</span>
+        </a>
+        <p>A venture-building initiative by Roxten Studios. You bring the vision — we build it with you.</p>
+        <a href="apply.html" class="btn btn--lime btn--sm" data-magnetic><span>Apply now</span><b>↗</b></a>
+      </div>
+      <nav class="footer__col" aria-label="Footer">
+        <p class="mono">Explore</p>
+        <a href="#concept">Concept</a>
+        <a href="#bring">What we bring</a>
+        <a href="#process">Process</a>
+        <a href="#model">Model</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="footer__col">
+        <p class="mono">Studio</p>
+        <a href="https://roxtenstudios.in">roxtenstudios.in ↗</a>
+        <a href="apply.html">Application</a>
+        <a href="#who">Who can apply</a>
+      </div>
+    </div>
+    <div class="footer__row mono">
+      <span>© <span id="year"></span> Roxten Studios</span>
+      <span>From idea to product.</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+    <div class="footer__big" aria-hidden="true">
+      <span class="footer__mark">
+        <svg class="footer__full" viewBox="0 0 1000 160"><g><text>FROM ORIGINAL IDEA TO REVENUE-GENERATING ENTERPRISE</text></g></svg>
+        <span class="footer__word" data-name>FORGE</span>
+      </span>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
