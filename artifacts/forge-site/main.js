@@ -493,7 +493,9 @@
   // a lime scanner builds it into solid type, a slab stamps it live — then the grid paper itself
   // dissolves square by square in a lime ripple from the centre, revealing the site.
   const runLoader = () => new Promise(async resolve => {
-    if (!hasGsap || reduce) { loader?.remove(); return resolve(); }
+    // once per visit: a refresh (same tab session) goes straight to the site
+    if (!hasGsap || reduce || store.get('forge_booted')) { loader?.remove(); return resolve(); }
+    store.set('forge_booted', '1');
     try { history.scrollRestoration = 'manual'; } catch {}
     scrollTo(0, 0);
     lenis?.stop();
