@@ -113,6 +113,22 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // ==========================================
+    // VENTURE APPLICATIONS (program subdomain survey)
+    // ==========================================
+    match /venture_applications/{appId} {
+      // Anyone can submit an application, with basic shape checks
+      allow create: if request.resource.data.keys().size() < 30
+        && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() < 120
+        && request.resource.data.email is string && request.resource.data.email.size() < 200
+        && request.resource.data.pitch is string && request.resource.data.pitch.size() <= 140
+        && request.resource.data.problem is string && request.resource.data.problem.size() <= 1200
+        && request.resource.data.why is string && request.resource.data.why.size() <= 1200
+        && request.resource.data.status == 'new';
+      // ONLY authenticated admins can read, update, or delete applications
+      allow read, update, delete: if isAdmin();
+    }
+
     // Default deny all for any other unknown collections
     match /{document=**} {
       allow read, write: if false;
