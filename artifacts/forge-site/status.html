@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Application status — FORGE by Roxten Studios</title>
+  <meta name="description" content="Check the status of your FORGE application." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#F1EEE8" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230D0D0C'/%3E%3Cpath d='M14 46 L22 18 H52 L44 46 Z' fill='%23DCF21E'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="status.css" />
+  <!-- Vercel Web Analytics -->
+  <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body class="st">
+  <header class="st-top">
+    <a href="./" class="brand" aria-label="Back to FORGE home">
+      <span class="brand__rx">ROXTEN<br/>STUDIOS</span>
+      <span class="brand__sep">/</span>
+      <span class="brand__prog">FORGE</span>
+    </a>
+    <a href="./" class="st-top__link mono">Home ↗</a>
+  </header>
+
+  <main class="st-main" id="main" aria-live="polite">
+    <!-- loading -->
+    <section class="st-view" data-view="loading">
+      <p class="mono st-k">Looking up your application…</p>
+    </section>
+
+    <!-- found -->
+    <section class="st-view" data-view="found" hidden>
+      <p class="mono st-k"><span id="stRef">REF</span> · submitted <span id="stCreated">—</span></p>
+      <h1 class="st-title" id="stTitle">RECEIVED.</h1>
+      <p class="st-lede" id="stLede"></p>
+
+      <ol class="st-track" id="stTrack" aria-label="Application progress"></ol>
+      <p class="mono st-upd">Last update · <span id="stUpdated">—</span></p>
+
+      <article class="st-brief" aria-label="What you sent">
+        <p class="mono st-brief__k">Your venture brief</p>
+        <h2 class="st-brief__title" id="stPitch">Untitled venture</h2>
+        <dl class="st-rows" id="stRows"></dl>
+      </article>
+
+      <p class="st-note">Keep this page's link private. Anyone who has it can see this summary (never your contact details).</p>
+    </section>
+
+    <!-- lookup: no link, or link not found -->
+    <section class="st-view" data-view="lookup" hidden>
+      <p class="mono st-k" id="lookupK">Application status</p>
+      <h1 class="st-title st-title--sm" id="lookupTitle">FIND YOUR<br/><span class="slab">APPLICATION.</span></h1>
+      <p class="st-lede" id="lookupLede">Paste the private status link you got after applying.</p>
+      <form class="st-form" id="lookupForm" autocomplete="off">
+        <input class="st-input" id="lookupInput" type="text" placeholder="forge.roxtenstudios.in/status?t=…" aria-label="Status link or code" />
+        <button class="btn btn--lime" type="submit"><span>Check</span><b>→</b></button>
+      </form>
+      <div class="st-mine" id="mine" hidden>
+        <p class="mono st-k">Saved on this device</p>
+        <ul class="st-mine__list" id="mineList"></ul>
+      </div>
+      <p class="st-note">Haven't applied yet? <a href="apply.html">Start your application →</a></p>
+    </section>
+  </main>
+
+  <script type="module" src="status.js"></script>
+</body>
+</html>

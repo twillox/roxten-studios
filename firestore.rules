@@ -129,6 +129,28 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // ==========================================
+    // FORGE APPLICANT STATUS (private link, no contact details)
+    // ==========================================
+    match /venture_status/{token} {
+      // Anyone with the exact link can open ONE record; nobody can list them
+      allow get: if token.size() >= 20;
+      allow list: if isAdmin();
+      // Created right after an application, always as 'new', with a fixed set of short fields
+      allow create: if token.size() >= 20 && token.size() <= 64
+        && request.resource.data.keys().hasOnly(['ref', 'status', 'program', 'track', 'first', 'pitch', 'profile', 'stage', 'needs', 'commitment', 'createdAt', 'updatedAt'])
+        && request.resource.data.status == 'new'
+        && request.resource.data.ref is string && request.resource.data.ref.size() < 20
+        && request.resource.data.first is string && request.resource.data.first.size() <= 60
+        && request.resource.data.pitch is string && request.resource.data.pitch.size() <= 140
+        && request.resource.data.profile is string && request.resource.data.profile.size() <= 120
+        && request.resource.data.stage is string && request.resource.data.stage.size() <= 120
+        && request.resource.data.commitment is string && request.resource.data.commitment.size() <= 120
+        && request.resource.data.needs is list && request.resource.data.needs.size() <= 12;
+      // Only admins change the status (from the admin panel) or remove it
+      allow update, delete: if isAdmin();
+    }
+
     // Default deny all for any other unknown collections
     match /{document=**} {
       allow read, write: if false;

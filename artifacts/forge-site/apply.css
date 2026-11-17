@@ -142,6 +142,15 @@
 .done__next .mono { color: var(--lime); }
 .done__next b { font-weight: 800; font-stretch: 110%; font-size: 20px; letter-spacing: -.01em; }
 .done__next em { font-style: normal; color: rgba(241,238,232,.62); font-size: 14.5px; }
+.done__link { margin: 30px 0 0; padding: 20px 22px; border: 1.5px solid var(--lime); background: rgba(220,242,30,.06); }
+.done__link-k { color: var(--lime); margin: 0 0 6px; }
+.done__link-sub { margin: 0 0 14px; color: rgba(241,238,232,.72); font-size: 15px; }
+.done__link-row { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
+.done__url { flex: 1 1 260px; min-width: 0; padding: 12px 14px; background: rgba(241,238,232,.08); color: var(--paper); font-family: var(--f-mono); font-size: 13px; overflow-wrap: anywhere; user-select: all; }
+.done__copy, .done__open { display: inline-flex; align-items: center; padding: 0 16px; min-height: 44px; border: 0; cursor: pointer; text-decoration: none; }
+.done__copy { background: var(--lime); color: var(--ink); }
+.done__open { background: transparent; color: var(--paper); box-shadow: inset 0 0 0 1.5px rgba(241,238,232,.4); }
+.done__copy:hover { background: var(--paper); } .done__open:hover { box-shadow: inset 0 0 0 1.5px var(--paper); }
 .done .btn--lime { --hover: var(--paper); --hfg: var(--ink); }
 
 /* ---------- responsive ---------- */
