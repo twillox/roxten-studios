@@ -14,6 +14,8 @@ const FIREBASE_CONFIG = {
 const COLLECTION = 'venture_applications';
 const PROGRAM = 'FORGE';
 const DRAFT_KEY = 'forge_draft_v2';
+const STATUS_COLLECTION = 'venture_status'; // public-by-link mirror: no contact details
+const MINE_KEY = 'forge_my_apps';           // this browser's status links
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -390,13 +392,25 @@ async function getDb() {
   fb = { db: fs.getFirestore(app), ...fs };
   return fb;
 }
+// long random code: whoever has the link can see that one status record, and nothing else
+const statusToken = () => [...crypto.getRandomValues(new Uint8Array(24))].map(b => 'abcdefghijkmnpqrstuvwxyz23456789'[b % 32]).join('');
+// clean /status URL on Vercel; the .html file locally
+const statusUrl = t => new URL((/^(localhost|127.0.0.1)$/.test(location.hostname) ? 'status.html' : 'status') + '?t=' + t, location.href).href;
+const rememberMine = (t, ref, pitch) => {
+  try {
+    const list = JSON.parse(localStorage.getItem(MINE_KEY) || '[]').filter(x => x.t !== t);
+    list.unshift({ t, ref, pitch: (pitch || '').slice(0, 140), at: Date.now() });
+    localStorage.setItem(MINE_KEY, JSON.stringify(list.slice(0, 10)));
+  } catch {}
+};
 const refId = () => 'RX-' + Date.now().toString(36).slice(-4).toUpperCase() + Math.random().toString(36).slice(2, 4).toUpperCase();
 
 async function submit(el) {
   const btn = el.querySelector('[data-ok]');
   const errEl = el.querySelector('.q__err');
   const ref = refId();
-  if ($('.hp').value) return done(ref, btn); // bot honeypot: pretend success
+  const token = statusToken();
+  if ($('.hp').value) return done(ref, btn, null); // bot honeypot: pretend success
   btn.classList.add('is-loading'); btn.disabled = true;
   btn.innerHTML = '<span>Sending</span><b>◌</b>';
   const payload = {
@@ -404,16 +418,31 @@ async function submit(el) {
     profile: data.profile || '', pitch: (data.pitch || '').slice(0, 140), problem: (data.problem || '').slice(0, 1200),
     audience: data.audience || '', stage: data.stage || '', needs: data.needs, commitment: data.commitment || '',
     why: (data.why || '').slice(0, 1200), revshare: data.revshare || '', consent: true,
-    ref, track: data.track === 'quick' ? 'quick' : 'full', program: PROGRAM, status: 'new', source: location.hostname || 'local', userAgent: navigator.userAgent.slice(0, 200),
+    ref, statusToken: token, track: data.track === 'quick' ? 'quick' : 'full', program: PROGRAM, status: 'new', source: location.hostname || 'local', userAgent: navigator.userAgent.slice(0, 200),
   };
   try {
-    const { db, collection, addDoc, serverTimestamp } = await getDb();
+    const { db, collection, addDoc, doc, setDoc, serverTimestamp } = await getDb();
     await Promise.race([
       addDoc(collection(db, COLLECTION), { ...payload, createdAt: serverTimestamp() }),
       new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 15000)),
     ]);
+    // the applicant's status record; if this fails the application still went through
+    let link = null;
+    try {
+      await Promise.race([
+        setDoc(doc(db, STATUS_COLLECTION, token), {
+          ref, status: 'new', program: PROGRAM, track: payload.track, first: first().slice(0, 60),
+          pitch: payload.pitch, profile: payload.profile.slice(0, 120), stage: payload.stage.slice(0, 120),
+          needs: (payload.needs || []).slice(0, 12).map(n => String(n).slice(0, 80)), commitment: payload.commitment.slice(0, 120),
+          createdAt: serverTimestamp(), updatedAt: serverTimestamp(),
+        }),
+        new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 10000)),
+      ]);
+      link = statusUrl(token);
+      rememberMine(token, ref, payload.pitch);
+    } catch (e) { console.warn('[apply] status record not created', e); }
     try { localStorage.removeItem(DRAFT_KEY); sessionStorage.removeItem('forge_pitch'); } catch {}
-    done(ref, btn);
+    done(ref, btn, link);
   } catch (err) {
     console.error('[apply] submit failed', err);
     errEl.textContent = 'Something went wrong while sending. Your answers are saved — please try again in a moment.';
@@ -422,13 +451,27 @@ async function submit(el) {
   }
 }
 
-function done(ref, btn) {
+function done(ref, btn, link) {
   const brief = $('#brief');
   brief.classList.add('is-built');
   $('#briefStamp').textContent = 'Submitted ✓';
   $('#progress').style.transform = 'scaleX(1)';
   $('#doneRef').textContent = 'REF ' + ref;
   $('#doneName').textContent = first() ? ', ' + first() : '';
+  const box = $('#doneLink');
+  if (link) {
+    box.hidden = false;
+    $('#doneUrl').textContent = link.replace(/^https?:\/\//, '');
+    $('#doneOpen').href = link;
+    $('#doneCopy').onclick = async () => {
+      try { await navigator.clipboard.writeText(link); } catch {
+        const r = document.createRange(); r.selectNodeContents($('#doneUrl'));
+        getSelection().removeAllRanges(); getSelection().addRange(r); document.execCommand('copy');
+      }
+      $('#doneCopy').textContent = 'Copied ✓';
+      setTimeout(() => { $('#doneCopy').textContent = 'Copy link'; }, 1800);
+    };
+  }
   const r = btn?.getBoundingClientRect();
   const doneEl = $('#done');
   if (r) { doneEl.style.setProperty('--cx', (r.left + r.width / 2) + 'px'); doneEl.style.setProperty('--cy', (r.top + r.height / 2) + 'px'); }

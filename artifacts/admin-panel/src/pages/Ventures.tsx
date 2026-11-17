@@ -6,6 +6,8 @@ import { Search, Download, RefreshCw, Mail, Phone, MessageCircle, ExternalLink, 
 import clsx from "clsx";
 
 const COLLECTION = "venture_applications";
+// what the applicant sees on their private status link (no contact details)
+const STATUS_COLLECTION = "venture_status";
 
 type FirestoreDate = { toDate: () => Date } | string | number | null | undefined;
 
@@ -27,6 +29,7 @@ type Application = {
   why?: string;
   revshare?: string;
   status?: string;
+  statusToken?: string;
   track?: string;
   notes?: string;
   source?: string;
@@ -92,12 +95,25 @@ export default function Ventures() {
   const updateMutation = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<Application> }) => {
       await updateDoc(doc(db, COLLECTION, id), { ...data, updatedAt: serverTimestamp() });
+      // mirror status changes to the applicant's status page
+      const token = apps.find((a) => a.id === id)?.statusToken;
+      if (data.status && token) {
+        try {
+          await updateDoc(doc(db, STATUS_COLLECTION, token), { status: data.status, updatedAt: serverTimestamp() });
+        } catch (e) {
+          console.warn("[ventures] applicant status page not updated", e);
+        }
+      }
     },
     onSuccess: invalidate,
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => deleteDoc(doc(db, COLLECTION, id)),
+    mutationFn: async (id: string) => {
+      const token = apps.find((a) => a.id === id)?.statusToken;
+      await deleteDoc(doc(db, COLLECTION, id));
+      if (token) await deleteDoc(doc(db, STATUS_COLLECTION, token)).catch(() => {});
+    },
     onSuccess: () => { setSelectedId(null); invalidate(); },
   });
 
